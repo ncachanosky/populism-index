@@ -51,5 +51,5 @@ Source: The Standardized World Income Inequality Database (Solt, 2020).
 
 
 
-# References 
+## References 
 1. Solt, Frederick. 2020. “Measuring Income Inequality Across Countries and Over Time: The Standardized World Income Inequality Database.” Social Science Quarterly 101(3):1183-1199. SWIID Version 9.5, June 2023.
