@@ -94,7 +94,7 @@ V-Dem executive corruption components:
 ### Freedom of the Press
 
 $$
-IP_5 = 100 = \text{v2mecenefm-osp} \cdot 25
+IP_5 = 100 - (\text{v2mecenefm-osp} \cdot 25)
 $$
 
 ## Sources
