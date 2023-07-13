@@ -47,6 +47,15 @@ index = pd.merge(index, vdem1, on=['ISO','YEAR'])
 
 
 # ============================================================================|
+#%% INSTITUTIONAL POPULISM | NEOPATRIMONIALISM
+
+vdem3 = vdem.loc[:, ['ISO', 'YEAR', 'v2x_neopat']]
+vdem3['v2x_neopat'] = vdem3['v2x_neopat']*100
+
+index = pd.merge(index, vdem3, on=['ISO', 'YEAR'])
+
+
+# ============================================================================|
 #%% INSTITUTIONAL POPULISM | CORRUPTION
 
 vdem4 = vdem.loc[:, ['ISO', 'YEAR', 'v2x_execorr']]
