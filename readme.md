@@ -39,11 +39,43 @@ Source: The Standardized World Income Inequality Database (Solt, 2020).
 
 ### Rule of Law
 
+$$
+IP_1 = \text{v2x_rule} * 100
+$$
+
+<!--
+V-Dem rule of law components:
+1. Compliance with high court                    - v2juhccomp
+2. Complance with judiciary                      - v2jucomp
+3. High court independence                       - v2juhcind
+4. Lower court independence                      - v2juncind
+5. Transparent laws with predictable enforcement - v2cltrnslw
+6. Access to justice for men                     - v2clacjstm
+7. Access to justice for women                   - v2clacjstw
+8. Judicial accountability                       - v2juaccnt
+9. Judicial corruption decision                  - v2jucorrde
+10. Public sector corrupt exchanges              - v2xcrptps
+11. Public sector theft                          - v2xthftps
+12. Executive bribery and corrupt exchanges      - v2exbribe
+13. Executive embezzlement and theft             - v2exembez
+
+-->
+
 ### Attacks on the Judiciary
 
 ### Attacks on the Legislative
 
 ### Corruption
+
+$$
+IP_4 = \text{v2x_execorr} * 100
+$$
+
+<!--
+V-Dem executive corruption components:
+1. Executive bribery      - v2exbribe
+2. Executive embezzelment - v2xembez
+-->
 
 ### Freedom of the Press
 
