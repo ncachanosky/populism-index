@@ -53,3 +53,12 @@ vdem4 = vdem.loc[:, ['ISO', 'YEAR', 'v2x_execorr']]
 vdem4['v2x_execorr'] = vdem4['v2x_execorr']*100
 
 index = pd.merge(index, vdem4, on=['ISO', 'YEAR'])
+
+
+# ============================================================================|
+#%% INSTITUTIONAL POPULISM | FREEDOM OF EXPRESSION
+
+vdem5 = vdem.loc[:, ['ISO', 'YEAR', 'v2mecenefm_osp']]
+vdem5['v2mecenefm_osp'] = 100 - vdem5['v2mecenefm_osp']*25
+
+index = pd.merge(index, vdem5, on=['ISO', 'YEAR'])
