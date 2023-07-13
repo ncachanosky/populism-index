@@ -39,9 +39,7 @@ Source: The Standardized World Income Inequality Database (Solt, 2020).
 
 ### Rule of Law
 
-$$
-IP_1 = \text{v2x_rule} * 100
-$$
+$IP_1 = \text{v2x-rule} \cdot 100$
 
 <!--
 V-Dem rule of law components:
@@ -67,9 +65,7 @@ V-Dem rule of law components:
 
 ### Corruption
 
-$$
-IP_4 = \text{v2x_execorr} * 100
-$$
+$IP_4 = \text{v2x-execorr} \cdot 100$
 
 <!--
 V-Dem executive corruption components:
