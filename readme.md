@@ -59,27 +59,13 @@ V-Dem rule of law components:
 
 -->
 
-### Executive power
+### Attacks on the judiciary
 
-<!--
-V-Dem neopatrimonialism components:
-1. Vote buyins - v2elvotbuy
-2. Particularistic vs public goods                    - v2dlencmps
-3. Party linkages                                     - v2psprlnks
-4. Executive respects constitution                    - v2exrescon
-5. Executive oversight                                - v2lgotovst
-6. Legislature controls resources                     - v2lgfunds
-7. Legislature investigates the executive in practice - v2lginvstp
-8. High court independence                            - V2juhcind
-9. Low court independence                             - v2juhcind
-10. Compliance with high court                        - v2juhccomp
-11. Compliance with judiciary                         - v2jucomp
-12. Electoral managemente body autonomy               - v2elembaut
-13. Executive embezzlement and theft                  - v2exembez
-14. Executive bribes and corrput charges              - v2exbribe
-15. Legislative corruption                            - v2lgcrrpt
-16. Judicial corruption                               - v2jucorrde
--->
+
+
+### Neopatrimonialism
+
+$IP_3 = 100 - \text{v2jupoatck} \cdot 25$
 
 ### Corruption
 
@@ -94,20 +80,22 @@ V-Dem executive corruption components:
 ### Freedom of the Press
 
 $$
-IP_5 = 100 - (\text{v2mecenefm-osp} \cdot 25)
+IP_5 = 100 = \text{v2mecenefm-osp} \cdot 25
 $$
 
 ## Sources
 
-| VARIABLE                   | SOURCE         | VARIABLE CODE  |
-| -------------------------- | -------------  | -------------- |
-| **Economic populism**      |                |                |
-| Income distribution        | [SWIID][SWIID] |
-| **Institutional populism** |                |                |
-| Rule of law                | [V-Dem][VDEM]  | v2x_rule       |
-| Neopatrimonialism          | [V-Dem][VDEM]  | v2x_neopat     |
-| Corruption                 | [V-Dem][VDEM]  | v2x_execorr    |
-| Freedom of expression      | [V-Dem][VDEM]  | v2mecenefm_osp |
+| VARIABLE                      | SOURCE         | VARIABLE CODE  |
+| ----------------------------- | -------------  | -------------- |
+| **Populism rehtorical index** |                |                |
+| Populism index                | [V-Dem][VDEM2] | v2xpa_popul    |
+| **Economic populism**         |                |                |
+| Income distribution           | [SWIID][SWIID] |                |
+| **Institutional populism**    |                |                |
+| Rule of law                   | [V-Dem][VDEM1] | v2x_rule       |
+| Neopatrimonialism             | [V-Dem][VDEM1] | v2x_neopat     |
+| Corruption                    | [V-Dem][VDEM1] | v2x_execorr    |
+| Freedom of expression         | [V-Dem][VDEM1] | v2mecenefm_osp |
 
 
 
@@ -119,5 +107,6 @@ $$
 <!-- HYPERLINKS -->
 [SWIID]: <https://fsolt.org/swiid/>
 
-[VDEM]: <https://www.v-dem.net/data/the-v-dem-dataset/>
+[VDEM1]: <https://www.v-dem.net/data/the-v-dem-dataset/>
+[VDEM2]: <https://v-dem.net/data/v-party-dataset/>
 
