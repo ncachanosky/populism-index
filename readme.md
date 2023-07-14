@@ -99,13 +99,15 @@ $$
 
 ## Sources
 
-| VARIABLE                   | SOURCE        | VARIABLE CODE  |
-| -------------------------- | ------------  | -------------- |
-| **Institutional populism** |               |                |
-| Rule of law                | [V-Dem][VDEM] | v2x_rule       |
-| Neopatrimonialism          | [V-Dem][VDEM] | v2x_neopat     |
-| Corruption                 | [V-Dem][VDEM] | v2x_execorr    |
-| Freedom of expression      | [V-Dem][VDEM] | v2mecenefm_osp |
+| VARIABLE                   | SOURCE         | VARIABLE CODE  |
+| -------------------------- | -------------  | -------------- |
+| **Economic populism**      |                |                |
+| Income distribution        | [SWIID][SWIID] |
+| **Institutional populism** |                |                |
+| Rule of law                | [V-Dem][VDEM]  | v2x_rule       |
+| Neopatrimonialism          | [V-Dem][VDEM]  | v2x_neopat     |
+| Corruption                 | [V-Dem][VDEM]  | v2x_execorr    |
+| Freedom of expression      | [V-Dem][VDEM]  | v2mecenefm_osp |
 
 
 
@@ -115,6 +117,7 @@ $$
 
 
 <!-- HYPERLINKS -->
+[SWIID]: <https://fsolt.org/swiid/>
 
 [VDEM]: <https://www.v-dem.net/data/the-v-dem-dataset/>
 
