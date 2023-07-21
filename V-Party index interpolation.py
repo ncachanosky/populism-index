@@ -1,5 +1,5 @@
 # | ==========================================================================|
-# | LEFT-LEANING POPULISM INDEX FOR LATIN AMERICA
+# | V-PARTY POPULISM INDEX INTERPOLATION
 
 
 # ============================================================================|
@@ -90,24 +90,26 @@ while t <= end:
          ['VEN', t, 'Venezuela'                     , 'South America'  , 0, 0, 0]],
          columns=['ISO', 'YEAR', 'COUNTRY', 'REGION', 'LDC', 'LLDC', 'SIDS'])
     
-   index = pd.concat([index, df_new])
+   vparty = pd.concat([index, df_new])
    t = t+1
 
 # CLEAN UP
 del start, end, t, df_new
 
-# ============================================================================|
-# %% DATA: V-PARTY POPULISM INDEX
 
+
+# ============================================================================|
+# %% LOAD AND EXPORT DATA
+# Original dataset
 file = "C:/Users/ncachanosky/OneDrive/Research/Datasets/V-Dem-CPD-Party-V2.dta"
 vparty = pd.read_stata(file)
-del file
 
 # Rename columns for future merge (when building the index)
 vparty = vparty.rename(columns={'country_text_id':'ISO' })
 vparty = vparty.rename(columns={'year'           :'YEAR'})
+del file
 
-# Drop unnecesary columns and rows
+# Drop unnecesary columns
 keep = ['ISO'       ,
         'YEAR'      ,
         'v2paenname',
@@ -133,7 +135,9 @@ vparty = vparty.pivot(index='YEAR', values='v2xpa_popul', columns=['ISO', 'v2pae
 vparty = vparty.interpolate()
 vparty = vparty.sort_index(axis=1)
 
-# Export to excel for *manual* completion
+
+# ============================================================================|
+# %% LOAD AND EXPORT DATA
 with pd.ExcelWriter('Vparty2.xlsx',
                     mode='a',
                     engine="openpyxl",
@@ -141,81 +145,3 @@ with pd.ExcelWriter('Vparty2.xlsx',
 ) as writer:
     vparty.to_excel('VParty2.xlsx', sheet_name='V-Party')
 
-del writer
-
-# After manual update, re-import data from Excel
-file   = pd.ExcelFile("VParty2.xlsx")
-vparty = pd.read_excel(file, sheet_name='INDEX', usecols="A,B,E")
-del file
-
-# Merge with INDEX
-index = pd.merge(index, vparty, on=['ISO','YEAR'])
-del vparty
-
-
-# ============================================================================|
-# %% DATA: V-DEM INDICES
-
-# Be patient with data import (can take a few minutes)
-# Then rename columns used for merging
-
-file = "C:/Users/ncachanosky/OneDrive/Research/Datasets/V-Dem-CY-Core-v13.dta"
-vdem = pd.read_stata(file)
-vdem = vdem.rename(columns={'country_text_id':'ISO' })
-vdem = vdem.rename(columns={'year'           :'YEAR'})
-
-
-# CLEAN UP
-del file
-
-
-# ============================================================================|
-# %% POPULIST RHETORIC INDEX | RULE OF LAW
-
-xlsx ="populism-index.xlsx"
-xlsx = pd.ExcelFile(xlsx)
-df   = pd.read_excel(xlsx, header=0, usecols="A:D")
-df   = df.loc[:,['ISO', 'YEAR', 'POPULISM']]
-
-index = pd.merge(index,df, on=['ISO','YEAR'])
-del xlsx, df
-
-
-# ============================================================================|
-# %% INSTITUTIONAL POPULISM | RULE OF LAW
-
-vdem_new = vdem.loc[:, ['ISO', 'YEAR', 'v2x_rule']]
-vdem_new['v2x_rule'] = vdem_new['v2x_rule']*100
-
-index = pd.merge(index, vdem_new, on=['ISO','YEAR'])
-del vdem_new
-
-
-# ============================================================================|
-#%% INSTITUTIONAL POPULISM | NEOPATRIMONIALISM
-
-vdem_new = vdem.loc[:, ['ISO', 'YEAR', 'v2x_neopat']]
-vdem_new['v2x_neopat'] = vdem_new['v2x_neopat']*100
-
-index = pd.merge(index, vdem_new, on=['ISO', 'YEAR'])
-del vdem_new
-
-
-# ============================================================================|
-#%% INSTITUTIONAL POPULISM | CORRUPTION
-
-vdem_new = vdem.loc[:, ['ISO', 'YEAR', 'v2x_execorr']]
-vdem_new['v2x_execorr'] = vdem_new['v2x_execorr']*100
-
-index = pd.merge(index, vdem_new, on=['ISO', 'YEAR'])
-del vdem_new
-
-
-# ============================================================================|
-#%% INSTITUTIONAL POPULISM | FREEDOM OF EXPRESSION
-
-vdem_new = vdem.loc[:, ['ISO', 'YEAR', 'v2mecenefm_osp']]
-vdem_new['v2mecenefm_osp'] = 100 - vdem_new['v2mecenefm_osp']*25
-
-index = pd.merge(index, vdem_new, on=['ISO', 'YEAR'])
-del vdem_new
