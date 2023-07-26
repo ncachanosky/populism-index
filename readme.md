@@ -87,9 +87,12 @@ $$
 | Income distribution           | [SWIID][SWIID] |                |
 | **Institutional populism**    |                |                |
 | Rule of law                   | [V-Dem][VDEM1] | v2x_rule       |
+| Rule of Law                   | [WGI][WGI]     | RL_EST         |
 | Neopatrimonialism             | [V-Dem][VDEM1] | v2x_neopat     |
 | Corruption                    | [V-Dem][VDEM1] | v2x_execorr    |
+| Corruption                    | [WGI][WGI]     | CC_EST         |
 | Freedom of expression         | [V-Dem][VDEM1] | v2mecenefm_osp |
+
 
 
 
@@ -103,4 +106,6 @@ $$
 
 [VDEM1]: <https://www.v-dem.net/data/the-v-dem-dataset/>
 [VDEM2]: <https://v-dem.net/data/v-party-dataset/>
+
+[WGI]: <https://info.worldbank.org/governance/wgi/>
 
