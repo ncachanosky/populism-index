@@ -23,19 +23,19 @@ del path
 # %% CREATE COUNTRY LIST: DATASET STRUCTURE
 
 # Create dataset structure with empty rows
-index = pd.DataFrame({'ISO'   :[],  
-                     'YEAR'   :[],
-                     'COUNTRY':[],
-                     'REGION' :[],
-                     'LDC'    :[],      # Least developed country
-                     'LLDC'   :[],      # Land locked developing country
-                     'SIDS'   :[]})     # Small island developing state
+INDEX = pd.DataFrame({'ISO'   : [],  
+                     'YEAR'   : [],
+                     'COUNTRY': [],
+                     'REGION' : [],
+                     'LDC'    : [],      # Least developed country
+                     'LLDC'   : [],      # Land locked developing country
+                     'SIDS'   : []})     # Small island developing state
 start = 1990
 end   = 2020
 
 t = start
 while t <= end:
-   df_new = pd.DataFrame(
+    df_new = pd.DataFrame(
         [['AIA', t, 'Anguila'                       , 'Caribbean'      , 0, 0, 1],
          ['ATG', t, 'Antigua and Barbuda'           , 'Caribbean'      , 0, 0, 1],
          ['ARG', t, 'Argentina'                     , 'South America'  , 0, 0, 0],
@@ -90,8 +90,9 @@ while t <= end:
          ['VEN', t, 'Venezuela'                     , 'South America'  , 0, 0, 0]],
          columns=['ISO', 'YEAR', 'COUNTRY', 'REGION', 'LDC', 'LLDC', 'SIDS'])
     
-   index = pd.concat([index, df_new])
-   t = t+1
+    INDEX = pd.concat([INDEX, df_new])
+    t = t+1
+
 
 # CLEAN UP
 del start, end, t, df_new
@@ -100,12 +101,12 @@ del start, end, t, df_new
 # %% DATA: V-PARTY POPULISM INDEX
 
 file = "C:/Users/ncachanosky/OneDrive/Research/Datasets/V-Dem-CPD-Party-V2.dta"
-vparty = pd.read_stata(file)
+VPARTY = pd.read_stata(file)
 del file
 
 # Rename columns for future merge (when building the index)
-vparty = vparty.rename(columns={'country_text_id':'ISO' })
-vparty = vparty.rename(columns={'year'           :'YEAR'})
+VPARTY = VPARTY.rename(columns={'country_text_id':'ISO' })
+VPARTY = VPARTY.rename(columns={'year'           :'YEAR'})
 
 # Drop unnecesary columns and rows
 keep = ['ISO'       ,
@@ -115,42 +116,44 @@ keep = ['ISO'       ,
         'v2paid'    ,
         'v2xpa_popul']
 
-vparty = vparty[keep]
-vparty = vparty[vparty['YEAR'] >= 1990]
+VPARTY = VPARTY[keep]
+VPARTY = VPARTY[VPARTY['YEAR'] >= 1990]
 
 # Drop non-Latam countries
-keep = 'AIA|ATG|ARG|ABW|BHS|BRB|BLZ|BOL|BES|BVT|BRA|VGB|CYM \
-        CHL|COL|CRI|CUB|CUW|DMA|DOM|ECU|SLV|FLK|GUF|GRD|GLP \
-        GTM|GUY|HTI|HND|JAM|MTQ|MEX|MSR|NIC|PAN|PRY|PER|PRI \
-        BLM|KNA|LCA|MAF|VCT|SXM|SGS|SUR|TTO|TCA|VIR|URY|VEN'
+keep = 'AIA|ATG|ARG|ABW|BHS|BRB|BLZ|BOL|BES|BVT|BRA|VGB|CYM|\
+CHL|COL|CRI|CUB|CUW|DMA|DOM|ECU|SLV|FLK|GUF|GRD|GLP|\
+GTM|GUY|HTI|HND|JAM|MTQ|MEX|MSR|NIC|PAN|PRY|PER|PRI|\
+BLM|KNA|LCA|MAF|VCT|SXM|SGS|SUR|TTO|TCA|VIR|URY|VEN'
 
-vparty = vparty[vparty['ISO'].str.contains(keep)]
+VPARTY = VPARTY[VPARTY['ISO'].str.contains(keep)]
 del keep
 
 # Interpolate missing observations
-vparty = vparty.sort_values(by=['ISO', 'v2paenname', 'YEAR'])
-vparty = vparty.pivot(index='YEAR', values='v2xpa_popul', columns=['ISO', 'v2paenname','v2pashname', 'v2paid'])
-vparty = vparty.interpolate()
-vparty = vparty.sort_index(axis=1)
+VPARTY = VPARTY.sort_values(by=['ISO', 'v2paenname', 'YEAR'])
+VPARTY = VPARTY.pivot(index='YEAR', values='v2xpa_popul', columns=['ISO', 'v2paenname','v2pashname', 'v2paid'])
+VPARTY = VPARTY.interpolate()
+VPARTY = VPARTY.sort_index(axis=1)
 
 # Export to excel for *manual* completion
-with pd.ExcelWriter('Vparty2.xlsx',
+file = 'Data/VParty.xlsx'
+
+with pd.ExcelWriter(file,
+                    engine='openpyxl',
                     mode='a',
-                    engine="openpyxl",
-                    if_sheet_exists='replace'
-) as writer:
-    vparty.to_excel('VParty2.xlsx', sheet_name='V-Party')
+                    if_sheet_exists='replace') as writer:
+    VPARTY.to_excel(writer, sheet_name="V-Party")
 
 del writer
 
+
 # After manual update, re-import data from Excel
-file   = pd.ExcelFile("VParty2.xlsx")
-vparty = pd.read_excel(file, sheet_name='INDEX', usecols="A,B,E")
+file   = pd.ExcelFile(file)
+VPARTY = pd.read_excel(file, sheet_name='INDEX', usecols="A,B,E")
 del file
 
 # Merge with INDEX
-index = pd.merge(index, vparty, on=['ISO','YEAR'])
-del vparty
+INDEX = pd.merge(INDEX, VPARTY, on=['ISO','YEAR'])
+del VPARTY
 
 
 # ============================================================================|
@@ -160,9 +163,9 @@ del vparty
 # Then rename columns used for merging
 
 file = "C:/Users/ncachanosky/OneDrive/Research/Datasets/V-Dem-CY-Core-v13.dta"
-vdem = pd.read_stata(file)
-vdem = vdem.rename(columns={'country_text_id':'ISO' })
-vdem = vdem.rename(columns={'year'           :'YEAR'})
+VDEM = pd.read_stata(file)
+VDEM = VDEM.rename(columns={'country_text_id':'ISO' })
+VDEM = VDEM.rename(columns={'year'           :'YEAR'})
 
 
 # CLEAN UP
@@ -170,52 +173,120 @@ del file
 
 
 # ============================================================================|
-# %% POPULIST RHETORIC INDEX | RULE OF LAW
+# %% DATA: WGI
 
-xlsx ="populism-index.xlsx"
-xlsx = pd.ExcelFile(xlsx)
-df   = pd.read_excel(xlsx, header=0, usecols="A:D")
-df   = df.loc[:,['ISO', 'YEAR', 'POPULISM']]
+file = "Data/wgidataset.dta"
+WGI = pd.read_stata(file)
+WGI = WGI.rename(columns={'year':'YEAR'})
+WGI = WGI.rename(columns={'code':'ISO' })
+WGI = WGI.rename(columns={'rle':'WGI_1' ,
+                          'cce':'WGI_3'})
 
-index = pd.merge(index,df, on=['ISO','YEAR'])
-del xlsx, df
+# Drop unnecessary columns
+keep = ['ISO'  ,
+        'YEAR' ,
+        'WGI_1',
+        'WGI_3']
 
-
-# ============================================================================|
-# %% INSTITUTIONAL POPULISM | RULE OF LAW
-
-vdem_new = vdem.loc[:, ['ISO', 'YEAR', 'v2x_rule']]
-vdem_new['v2x_rule'] = vdem_new['v2x_rule']*100
-
-index = pd.merge(index, vdem_new, on=['ISO','YEAR'])
-del vdem_new
+WGI = WGI[keep]
 
 
-# ============================================================================|
-#%% INSTITUTIONAL POPULISM | NEOPATRIMONIALISM
+# Drop non-Latam countries
+keep = 'AIA|ATG|ARG|ABW|BHS|BRB|BLZ|BOL|BES|BVT|BRA|VGB|CYM|\
+CHL|COL|CRI|CUB|CUW|DMA|DOM|ECU|SLV|FLK|GUF|GRD|GLP|\
+GTM|GUY|HTI|HND|JAM|MTQ|MEX|MSR|NIC|PAN|PRY|PER|PRI|\
+BLM|KNA|LCA|MAF|VCT|SXM|SGS|SUR|TTO|TCA|VIR|URY|VEN'
 
-vdem_new = vdem.loc[:, ['ISO', 'YEAR', 'v2x_neopat']]
-vdem_new['v2x_neopat'] = vdem_new['v2x_neopat']*100
+WGI = WGI[WGI['ISO'].str.contains(keep)]
 
-index = pd.merge(index, vdem_new, on=['ISO', 'YEAR'])
-del vdem_new
-
-
-# ============================================================================|
-#%% INSTITUTIONAL POPULISM | CORRUPTION
-
-vdem_new = vdem.loc[:, ['ISO', 'YEAR', 'v2x_execorr']]
-vdem_new['v2x_execorr'] = vdem_new['v2x_execorr']*100
-
-index = pd.merge(index, vdem_new, on=['ISO', 'YEAR'])
-del vdem_new
+# CLEAN UP
+del file, keep
 
 
 # ============================================================================|
-#%% INSTITUTIONAL POPULISM | FREEDOM OF EXPRESSION
+# %% INSTITUTIONAL POPULISM | V-DEM: RULE OF LAW
 
-vdem_new = vdem.loc[:, ['ISO', 'YEAR', 'v2mecenefm_osp']]
-vdem_new['v2mecenefm_osp'] = 100 - vdem_new['v2mecenefm_osp']*25
+VDEM_NEW = VDEM.loc[:, ['ISO', 'YEAR', 'v2x_rule']]
+VDEM_NEW['v2x_rule'] = VDEM_NEW['v2x_rule']*100
 
-index = pd.merge(index, vdem_new, on=['ISO', 'YEAR'])
-del vdem_new
+INDEX = pd.merge(INDEX, VDEM_NEW, on=['ISO','YEAR'])
+INDEX = INDEX.rename(columns={'v2x_rule':'VDEM_1'})
+del VDEM_NEW
+
+
+# ============================================================================|
+#%% INSTITUTIONAL POPULISM | V_DEM: NEOPATRIMONIALISM
+
+VDEM_NEW = VDEM.loc[:, ['ISO', 'YEAR', 'v2x_neopat']]
+VDEM_NEW['v2x_neopat'] = VDEM_NEW['v2x_neopat']*100
+
+INDEX = pd.merge(INDEX, VDEM_NEW, on=['ISO', 'YEAR'])
+INDEX = INDEX.rename(columns={'v2x_neopat':'VDEM_2'})
+del VDEM_NEW
+
+
+# ============================================================================|
+#%% INSTITUTIONAL POPULISM | V_DEM: CORRUPTION
+
+VDEM_NEW = VDEM.loc[:, ['ISO', 'YEAR', 'v2x_execorr']]
+VDEM_NEW['v2x_execorr'] = VDEM_NEW['v2x_execorr']*100
+
+INDEX = pd.merge(INDEX, VDEM_NEW, on=['ISO', 'YEAR'])
+INDEX = INDEX.rename(columns={'v2x_execorr':'VDEM_3'})
+del VDEM_NEW
+
+
+# ============================================================================|
+#%% INSTITUTIONAL POPULISM | V-DEM: FREEDOM OF EXPRESSION
+
+VDEM_NEW = VDEM.loc[:, ['ISO', 'YEAR', 'v2mecenefm_osp']]
+VDEM_NEW['v2mecenefm_osp'] = 100 - VDEM_NEW['v2mecenefm_osp']*25
+
+INDEX = pd.merge(INDEX, VDEM_NEW, on=['ISO', 'YEAR'])
+INDEX = INDEX.rename(columns={'v2mecenefm_osp':'VDEM_4'})
+del VDEM_NEW
+
+
+# ============================================================================|
+#%% INSTITUTIONAL POPULISM | WGI: RULE OF LAW
+
+WGI_NEW = WGI.loc[:, ['ISO', 'YEAR', 'WGI_1']]
+WGI_NEW['WGI_1'] = (WGI_NEW['WGI_1'] + 2.5)*20
+
+INDEX = pd.merge(INDEX, WGI_NEW, on=['ISO', 'YEAR'])
+del WGI_NEW
+
+
+# ============================================================================|
+#%% INSTITUTIONAL POPULISM | WGI: CORRUPTION
+
+WGI_NEW = WGI.loc[:, ['ISO', 'YEAR', 'WGI_3']]
+WGI_NEW['WGI_3'] = (WGI_NEW['WGI_3'] + 2.5)*20
+
+INDEX = pd.merge(INDEX, WGI_NEW, on=['ISO', 'YEAR'])
+del WGI_NEW
+
+
+# ============================================================================|
+#%% INDEX | INSTITUTIONAL POPULISM
+
+INDEX['IP_1'] = (INDEX['VDEM_1'] + INDEX['WGI_1'])/2
+INDEX = INDEX.rename(columns={'VDEM_2': 'IP_2'})
+INDEX['IP_3'] = (INDEX['VDEM_3'] + INDEX['WGI_3'])/2
+INDEX = INDEX.rename(columns={'VDEM_4': 'IP_4'})
+
+INDEX['IP'] = (INDEX['IP_1']+INDEX['IP_2']+INDEX['IP_3']+INDEX['IP_4'])/4
+
+# Drop unnecessary columns
+keep = ['ISO'    , 
+        'YEAR'   ,
+        'COUNTRY',
+        'REGION' ,
+        'LDC'    ,
+        'LLDC'   ,
+        'SIDS'   ,
+        'VPARTY' ,
+        'IP', 'IP_1', 'IP_2', 'IP_3', 'IP_4']
+
+INDEX = INDEX[keep]
+del keep

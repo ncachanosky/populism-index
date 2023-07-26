@@ -1,7 +1,6 @@
 # Latin America (left-leaning) Populism Index Project
 
 ## The Index
-
 The index has two sub-indices: (a) Economic populism $(EP)$ and (b) Institutional populism $(IP)$. Both sub-indices range from 0 (less) to 100 (more) populism.
 
 Each sub-index is the interaction of populism policies with populist motives. Take, for instance, income distribution. This is a typical left-leaning populist policy, but not all of income distribution policies are carried by populist regimes. A high populist index requires a populist policy (such as income distribution) executed for populist reasons.
@@ -56,19 +55,15 @@ V-Dem rule of law components:
 11. Public sector theft                          - v2xthftps
 12. Executive bribery and corrupt exchanges      - v2exbribe
 13. Executive embezzlement and theft             - v2exembez
-
 -->
 
 ### Attacks on the judiciary
 
 
-
 ### Neopatrimonialism
-
 $IP_3 = 100 - \text{v2jupoatck} \cdot 25$
 
 ### Corruption
-
 $IP_4 = \text{v2x-execorr} \cdot 100$
 
 <!--
@@ -78,7 +73,6 @@ V-Dem executive corruption components:
 -->
 
 ### Freedom of the Press
-
 $$
 IP_5 = 100 = \text{v2mecenefm-osp} \cdot 25
 $$
