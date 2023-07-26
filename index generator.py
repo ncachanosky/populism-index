@@ -11,8 +11,6 @@ import pandas            as pd
 import numpy             as np
 import matplotlib.pyplot as plt
 
-from pandas_datareader import wb
-
 # | SETTINGS
 path = 'C:/Users/ncachanosky/OneDrive/Research/populism-index/'
 os.chdir(path)
@@ -143,17 +141,19 @@ with pd.ExcelWriter(file,
                     if_sheet_exists='replace') as writer:
     VPARTY.to_excel(writer, sheet_name="V-Party")
 
-del writer
+del writer, file
 
 
+# ============================================================================|
+# %% DATA: V-DEM V-PARTY MERGE
+file = 'Data/VParty.xlsx'
 # After manual update, re-import data from Excel
 file   = pd.ExcelFile(file)
 VPARTY = pd.read_excel(file, sheet_name='INDEX', usecols="A,B,E")
-del file
 
 # Merge with INDEX
 INDEX = pd.merge(INDEX, VPARTY, on=['ISO','YEAR'])
-del VPARTY
+del VPARTY, file
 
 
 # ============================================================================|

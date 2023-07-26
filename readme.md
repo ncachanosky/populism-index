@@ -18,7 +18,7 @@ IP &= \text{Populist rhetoric} \times \text{Populist institutional policies}
 \\end{align*}
 $$
 
-## Economic Populism $(EP$)
+## Economic Populism $(EP)$
 
 ### Budget Deficits
 
