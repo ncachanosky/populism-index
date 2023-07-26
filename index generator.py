@@ -215,7 +215,7 @@ del VDEM_NEW
 
 
 # ============================================================================|
-#%% INSTITUTIONAL POPULISM | V_DEM: NEOPATRIMONIALISM
+# %% INSTITUTIONAL POPULISM | V_DEM: NEOPATRIMONIALISM
 
 VDEM_NEW = VDEM.loc[:, ['ISO', 'YEAR', 'v2x_neopat']]
 VDEM_NEW['v2x_neopat'] = VDEM_NEW['v2x_neopat']*100
@@ -226,7 +226,7 @@ del VDEM_NEW
 
 
 # ============================================================================|
-#%% INSTITUTIONAL POPULISM | V_DEM: CORRUPTION
+# %% INSTITUTIONAL POPULISM | V_DEM: CORRUPTION
 
 VDEM_NEW = VDEM.loc[:, ['ISO', 'YEAR', 'v2x_execorr']]
 VDEM_NEW['v2x_execorr'] = VDEM_NEW['v2x_execorr']*100
@@ -237,7 +237,7 @@ del VDEM_NEW
 
 
 # ============================================================================|
-#%% INSTITUTIONAL POPULISM | V-DEM: FREEDOM OF EXPRESSION
+# %% INSTITUTIONAL POPULISM | V-DEM: FREEDOM OF EXPRESSION
 
 VDEM_NEW = VDEM.loc[:, ['ISO', 'YEAR', 'v2mecenefm_osp']]
 VDEM_NEW['v2mecenefm_osp'] = 100 - VDEM_NEW['v2mecenefm_osp']*25
@@ -248,7 +248,7 @@ del VDEM_NEW
 
 
 # ============================================================================|
-#%% INSTITUTIONAL POPULISM | WGI: RULE OF LAW
+# %% INSTITUTIONAL POPULISM | WGI: RULE OF LAW
 
 WGI_NEW = WGI.loc[:, ['ISO', 'YEAR', 'WGI_1']]
 WGI_NEW['WGI_1'] = (WGI_NEW['WGI_1'] + 2.5)*20
@@ -258,7 +258,7 @@ del WGI_NEW
 
 
 # ============================================================================|
-#%% INSTITUTIONAL POPULISM | WGI: CORRUPTION
+# %% INSTITUTIONAL POPULISM | WGI: CORRUPTION
 
 WGI_NEW = WGI.loc[:, ['ISO', 'YEAR', 'WGI_3']]
 WGI_NEW['WGI_3'] = (WGI_NEW['WGI_3'] + 2.5)*20
@@ -268,7 +268,7 @@ del WGI_NEW
 
 
 # ============================================================================|
-#%% INDEX | INSTITUTIONAL POPULISM
+# %% INDEX | INSTITUTIONAL POPULISM
 
 INDEX['IP_1'] = (INDEX['VDEM_1'] + INDEX['WGI_1'])/2
 INDEX = INDEX.rename(columns={'VDEM_2': 'IP_2'})
