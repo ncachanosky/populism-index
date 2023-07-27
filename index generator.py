@@ -215,24 +215,24 @@ del VDEM_NEW
 
 
 # ============================================================================|
-# %% INSTITUTIONAL POPULISM | V_DEM: NEOPATRIMONIALISM
-
-VDEM_NEW = VDEM.loc[:, ['ISO', 'YEAR', 'v2x_neopat']]
-VDEM_NEW['v2x_neopat'] = VDEM_NEW['v2x_neopat']*100
-
-INDEX = pd.merge(INDEX, VDEM_NEW, on=['ISO', 'YEAR'])
-INDEX = INDEX.rename(columns={'v2x_neopat':'VDEM_2'})
-del VDEM_NEW
-
-
-# ============================================================================|
 # %% INSTITUTIONAL POPULISM | V_DEM: CORRUPTION
 
 VDEM_NEW = VDEM.loc[:, ['ISO', 'YEAR', 'v2x_execorr']]
 VDEM_NEW['v2x_execorr'] = VDEM_NEW['v2x_execorr']*100
 
 INDEX = pd.merge(INDEX, VDEM_NEW, on=['ISO', 'YEAR'])
-INDEX = INDEX.rename(columns={'v2x_execorr':'VDEM_3'})
+INDEX = INDEX.rename(columns={'v2x_execorr':'VDEM_2'})
+del VDEM_NEW
+
+
+# ============================================================================|
+# %% INSTITUTIONAL POPULISM | V_DEM: NEOPATRIMONIALISM
+
+VDEM_NEW = VDEM.loc[:, ['ISO', 'YEAR', 'v2x_neopat']]
+VDEM_NEW['v2x_neopat'] = VDEM_NEW['v2x_neopat']*100
+
+INDEX = pd.merge(INDEX, VDEM_NEW, on=['ISO', 'YEAR'])
+INDEX = INDEX.rename(columns={'v2x_neopat':'VDEM_3'})
 del VDEM_NEW
 
 
@@ -260,8 +260,8 @@ del WGI_NEW
 # ============================================================================|
 # %% INSTITUTIONAL POPULISM | WGI: CORRUPTION
 
-WGI_NEW = WGI.loc[:, ['ISO', 'YEAR', 'WGI_3']]
-WGI_NEW['WGI_3'] = (WGI_NEW['WGI_3'] + 2.5)*20
+WGI_NEW = WGI.loc[:, ['ISO', 'YEAR', 'WGI_2']]
+WGI_NEW['WGI_2'] = (WGI_NEW['WGI_3'] + 2.5)*20
 
 INDEX = pd.merge(INDEX, WGI_NEW, on=['ISO', 'YEAR'])
 del WGI_NEW
@@ -271,8 +271,8 @@ del WGI_NEW
 # %% INDEX | INSTITUTIONAL POPULISM
 
 INDEX['IP_1'] = (INDEX['VDEM_1'] + INDEX['WGI_1'])/2
-INDEX = INDEX.rename(columns={'VDEM_2': 'IP_2'})
-INDEX['IP_3'] = (INDEX['VDEM_3'] + INDEX['WGI_3'])/2
+INDEX['IP_2'] = (INDEX['VDEM_2'] + INDEX['WGI_2'])/2
+INDEX = INDEX.rename(columns={'VDEM_3': 'IP_3'})
 INDEX = INDEX.rename(columns={'VDEM_4': 'IP_4'})
 
 INDEX['IP'] = (INDEX['IP_1']+INDEX['IP_2']+INDEX['IP_3']+INDEX['IP_4'])/4

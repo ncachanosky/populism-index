@@ -3,7 +3,9 @@
 ## The Index
 The index has two sub-indices: (a) Economic populism $(EP)$ and (b) Institutional populism $(IP)$. Both sub-indices range from 0 (less) to 100 (more) populism.
 
-Each sub-index is the interaction of populism policies with populist motives. Take, for instance, income distribution. This is a typical left-leaning populist policy, but not all of income distribution policies are carried by populist regimes. A high populist index requires a populist policy (such as income distribution) executed for populist reasons.
+Each sub-index is the interaction of populism policies with populist motives. Take, for instance, income distribution. This is a typical left-leaning populist policy, but not all of income distribution policies are carried by populist regimes. A high populist index requires a populist policy (such as income distribution) executed for populist reasons. To achieve this, the index interacts economics and institutional policies with a measure of populist rhetoric.
+
+The index is the arithmetic average of $EP$ and $IP$ adjusted for a measure of populist motives.
 
 $$
 \mathcal{I} = \frac{EP + IP}{2}
@@ -12,11 +14,13 @@ $$
 where:
 
 $$
-\begin{align*}
+\begin{align}
 EP &= \text{Populist rhetoric} \times \text{Populist economic policies} \\
 IP &= \text{Populist rhetoric} \times \text{Populist institutional policies}
-\\end{align*}
+\\end{align}
 $$
+
+## Populism Rhetoric / Motives
 
 ## Economic Populism $(EP)$
 
@@ -36,46 +40,25 @@ Source: The Standardized World Income Inequality Database (Solt, 2020).
 
 ## Institutional Populism $(IP)$
 
-### Rule of Law
+The **institutional populism** $(IP)$ sub-index has four components:
+1. Rule of law $(IP_1)$
+2. Corruption $(IP_2)$
+3. Neopatrimonialism $(IP_3)$
+4. Freedom of expression $(IP_4)$
 
-$IP_1 = \text{v2x-rule} \cdot 100$
+Each component ranges between 0 (less populism) and 100 (more populism). The index is the arithmetic average of the four components:  
 
-<!--
-V-Dem rule of law components:
-1. Compliance with high court                    - v2juhccomp
-2. Complance with judiciary                      - v2jucomp
-3. High court independence                       - v2juhcind
-4. Lower court independence                      - v2juncind
-5. Transparent laws with predictable enforcement - v2cltrnslw
-6. Access to justice for men                     - v2clacjstm
-7. Access to justice for women                   - v2clacjstw
-8. Judicial accountability                       - v2juaccnt
-9. Judicial corruption decision                  - v2jucorrde
-10. Public sector corrupt exchanges              - v2xcrptps
-11. Public sector theft                          - v2xthftps
-12. Executive bribery and corrupt exchanges      - v2exbribe
-13. Executive embezzlement and theft             - v2exembez
--->
+$IP = \frac{IP_1 + IP_2 + IP_3 + IP_4}{4}$
 
-### Attacks on the judiciary
+where  
+
+$IP_1 = \frac{IP_{1,1,} + IP_{1,2}}{2}$  
+
+$IP_2 = \frac{IP_{2,1,} + IP_{2,2}}{2}$
+
+$IP_1$ and $IP_2$ include two measures of *corruption* and *rule of law*, V-Dem and World Governance Indicators.
 
 
-### Neopatrimonialism
-$IP_3 = 100 - \text{v2jupoatck} \cdot 25$
-
-### Corruption
-$IP_4 = \text{v2x-execorr} \cdot 100$
-
-<!--
-V-Dem executive corruption components:
-1. Executive bribery      - v2exbribe
-2. Executive embezzelment - v2xembez
--->
-
-### Freedom of the Press
-$$
-IP_5 = 100 = \text{v2mecenefm-osp} \cdot 25
-$$
 
 ## Sources
 
