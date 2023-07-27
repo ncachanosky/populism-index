@@ -1,24 +1,31 @@
 # Latin America (left-leaning) Populism Index Project
 
 ## The Index
-The index has two sub-indices: (a) Economic populism $(EP)$ and (b) Institutional populism $(IP)$. Both sub-indices range from 0 (less) to 100 (more) populism.
 
-Each sub-index is the interaction of populism policies with populist motives. Take, for instance, income distribution. This is a typical left-leaning populist policy, but not all of income distribution policies are carried by populist regimes. A high populist index requires a populist policy (such as income distribution) executed for populist reasons. To achieve this, the index interacts economics and institutional policies with a measure of populist rhetoric.
+### Introduction
+
+The index has two sub-indices: (a) Economic populism $(EP)$ and (b) Institutional populism $(IP)$. Each sub-index is constructed with a number of components. All components are adjusted to range between 0 (less) to 100 (more) populism.
+
+Each sub-index is the interaction of populism policies (economic or institutional) with populist motives $(POP)$. Take, for instance, income distribution. This is a typical left-leaning populist policy, but not all of income distribution policies are carried by populist regimes. A high populist index requires a populist policy (such as income distribution) executed for populist reasons. To achieve this, the index interacts economics and institutional policies with a measure of populist rhetoric.
+
+By interacting populist policies with populist rhetoric (motives), the index separates non-populist regimes that carry out populist policies and populist regimes that do not carry out populist policies. Because the index can be dissagregated, its information can be used to study:
+
+1. The effects of populism (the overall index)
+2. The effects of economic populism
+3. The effects of institutinal populism
+4. The effects of economic populist policies carried out by a non-populist regime
+5. The effects of institional populist policies carried out by a non-populist regime
+6. The effects of a populist regime that does not carry out populist policies
+
+### The calculation
 
 The index is the arithmetic average of $EP$ and $IP$ adjusted for a measure of populist motives.
 
-$$
-\mathcal{I} = \frac{EP + IP}{2}
-$$
+$\mathcal{I} = \frac{(\text{Populist rhetoric} \times \text{Populist economic policies}) + (\text{Populist rhetoric} \times \text{Populist institutional policies})}{2}$
 
-where:
+$\mathcal{I} = \frac{(POP \cdot EP) + (POP \cdot IP)}{2}$  
 
-$$
-\begin{align}
-EP &= \text{Populist rhetoric} \times \text{Populist economic policies} \\
-IP &= \text{Populist rhetoric} \times \text{Populist institutional policies}
-\\end{align}
-$$
+$\mathcal{I} = POP \cdot \frac{EP + IP}{2}$
 
 ## Populism Rhetoric / Motives
 
@@ -46,7 +53,7 @@ The **institutional populism** $(IP)$ sub-index has four components:
 3. Neopatrimonialism $(IP_3)$
 4. Freedom of expression $(IP_4)$
 
-Each component ranges between 0 (less populism) and 100 (more populism). The index is the arithmetic average of the four components:  
+ The index is the arithmetic average of the four components:  
 
 $IP = \frac{IP_1 + IP_2 + IP_3 + IP_4}{4}$
 
@@ -61,6 +68,8 @@ $IP_1$ and $IP_2$ include two measures of *corruption* and *rule of law*, V-Dem 
 
 
 ## Sources
+
+The folling tables includes the source of each component used in the index and its oroginal databse `code`.
 
 | VARIABLE                      | SOURCE         | VARIABLE CODE  |
 | ----------------------------- | -------------  | -------------- |
