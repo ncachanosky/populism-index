@@ -71,7 +71,7 @@ $IP_1$ and $IP_2$ include two measures of *corruption* and *rule of law*, V-Dem 
 
 The folling tables includes the source of each component used in the index and its oroginal databse `code`.
 
-| VARIABLE                      | SOURCE         | VARIABLE CODE  |
+| Variable                      | Source         | Variable code  |
 | ----------------------------- | -------------  | -------------- |
 | **Populism rehtorical index** |                |                |
 | Populism index                | [V-Dem][VDEM2] | v2xpa_popul    |
