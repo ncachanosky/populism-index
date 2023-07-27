@@ -69,7 +69,7 @@ $IP_1$ and $IP_2$ include two measures of *corruption* and *rule of law*, V-Dem 
 
 ## Sources
 
-The folling tables includes the source of each component used in the index and its oroginal databse `code`.
+The folling tables includes the source of each component used in the index and its original databse `code name`.
 
 | Variable                      | Source         | Variable code  |
 | ----------------------------- | -------------  | -------------- |
