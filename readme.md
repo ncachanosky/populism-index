@@ -53,7 +53,7 @@ The **institutional populism** $(IP)$ sub-index has four components:
 3. Neopatrimonialism $(IP_3)$
 4. Freedom of expression $(IP_4)$
 
- The index is the arithmetic average of the four components:  
+The index is the arithmetic average of the four components:  
 
 $IP = \frac{IP_1 + IP_2 + IP_3 + IP_4}{4}$
 
@@ -61,9 +61,12 @@ where
 
 $IP_1 = \frac{IP_{1,1,} + IP_{1,2}}{2}$  
 
-$IP_2 = \frac{IP_{2,1,} + IP_{2,2}}{2}$
+$IP_2 = \frac{IP_{2,1,} + IP_{2,2} + IP_{2,3}}{3}$
 
-$IP_1$ and $IP_2$ include two measures of *corruption* and *rule of law*, V-Dem and World Governance Indicators.
+$IP_1$ and $IP_2$ include more than one source:
+* V-Dem, 
+* World Governance Indicators, and 
+* Transparency International
 
 
 
@@ -71,19 +74,20 @@ $IP_1$ and $IP_2$ include two measures of *corruption* and *rule of law*, V-Dem 
 
 The folling tables includes the source of each component used in the index and its original databse `code name`.
 
-| Variable                      | Source         | Variable code  |
-| ----------------------------- | -------------  | -------------- |
-| **Populism rehtorical index** |                |                |
-| Populism index                | [V-Dem][VDEM2] | v2xpa_popul    |
-| **Economic populism**         |                |                |
-| Income distribution           | [SWIID][SWIID] |                |
-| **Institutional populism**    |                |                |
-| Rule of law                   | [V-Dem][VDEM1] | v2x_rule       |
-| Rule of Law                   | [WGI][WGI]     | RL_EST         |
-| Neopatrimonialism             | [V-Dem][VDEM1] | v2x_neopat     |
-| Corruption                    | [V-Dem][VDEM1] | v2x_execorr    |
-| Corruption                    | [WGI][WGI]     | CC_EST         |
-| Freedom of expression         | [V-Dem][VDEM1] | v2mecenefm_osp |
+| Variable                      | Source                             | Variable code  |
+| ----------------------------- | ---------------------------------- | -------------- |
+| **Populism rehtorical index** |                                    |                |
+| Populism index                | [V-Dem][VDEM2]                     | v2xpa_popul    |
+| **Economic populism**         |                                    |                |
+| Income distribution           | [SWIID][SWIID]                     |                |
+| **Institutional populism**    |                                    |                |
+| Rule of law                   | [V-Dem][VDEM1]                     | v2x_rule       |
+| Rule of Law                   | [World Governance Indicators][WGI] | RL_EST         |
+| Neopatrimonialism             | [V-Dem][VDEM1]                     | v2x_neopat     |
+| Corruption                    | [V-Dem][VDEM1]                     | v2x_execorr    |
+| Corruption                    | [World Governance Indicators][WGI] | CC_EST         |
+| Corruption                    | [Transparenty International][TI]   | CPI score      |
+| Freedom of expression         | [V-Dem][VDEM1]                     | v2mecenefm_osp |
 
 
 
@@ -96,8 +100,12 @@ The folling tables includes the source of each component used in the index and i
 <!-- HYPERLINKS -->
 [SWIID]: <https://fsolt.org/swiid/>
 
+[TI]: <https://www.transparency.org/cpi>
+
 [VDEM1]: <https://www.v-dem.net/data/the-v-dem-dataset/>
 [VDEM2]: <https://v-dem.net/data/v-party-dataset/>
 
 [WGI]: <https://info.worldbank.org/governance/wgi/>
+
+
 

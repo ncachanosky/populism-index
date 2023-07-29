@@ -180,13 +180,13 @@ WGI = pd.read_stata(file)
 WGI = WGI.rename(columns={'year':'YEAR'})
 WGI = WGI.rename(columns={'code':'ISO' })
 WGI = WGI.rename(columns={'rle':'WGI_1' ,
-                          'cce':'WGI_3'})
+                          'cce':'WGI_2'})
 
 # Drop unnecessary columns
 keep = ['ISO'  ,
         'YEAR' ,
         'WGI_1',
-        'WGI_3']
+        'WGI_2']
 
 WGI = WGI[keep]
 
@@ -203,8 +203,12 @@ WGI = WGI[WGI['ISO'].str.contains(keep)]
 del file, keep
 
 
+
+
+
+
 # ============================================================================|
-# %% INSTITUTIONAL POPULISM | V-DEM: RULE OF LAW
+# %% IP | V-DEM: RULE OF LAW
 
 VDEM_NEW = VDEM.loc[:, ['ISO', 'YEAR', 'v2x_rule']]
 VDEM_NEW['v2x_rule'] = VDEM_NEW['v2x_rule']*100
@@ -215,7 +219,7 @@ del VDEM_NEW
 
 
 # ============================================================================|
-# %% INSTITUTIONAL POPULISM | V_DEM: CORRUPTION
+# %% IP | V_DEM: CORRUPTION
 
 VDEM_NEW = VDEM.loc[:, ['ISO', 'YEAR', 'v2x_execorr']]
 VDEM_NEW['v2x_execorr'] = VDEM_NEW['v2x_execorr']*100
@@ -226,7 +230,7 @@ del VDEM_NEW
 
 
 # ============================================================================|
-# %% INSTITUTIONAL POPULISM | V_DEM: NEOPATRIMONIALISM
+# %% IP | V_DEM: NEOPATRIMONIALISM
 
 VDEM_NEW = VDEM.loc[:, ['ISO', 'YEAR', 'v2x_neopat']]
 VDEM_NEW['v2x_neopat'] = VDEM_NEW['v2x_neopat']*100
@@ -237,7 +241,7 @@ del VDEM_NEW
 
 
 # ============================================================================|
-# %% INSTITUTIONAL POPULISM | V-DEM: FREEDOM OF EXPRESSION
+# %% IP | V-DEM: FREEDOM OF EXPRESSION
 
 VDEM_NEW = VDEM.loc[:, ['ISO', 'YEAR', 'v2mecenefm_osp']]
 VDEM_NEW['v2mecenefm_osp'] = 100 - VDEM_NEW['v2mecenefm_osp']*25
@@ -248,7 +252,7 @@ del VDEM_NEW
 
 
 # ============================================================================|
-# %% INSTITUTIONAL POPULISM | WGI: RULE OF LAW
+# %% IP | WGI: RULE OF LAW
 
 WGI_NEW = WGI.loc[:, ['ISO', 'YEAR', 'WGI_1']]
 WGI_NEW['WGI_1'] = (WGI_NEW['WGI_1'] + 2.5)*20
@@ -258,13 +262,63 @@ del WGI_NEW
 
 
 # ============================================================================|
-# %% INSTITUTIONAL POPULISM | WGI: CORRUPTION
+# %% IP | WGI: CORRUPTION
 
 WGI_NEW = WGI.loc[:, ['ISO', 'YEAR', 'WGI_2']]
-WGI_NEW['WGI_2'] = (WGI_NEW['WGI_3'] + 2.5)*20
+WGI_NEW['WGI_2'] = (WGI_NEW['WGI_2'] + 2.5)*20
 
 INDEX = pd.merge(INDEX, WGI_NEW, on=['ISO', 'YEAR'])
 del WGI_NEW
+
+# ============================================================================|
+# %% IP | TRANSAPRENCY INTERNATIONAL
+
+# file  = "Data/CPI2022_GlobalResultsTrends.xlsx"
+# file   = pd.ExcelFile(file)
+# sheet = 'CPI Timeseries 2012 - 2022'
+
+# cols = 'B,D,H,L,P,T,X,AB,AE,AH,AK,AN'
+# IT = pd.read_excel(file, sheet_name=sheet, usecols=cols, skiprows=2)
+# IT = IT.rename(columns={'ISO3':'ISO',
+#                         'CPI Score 2012':'2012',
+#                         'CPI Score 2013':'2013',
+#                         'CPI score 2014':'2014',
+#                         'CPI score 2015':'2015',
+#                         'CPI score 2016':'2016',
+#                         'CPI score 2017':'2017',
+#                         'CPI score 2018':'2018',
+#                         'CPI score 2019':'2019',
+#                         'CPI score 2020':'2020',
+#                         'CPI score 2021':'2021',
+#                         'CPI score 2022':'2022'})
+
+# IT = pd.melt(IT, id_vars=['ISO'],
+#              value_vars =['2012',
+#                           '2013',
+#                           '2014',
+#                           '2015',
+#                           '2016',
+#                           '2017',
+#                           '2018',
+#                           '2019',
+#                           '2020',
+#                           '2021',
+#                           '2022'],
+#              var_name    ='YEAR',
+#              value_name  ='CPI')
+
+# keep = 'AIA|ATG|ARG|ABW|BHS|BRB|BLZ|BOL|BES|BVT|BRA|VGB|CYM|\
+# CHL|COL|CRI|CUB|CUW|DMA|DOM|ECU|SLV|FLK|GUF|GRD|GLP|\
+# GTM|GUY|HTI|HND|JAM|MTQ|MEX|MSR|NIC|PAN|PRY|PER|PRI|\
+# BLM|KNA|LCA|MAF|VCT|SXM|SGS|SUR|TTO|TCA|VIR|URY|VEN'
+
+# IT = IT[IT['ISO'].str.contains(keep)]
+# IT['YEAR'] = IT['YEAR'].astype(float)
+
+# INDEX = pd.merge(INDEX, IT, on=['ISO', 'YEAR'])
+
+# # CLEAN UP
+# del file, keep, sheet, cols
 
 
 # ============================================================================|
