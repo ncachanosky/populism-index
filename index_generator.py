@@ -109,9 +109,9 @@ VPARTY = VPARTY.rename(columns={'year'           :'YEAR'})
 # Drop unnecesary columns and rows
 keep = ['ISO'       ,
         'YEAR'      ,
-        'v2paenname',
-        'v2pashname' ,
         'v2paid'    ,
+        'v2paenname',
+        'v2pashname',
         'v2xpa_popul']
 
 VPARTY = VPARTY[keep]
@@ -128,7 +128,7 @@ del keep
 
 # Interpolate missing observations
 VPARTY = VPARTY.sort_values(by=['ISO', 'v2paenname', 'YEAR'])
-VPARTY = VPARTY.pivot(index='YEAR', values='v2xpa_popul', columns=['ISO', 'v2paenname','v2pashname', 'v2paid'])
+VPARTY = VPARTY.pivot(index='YEAR', values='v2xpa_popul', columns=['ISO', 'v2paid', 'v2paenname','v2pashname'])
 VPARTY = VPARTY.interpolate()
 VPARTY = VPARTY.sort_index(axis=1)
 
@@ -324,10 +324,10 @@ del WGI_NEW
 # ============================================================================|
 # %% INDEX | INSTITUTIONAL POPULISM
 
-INDEX['IP_1'] = (INDEX['VDEM_1'] + INDEX['WGI_1'])/2
-INDEX['IP_2'] = (INDEX['VDEM_2'] + INDEX['WGI_2'])/2
-INDEX = INDEX.rename(columns={'VDEM_3': 'IP_3'})
-INDEX = INDEX.rename(columns={'VDEM_4': 'IP_4'})
+INDEX['IP_1'] = (INDEX['VDEM_1'] + INDEX['WGI_1'])/2    # IP1: Rule of Law
+INDEX['IP_2'] = (INDEX['VDEM_2'] + INDEX['WGI_2'])/2    # IP2: Corruption
+INDEX = INDEX.rename(columns={'VDEM_3': 'IP_3'})        # IP3: Neopatrimonialism
+INDEX = INDEX.rename(columns={'VDEM_4': 'IP_4'})        # IP4: Freedom of the Press
 
 INDEX['IP'] = (INDEX['IP_1']+INDEX['IP_2']+INDEX['IP_3']+INDEX['IP_4'])/4
 
@@ -344,3 +344,111 @@ keep = ['ISO'    ,
 
 INDEX = INDEX[keep]
 del keep
+
+
+# ============================================================================|
+# %% INDEX | PLOTS FOR INITIAL CHECK
+
+# ARGENTINA
+y  = INDEX[INDEX['ISO']=='ARG']
+y1 = y['IP']
+y2 = y['VPARTY']*100
+y3 = (y2/100)*y1
+t  = y['YEAR']
+
+fig, ax = plt.subplots()
+ax.set_title("Argentina")
+ax.plot(t, y1, color='tab:blue')
+ax.plot(t, y2, color='tab:red' )
+ax.plot(t, y3, color="black"   )
+ax.axvspan(2003, 2015, color='gray', alpha=0.25)
+ax.set_ylim(0, 100)
+plt.show()
+
+
+# BOLIVIA
+y  = INDEX[INDEX['ISO']=='BOL']
+y1 = y['IP']
+y2 = y['VPARTY']*100
+y3 = (y2/100)*y1
+t  = y['YEAR']
+
+fig, ax = plt.subplots()
+ax.set_title("Bolivia")
+ax.plot(t, y1, color='tab:blue')
+ax.plot(t, y2, color='tab:red' )
+ax.plot(t, y3, color="black"   )
+ax.axvspan(2006, 2019, color='gray', alpha=0.25)
+ax.set_ylim(0, 100)
+plt.show()
+
+
+# ECUADOR
+y  = INDEX[INDEX['ISO']=='ECU']
+y1 = y['IP']
+y2 = y['VPARTY']*100
+y3 = (y2/100)*y1
+t  = y['YEAR']
+
+fig, ax = plt.subplots()
+ax.set_title("Ecuador")
+ax.plot(t, y1, color='tab:blue')
+ax.plot(t, y2, color='tab:red' )
+ax.plot(t, y3, color="black"   )
+ax.axvspan(2007, 2017, color='gray', alpha=0.25)
+ax.set_ylim(0, 100)
+plt.show()
+
+
+# NICARAGUA
+y  = INDEX[INDEX['ISO']=='NIC']
+y1 = y['IP']
+y2 = y['VPARTY']*100
+y3 = (y2/100)*y1
+t  = y['YEAR']
+
+fig, ax = plt.subplots()
+ax.set_title("Nicaragua")
+ax.plot(t, y1, color='tab:blue')
+ax.plot(t, y2, color='tab:red' )
+ax.plot(t, y3, color="black"   )
+ax.axvspan(2007, 2020, color='gray', alpha=0.25)
+ax.set_ylim(0, 100)
+plt.show()
+
+
+# VENEZUELA
+y  = INDEX[INDEX['ISO']=='VEN']
+y1 = y['IP']
+y2 = y['VPARTY']*100
+y3 = (y2/100)*y1
+t  = y['YEAR']
+
+fig, ax = plt.subplots()
+ax.set_title("Venezuela")
+ax.plot(t, y1, color='tab:blue')
+ax.plot(t, y2, color='tab:red' )
+ax.plot(t, y3, color="black"   )
+ax.axvspan(1999, 2020, color='gray', alpha=0.25)
+ax.set_ylim(0, 100)
+plt.show()
+
+
+# CHILE
+y  = INDEX[INDEX['ISO']=='CHL']
+y1 = y['IP']
+y2 = y['VPARTY']*100
+y3 = (y2/100)*y1
+t  = y['YEAR']
+
+fig, ax = plt.subplots()
+ax.set_title("Chile")
+ax.plot(t, y1, color='tab:blue')
+ax.plot(t, y2, color='tab:red' )
+ax.plot(t, y3, color="black"   )
+ax.axvspan(1999, 2020, color='gray', alpha=0.25)
+ax.set_ylim(0, 100)
+plt.show()
+
+
+del ax, fig, t, y1, y2, y3

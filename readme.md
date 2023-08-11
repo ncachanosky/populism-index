@@ -1,5 +1,7 @@
 # Latin America (left-leaning) Populism Index Project
 
+> :small_red_triangle: PROJECT UNDER DEVELOPMENT :small_red_triangle:
+
 ## The Index
 
 ### Introduction
