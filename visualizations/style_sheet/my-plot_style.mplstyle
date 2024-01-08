@@ -1,0 +1,45 @@
+#### MY UTEP MATPLOTLIB STYLE
+#### CONFIGURATION BEGINS HERE
+
+#### FONTS
+font.family: sans-serif
+font.size  : large
+font.sans-serif: Roboto condensed, Arial, Verdana
+
+#### COLORS
+axes.prop_cycle: cycler('color', ['tab:blue','tab:orange','tab:green','tab:red','tab:purple','tab:brown','tab:pink','tab:gray','tab:olive','tab:cyan'])
+
+### FIGURE MAIN SETTINGS
+figure.figsize  : 16, 9
+figure.dpi      : 300
+
+#### LINES
+lines.linewidth: 2
+
+### TITLE
+figure.titlesize: xx-large
+figure.labelsize: xx-large
+
+
+#### AXES
+axes.linewidth: 2
+axes.titlesize: large
+axes.labelsize: large
+axes.spines.bottom: True
+axes.spines.left:   True
+axes.spines.right:  False
+axes.spines.top:    False
+
+axes.grid      : False
+axes.grid.axis : both
+axes.grid.which: major
+
+xtick.labelsize: large
+ytick.labelsize: large
+
+grid.linestyle: dotted
+grid.color: gray
+
+### LEGEND
+legend.fontsize: large
+legend.frameon: False

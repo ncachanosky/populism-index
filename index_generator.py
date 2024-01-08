@@ -1,14 +1,23 @@
 # | ==========================================================================|
-# | LEFT-LEANING POPULISM INDEX FOR LATIN AMERICA
+'''
+LEFT-LEANING POPULISM INDEX FOR LATIN AMERICA
+INDEX GENERATOR
 
+Nicolas Cachanosky
+Center for Free Enterprise
+The University of Texas at El Paso
+ncachanosky@utep.edu
+www.ncachanosky.com
 
+Version: 1.0
+Last update: 08-Jan-2023
+'''
 # ============================================================================|
 # %% LOAD PACKAGES AND SETTINGS
 
 #### Packages
 import os
 import pandas            as pd
-import numpy             as np
 import matplotlib.pyplot as plt
 
 #### Settings
@@ -334,16 +343,17 @@ INDEX = INDEX.rename(columns={'VDEM_4'    : 'IP_4'})  # IP4: Freedom of the Pres
 INDEX = INDEX.rename(columns={'VDEM_5'    : 'IP_5'})  # IP5: Neopatrimonialism
 INDEX = INDEX.rename(columns={'HERITAGE_1': 'IP_6'})  # IP6: Property Rights
 
+#### Build index
 IP1 = INDEX['IP_1']     # Rule of Law
 IP2 = INDEX['IP_2']     # Corruption
 IP3 = INDEX['IP_3']     # Neopatrimonialism
 IP4 = INDEX['IP_4']     # Freedom of the Press
 IP5 = INDEX['IP_5']     # Clean Election Index
 IP6 = INDEX['IP_6']     # Property Rights
+INDEX['IP'] = INDEX['VPARTY'] * (IP1 + IP2 + IP3 + IP4 + IP5 + IP6)/6
 
-#### Build index
-INDEX['IP']      = INDEX['VPARTY'] * (IP1 + IP2 + IP3 + IP4 + IP5 + IP6)/6
-INDEX['IP_RANK'] = INDEX.groupby('YEAR')['IP'].rank(ascending=False)
+INDEX['IP_RANK']       = INDEX.groupby('YEAR')['IP'].rank(ascending=False)
+INDEX['IP_PERCENTILE'] = INDEX.groupby('YEAR')['IP'].rank(pct=True)
 
 #### Clean up
 del IP11, IP12, IP13, IP14, IP21, IP22, IP1, IP2, IP3, IP4, IP5, IP6
@@ -362,14 +372,15 @@ EP3 = (INDEX['HERITAGE_3'] + INDEX['HERITAGE_5'] + INDEX['EFW_3'])/3
 # International trade
 EP4 = (INDEX['HERITAGE_4'] + INDEX['EFW_4'])/2
 
-
+#### Build index
 INDEX['EP_1'] = EP1
 INDEX['EP_2'] = EP2
 INDEX['EP_3'] = EP3
 INDEX['EP_4'] = EP4
+INDEX['EP']   = INDEX['VPARTY'] * (EP1 + EP2 + EP3 + EP4)/4
 
-INDEX['EP']      = INDEX['VPARTY'] * (EP1 + EP2 + EP3 + EP4)/4
 INDEX['EP_RANK'] = INDEX.groupby('YEAR')['EP'].rank(ascending=False)
+INDEX['EP_PERCENTILE'] = INDEX.groupby('YEAR')['EP'].rank(pct=True)
 
 #### Clean up
 del EP1, EP2, EP3, EP4
@@ -378,24 +389,36 @@ del EP1, EP2, EP3, EP4
 # ============================================================================|
 # %% INDEX | POPULISM OVERAL INDEX
 
-INDEX['POPULISM']      = (INDEX['IP'] + INDEX['EP'])/2
-INDEX['POPULISM_RANK'] = INDEX.groupby('YEAR')['POPULISM'].rank(ascending=False)
+INDEX['POPULISM'] = (INDEX['IP'] + INDEX['EP'])/2
+
+INDEX['POPULISM_RANK']       = INDEX.groupby('YEAR')['POPULISM'].rank(ascending=False)
+INDEX['POPULISM_PERCENTILE'] = INDEX.groupby('YEAR')['POPULISM'].rank(pct=True)
 
 # ============================================================================|
 # %% CLEAN UP DATASET
 
-keep = ['ISO2'    ,
-        'ISO3'    ,
-        'COUNTRY' ,
-        'REGION'  ,
-        'LDC'     ,
-        'LLDC'    ,
-        'SIDS'    ,
-        'YEAR'    ,
-        'POPULISM', 'POPULISM_RANK',
-        'IP'      , 'IP_RANK', 'IP_1', 'IP_2', 'IP_3', 'IP_4', 'IP_5', 'IP_6',
-        'EP'      , 'EP_RANK', 'EP_1', 'EP_2', 'EP_3', 'EP_4',
-        'VPARTY'  , 'PARTY_CODE', 'PARTY_NAME']
+keep = ['ISO2'               ,
+        'ISO3'               ,
+        'COUNTRY'            ,
+        'REGION'             ,
+        'LDC'                ,
+        'LLDC'               ,
+        'SIDS'               ,
+        'YEAR'               ,
+        'POPULISM'           ,
+        'POPULISM_RANK'      ,
+        'POPULISM_PERCENTILE',
+        'IP'                 ,
+        'IP_RANK'            ,
+        'IP_PERCENTILE'      ,
+        'IP_1','IP_2','IP_3' ,'IP_4','IP_5','IP_6',
+        'EP'                 ,
+        'EP_RANK'            ,
+        'EP_PERCENTILE'      ,
+        'EP_1','EP_2','EP_3' ,'EP_4',
+        'VPARTY'             ,
+        'PARTY_CODE'         ,
+        'PARTY_NAME']
 
 INDEX = INDEX[keep]
 
@@ -426,9 +449,7 @@ INDEX.to_stata(file_name + extension_4)
 
 #### Clean up
 del file_name, extension_1, extension_2, extension_3, extension_4
-
-# ============================================================================|
-# %% INDEX | VISUALIZATIONS
+del replacements
 
 
 # ============================================================================|
