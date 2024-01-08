@@ -22,25 +22,38 @@ import os
 import pandas            as pd
 import matplotlib.pyplot as plt
 
-#### Settings
+#### General settings
 path = 'C:/Users/ncachanosky/OneDrive/Research/populism-index/'
 os.chdir(path)
+
+#### Plot settings
+style = "https://github.com/ncachanosky/populism-index/tree/style_sheet/my-plot_style.mplstyle"
+style = "C:/Users/ncachanosky/OneDrive/Research/populism-index/visualizations/style_sheet/my-plot_style.mplstyle"
+plt.style.use(style)
+
+figsize = (16,9)
+title_font_size = 26
 
 #### Load data
 file  = "index_2023.xlsx"
 file  = pd.ExcelFile(file)
 
 INDEX = pd.read_excel(file)
+INDEX = INDEX[INDEX['YEAR'] != 2000]  # Year 2001 is missing
+INDEX = INDEX[INDEX['YEAR'] != 2020]  # Year 2020 is missing
+
 countries = INDEX['COUNTRY'].unique()
+years     = INDEX['YEAR'].unique()
 
 #### Cleam up
-del path, file
+del path, file, style
 
 
 # ============================================================================|
-# %% TIME-SERIES PER COUNTRY
+# %% TIME-SERIES: ALL COUNTRIES
 
-
+#### Build plots
+axis_range = [2002, 2019]
 for country in countries:
     country_data = INDEX[INDEX['COUNTRY'] == country]
     EP = country_data['EP']
@@ -48,30 +61,48 @@ for country in countries:
     P  = country_data['POPULISM']
     T  = country_data['YEAR']
     #------------------------------------------------
-    plt.title(country)
-    plt.plot(T, EP, label='Economic Populism Sub-Index')
-    plt.plot(T, IP, label='Institutional Populism Sub-Index')
+    fig, ax = plt.subplots(figsize=figsize)
+    plt.title(country, size = title_font_size)
     plt.plot(T, P , label='Populism Index')
-    plt.legend()
+    plt.plot(T, EP, label='Economic Populism Sub-Index'     , c='tab:blue')
+    plt.plot(T, IP, label='Institutional Populism Sub-Index', c='tab:red' )
+    plt.xlim(2002, 2020)
+    plt.axis_range = axis_range
+    plt.legend(labelcolor='linecolor')
+    plt.tight_layout()
+    #plt.savefig('visualizations/TS_'+country)
     plt.show()
 
-
-
-
 #### Clean up
+del country_data, ax, fig, EP, IP, P
 
-# Convert 'Date' column to datetime type
-df['Date'] = pd.to_datetime(df['Date'])
+# ============================================================================|
+# %% TIME-SERIES: LATAM
 
-# Plot time series line plot for each country
-countries = df['Country'].unique()
 
-for country in countries:
-    country_data = df[df['Country'] == country]
-    plt.plot(country_data['Date'], country_data['Value'], label=country)
+# ============================================================================|
+# %% SCATTER PLOT PER YEAR
 
-plt.xlabel('Date')
-plt.ylabel('Value')
-plt.title('Time Series Line Plot for Each Country')
-plt.legend()
-plt.show()
+#### Build plots
+axis_range = [0, 100, 0, 100]
+#i= years[0]
+for year in years:
+    i = year.astype(str)
+    year_data = INDEX[INDEX['YEAR'] == year]
+    EP = year_data['EP']
+    IP = year_data['IP']
+    #------------------------------------------------
+    fig, ax = plt.subplots(figsize=figsize)
+    plt.title(year, size=title_font_size)
+    plt.scatter(EP,IP, color = 'tab:orange', s=100)
+    plt.plot([0,100],[0,100], color='black', ls=':')
+    plt.xlabel('Economic populism')
+    plt.ylabel('Institutional populism')
+    plt.axis_range = axis_range
+    plt.tight_layout()
+    plt.savefig('visualizations/scatter_'+i)
+    plt.show()
+    
+#### Clean up
+del year_data, ax, fig, EP, IP
+
