@@ -8,16 +8,7 @@ font.size: 12
 font.sans-serif: Roboto condensed, Arial, Verdana
 
 #### COLORS
-axes.prop_cycle: cycler('color', ['tab:blue'  ,
-                                    'tab:orange',
-                                    'tab:green' ,
-                                    'tab:red'   ,
-                                    'tab:purple',
-                                    'tab:brown' ,
-                                    'tab:pink'  ,
-                                    'tab:gray'  ,
-                                    'tab:olive' ,
-                                    'tab:cyan'] )
+axes.prop_cycle: cycler('color', ['tab:blue','tab:orange','tab:green','tab:red','tab:purple','tab:brown','tab:pink','tab:gray','tab:olive','tab:cyan'])
 
 ### FIGURE MAIN SETTINGS
 figure.figsize  : 16, 9
