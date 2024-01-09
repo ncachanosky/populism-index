@@ -109,14 +109,14 @@ plt.show()
 P = INDEX.pivot_table(index='YEAR',columns='REGION', values='POPULISM', aggfunc='mean')
 P['T'] = np.arange(2002, 2020, 1)
 
-T   = P['T']
+T  = P['T']
 P1 = P['Caribbean']
 P2 = P['Central America']
 P3 = P['South America']
 
 fig, ax = plt.subplots(figsize=figsize)
 plt.title("Populism, Latin America regional averages")
-plt.plot(T, P1, label='Caraibbean'     , c='tab:green' )
+plt.plot(T, P1, label='Caribbean'      , c='tab:green' )
 plt.plot(T, P2, label='Central America', c='tab:purple')
 plt.plot(T, P3, label='South America'  , c='tab:olive' )
 plt.xlim(2002, 2020)
@@ -136,7 +136,7 @@ EP3 = EP['South America']
 
 fig, ax = plt.subplots(figsize=figsize)
 plt.title("Economic Populism, Latin America regional averages")
-plt.plot(T, P1, label='Caraibbean'     , c='tab:green' )
+plt.plot(T, P1, label='Caribbean'      , c='tab:green' )
 plt.plot(T, P2, label='Central America', c='tab:purple')
 plt.plot(T, P3, label='South America'  , c='tab:olive' )
 plt.xlim(2002, 2020)
@@ -168,11 +168,8 @@ plt.show()
 
 
 #### Clean up
-del POP, EP, IP, T, y1,y2, y3, fig, ax, labels
-
-
-
-print(region)
+del POP, EP,EP1, EP2, EP3, IP, IP1, IP2, IP3, T, y1, y2, y3, fig, ax, labels
+del P, P1, P2, P3
 
 
 # ============================================================================|
@@ -200,4 +197,3 @@ for year in years:
     
 #### Clean up
 del year_data, ax, fig, EP, IP
-
