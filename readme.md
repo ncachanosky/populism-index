@@ -6,21 +6,18 @@
 
 ### Introduction
 
-The **Latin America Left-Leaning Populism Index** is a measure of active populist policies. The index has two sub-indices:
+The **Latin America Left-Leaning Populism Index** serves as a measure of active populist policies and comprises two sub-indices: Economic Populism and Institutional Populism.
+
+Each sub-index is derived from the interaction of populist rhetoric with typical left-leaning policies, resulting in the following two measurements:
 
 * Economic populism $(EP)$
 * Institutional populism $(IP)$.
 
-Each sub-index is the result of interacting a measure of populist *rhetoric* with typical left-leaning policies. This interaction produces two outcomes:
+These sub-indices represent the intersection of populism policies (economic or institutional) with populist motives. Take, for example, income distribution—a common left-leaning populist policy. However, not all income distribution policies are implemented by populist regimes. A high populist index necessitates the execution of populist policies, such as income distribution, driven by populist reasons. To achieve this, the index incorporates economic and institutional policies with a measure of populist rhetoric. Different from other indices, this construct observes if (a) populist rhetoric becomes action, and (b) if action is due to populist reasons.
 
-* Take into consideration if populist *rhetoric* becomes *action*
-* Take into consideration if typical populist policies are executed for *populist reasons*
+Each sub-index is constructed with several areas, all adjusted to a scale ranging from 0 (less populism) to 100 (more populism), and each area holds equal weight.
 
-Each sub-index is the interaction of populism policies (economic or institutional) with populist motives $(POP)$. Take, for instance, income distribution. This is a typical left-leaning populist policy, but not all income distribution policies are carried by populist regimes. A high populist index requires a populist policy (such as income distribution) executed for populist reasons. To achieve this, the index interacts with economics and institutional policies with a measure of populist rhetoric.
-
-Each sub-index is constructed with several areas. All areas are adjusted to range between 0 (less) to 100 (more) populism and equally weighted.
-
-By interacting populist policies with populist rhetoric (motives), the index separates non-populist regimes that carry out populist policies and populist regimes that do not carry out populist policies. Because the index can be disaggregated, its information can be used to study:
+By aligning populist policies with populist rhetoric, the index distinguishes between non-populist regimes implementing populist policies and populist regimes failing to do so. This disaggregated information enables the study of various scenarios, including::
 
 1. The effects of populism (the overall index)
 2. The effects of economic populism
@@ -43,9 +40,9 @@ Subsequently, each sub-index is the arithmetic average of their components.
 
 ### Populism rhetoric
 
-The measure of *populism rhetoric* is the V-Party Populism index. The index data is re-escaled from (0, 1) to (0, 100). 
+The measure of *populism rhetoric* is the V-Party Populism index. The index data is re-escaled from [0, 1] to [0, 100]. 
 
-The V-Party Populism Index measures the populist rhetoric of active political parties in each country. The index uses the index corresponding to the head of state's political party affiliation. For years where there is a change of party in the executive office, the data for the party with the majority of days in office is used.
+The V-Party Populism Index gauges the populist rhetoric exhibited by active political parties in each country. The index aligns with the political party affiliation of the head of state. In years when there is a transition in the executive office, the data reflects the party with the majority of days in office.
 
 ### Economic Populism $(EP)$
 
