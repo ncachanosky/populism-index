@@ -173,7 +173,7 @@ del P, P1, P2, P3
 
 
 # ============================================================================|
-# %% SCATTER PLOT PER YEAR
+# %% BARS: TOP & BOTTOM PER YEAR
 
 #### Build plots
 axis_range = [0, 100, 0, 100]
@@ -197,3 +197,36 @@ for year in years:
     
 #### Clean up
 del year_data, ax, fig, EP, IP
+
+
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Sample DataFrame (replace this with your actual DataFrame)
+data = {
+    'County': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'] * 5,
+    'Year': [2010, 2010, 2010, 2010, 2010, 2010, 2010, 2010, 2010, 2010,
+             2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011],
+    'Rank': [i+1 for i in range(10)] * 2,
+    'Value': [100-i for i in range(10)] * 2
+}
+
+df = pd.DataFrame(data)
+
+# Filter bottom and top 10 per year
+bottom_top_df = pd.concat([
+    df[df['Rank'] <= 10].groupby('Year').apply(lambda x: x.nsmallest(10, 'Rank')),
+    df[df['Rank'] <= 10].groupby('Year').apply(lambda x: x.nlargest(10, 'Rank'))
+])
+
+# Pivot for bar chart
+pivot_df = bottom_top_df.pivot(index='Year', columns='County', values='Value')
+
+# Plotting
+ax = pivot_df.plot(kind='bar', stacked=True, figsize=(12, 6))
+ax.set_ylabel('Value')
+ax.set_xlabel('Year')
+ax.set_title('Bottom and Top 10 Counties Per Year')
+
+plt.show()
