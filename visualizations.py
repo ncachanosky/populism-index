@@ -230,3 +230,35 @@ ax.set_xlabel('Year')
 ax.set_title('Bottom and Top 10 Counties Per Year')
 
 plt.show()
+
+
+
+# ============================================================================|
+# %% BARS: TCHANGING COLOR
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import cm
+
+# Sample data
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+# Create a colormap
+norm = plt.Normalize(y.min(), y.max())
+colors = cm.viridis(norm(y))
+
+# Plotting the line with changing colors
+fig, ax = plt.subplots()
+line = ax.plot(x, y, color=colors, linewidth=2)
+
+# Adding a colorbar for reference
+cbar = plt.colorbar(line, ax=ax)
+cbar.set_label('Color by Value')
+
+ax.set_xlabel('X-axis')
+ax.set_ylabel('Y-axis')
+ax.set_title('Line Plot with Changing Colors')
+
+plt.show()
