@@ -25,6 +25,7 @@ path = 'C:/Users/ncachanosky/OneDrive/Research/populism-index/'
 os.chdir(path)
 del path
 
+print(plt.style.available)
 
 # ============================================================================|
 # %% INDEX SKELETON
