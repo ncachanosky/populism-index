@@ -59,23 +59,23 @@ $$
 
 The contributors to each economic policy area are the following
 
-* EP_1 = (EP_11 + EP_12 + EP_13)/3
-* EP_2 = (EP_21 + EP_22)/2
-* EP_3 = (EP_31 + EP_32 + EP_33)/3
-* EP_4 = (EP_41 + EP_42)/2
+* $EP_1 = (EP_{11} + EP_{12} + EP_{13})/3$
+* $EP_2 = (EP_{21} + EP_{22})/2$
+* $EP_3 = (EP_{31} + EP_{32} + EP_{33})/3$
+* $EP_4 = (EP_{41} + EP_{42})/2$
 
 where:
 
-* EP_11 = Heritage's Foundation Index of Economic Freedom: Business freedom.
-* EP_12 = Fraser's Economic Freedom of the World: Labor Market Regulations (5A).
-* EP_13 = Fraser's Economic Freedom of the World: Business Regulations (5C).
-* EP_21 = Fraser's Economic Freedom of the World: Transfers and Subsidies (1B).
-* EP_22 = Fraser's Economic Freedom of the World: State Ownership (IE).
-* EP_31 = Heritage's Foundation Index of Economic Freedom: Monetary Freedom.
-* EP_32 = Heritage's Foundation Index of Economic Freedom: Financial Freedom.
-* EP_33 = Fraser's Economic Freedom of the World: Foreign Currency and Bank Accounts (3D).
-* EP_41 = Heritage's Foundation Index of Economic Freedom: Trade Freedom.
-* EP_42 = Fraser's Economic Freedom of the World: Freedom to Trade Internationally (4).
+* $EP_{11}$ = Heritage's Foundation Index of Economic Freedom: Business freedom.
+* $EP_{12}$ = Fraser's Economic Freedom of the World: Labor Market Regulations (5A).
+* $EP_{13}$ = Fraser's Economic Freedom of the World: Business Regulations (5C).
+* $EP_{21}$ = Fraser's Economic Freedom of the World: Transfers and Subsidies (1B).
+* $EP_{22}$ = Fraser's Economic Freedom of the World: State Ownership (IE).
+* $EP_{31}$ = Heritage's Foundation Index of Economic Freedom: Monetary Freedom.
+* $EP_{32}$ = Heritage's Foundation Index of Economic Freedom: Financial Freedom.
+* $EP_{33}$ = Fraser's Economic Freedom of the World: Foreign Currency and Bank Accounts (3D).
+* $EP_{41}$ = Heritage's Foundation Index of Economic Freedom: Trade Freedom.
+* $EP_{42}$ = Fraser's Economic Freedom of the World: Freedom to Trade Internationally (4).
 
 ### Institutional Populism $(IP)$
 
@@ -94,23 +94,23 @@ $$
 
 The contributors to each economic policy area are the following
 
-* IP_1 = (IP_11 + IP_12 + IP_13 + IP_14)/4
-* IP_2 = (IP_21 + IP_22)/2
-* IP_3 = IP_31
-* IP_4 = IP_41
-* IP_5 = IP_51
+* $IP_1 = (IP_{11} + IP_{12} + IP_{13} + IP_{14})/4$
+* $IP_2 = (IP_{21} + IP_{22})/2$
+* $IP_3 = IP_{31}$
+* $IP_4 = IP_{41}$
+* $IP_5 = IP_{51}$
 
 where:
 
-* IP_11 = V-Dem: Rule of Law.
-* IP_12 = V-Dem: Judiciary Constraints on the Executive.
-* IP_13 = V-Dem: Legislative Constraints on the Executive.
-* IP_14 = WGI: Rule of Law.
-* IP_21 = V-Dem: Corruption.
-* IP_22 = WGI: Control of Corruption.
-* IP_31 = V-Dem: Neopatrimonialism.
-* IP_41 = V-Dem: Freedom of Expression.
-* IP_51 = Heritage's Foundation Index of Economic Freedom: Property Rights.
+* $IP_{11}$ = V-Dem: Rule of Law.
+* $IP_{12}$ = V-Dem: Judiciary Constraints on the Executive.
+* $IP_{13}$ = V-Dem: Legislative Constraints on the Executive.
+* $IP_{14}$ = WGI: Rule of Law.
+* $IP_{21}$ = V-Dem: Corruption.
+* $IP_{22}$ = WGI: Control of Corruption.
+* $IP_{31}$ = V-Dem: Neopatrimonialism.
+* $IP_{41}$ = V-Dem: Freedom of Expression.
+* $IP_{51}$ = Heritage's Foundation Index of Economic Freedom: Property Rights.
 
 
 ## Sources

@@ -9,8 +9,14 @@ The University of Texas at El Paso
 ncachanosky@utep.edu
 www.ncachanosky.com
 
+J. P. Bastos
+Free Market Institute
+Texas Tech University
+jpmvbastos@gmail.com
+https://www.jpmvbastos.com/
+
 Version: 1.0
-Last update: 08-Jan-2023
+Last update: 08-Mar-2025
 '''
 
 # ============================================================================|
@@ -27,14 +33,6 @@ import matplotlib.pyplot as plt
 path = 'C:/Users/ncachanosky/OneDrive/Research/populism-index/'
 os.chdir(path)
 
-#### Plot settings
-style = "https://github.com/ncachanosky/populism-index/tree/style_sheet/my-plot_style.mplstyle"
-style = "C:/Users/ncachanosky/OneDrive/Research/populism-index/visualizations/style_sheet/my-plot_style.mplstyle"
-plt.style.use(style)
-
-figsize = (16,9)
-title_font_size = 26
-
 #### Load data
 file  = "index_2023.xlsx"
 file  = pd.ExcelFile(file)
@@ -47,9 +45,24 @@ countries = INDEX['COUNTRY'].unique()
 region    = INDEX['REGION'].unique()
 years     = INDEX['YEAR'].unique()
 
-#### Cleam up
-del path, file, style
+#### Clean up
+del path, file
 
+
+# ============================================================================|
+# %% PLOT SETTINGS
+
+#### Plot settings
+#style = "https://github.com/ncachanosky/populism-index/tree/style_sheet/my-plot_style.mplstyle"
+#style = "C:/Users/ncachanosky/OneDrive/Research/populism-index/visualizations/style_sheet/my-plot_style.mplstyle"
+#plt.style.use(style)
+
+print(plt.style.available)
+plt.style.use('seaborn-v0_8-bright')
+
+fig_landscape = (16,9)
+fig_square    = (9, 9)
+#title_font_size = 26
 
 # ============================================================================|
 # %% TIME-SERIES: ALL COUNTRIES
@@ -62,8 +75,8 @@ for country in countries:
     P  = country_data['POPULISM']
     T  = country_data['YEAR']
     #----------------------------------------------------------------------
-    fig, ax = plt.subplots(figsize=figsize)
-    plt.title(country, size = title_font_size)
+    fig, ax = plt.subplots(figsize=fig_landscape)
+    plt.title(country)
     plt.plot(T, P , label='Populism Index')
     plt.plot(T, EP, label='Economic Populism Sub-Index'     , c='tab:blue')
     plt.plot(T, IP, label='Institutional Populism Sub-Index', c='tab:red' )
@@ -94,7 +107,7 @@ labels = ['Populism index',
           'Institutional Populism Sub-Index']
 
 #### Average: Latin-America
-fig, ax = plt.subplots(figsize=figsize)
+fig, ax = plt.subplots(figsize=fig_landscape)
 plt.title("Populism indices, Latin America averages")
 plt.plot(T, y1, label=labels[0], c='black')
 plt.plot(T, y2, label=labels[1], c='tab:blue')
@@ -114,7 +127,7 @@ P1 = P['Caribbean']
 P2 = P['Central America']
 P3 = P['South America']
 
-fig, ax = plt.subplots(figsize=figsize)
+fig, ax = plt.subplots(figsize=fig_landscape)
 plt.title("Populism, Latin America regional averages")
 plt.plot(T, P1, label='Caribbean'      , c='tab:green' )
 plt.plot(T, P2, label='Central America', c='tab:purple')
@@ -134,7 +147,7 @@ EP1 = EP['Caribbean']
 EP2 = EP['Central America']
 EP3 = EP['South America']
 
-fig, ax = plt.subplots(figsize=figsize)
+fig, ax = plt.subplots(figsize=fig_landscape)
 plt.title("Economic Populism, Latin America regional averages")
 plt.plot(T, P1, label='Caribbean'      , c='tab:green' )
 plt.plot(T, P2, label='Central America', c='tab:purple')
@@ -155,7 +168,7 @@ IP1 = IP['Caribbean']
 IP2 = IP['Central America']
 IP3 = IP['South America']
 
-fig, ax = plt.subplots(figsize=figsize)
+fig, ax = plt.subplots(figsize=fig_landscape)
 plt.title("Institutional Populism, Latin America regional averages")
 plt.plot(T, P1, label='Caraibbean'     , c='tab:green' )
 plt.plot(T, P2, label='Central America', c='tab:purple')
@@ -184,8 +197,8 @@ for year in years:
     EP = year_data['EP']
     IP = year_data['IP']
     #----------------------------------------------------------------------
-    fig, ax = plt.subplots(figsize=figsize)
-    plt.title(year, size=title_font_size)
+    fig, ax = plt.subplots(figsize=fig_square)
+    plt.title(year)
     plt.scatter(EP,IP, color = 'tab:orange', s=100)
     plt.plot([0,100],[0,100], color='black', ls=':')
     plt.xlabel('Economic populism')
@@ -197,68 +210,3 @@ for year in years:
     
 #### Clean up
 del year_data, ax, fig, EP, IP
-
-
-
-import pandas as pd
-import matplotlib.pyplot as plt
-
-# Sample DataFrame (replace this with your actual DataFrame)
-data = {
-    'County': ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'] * 5,
-    'Year': [2010, 2010, 2010, 2010, 2010, 2010, 2010, 2010, 2010, 2010,
-             2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011],
-    'Rank': [i+1 for i in range(10)] * 2,
-    'Value': [100-i for i in range(10)] * 2
-}
-
-df = pd.DataFrame(data)
-
-# Filter bottom and top 10 per year
-bottom_top_df = pd.concat([
-    df[df['Rank'] <= 10].groupby('Year').apply(lambda x: x.nsmallest(10, 'Rank')),
-    df[df['Rank'] <= 10].groupby('Year').apply(lambda x: x.nlargest(10, 'Rank'))
-])
-
-# Pivot for bar chart
-pivot_df = bottom_top_df.pivot(index='Year', columns='County', values='Value')
-
-# Plotting
-ax = pivot_df.plot(kind='bar', stacked=True, figsize=(12, 6))
-ax.set_ylabel('Value')
-ax.set_xlabel('Year')
-ax.set_title('Bottom and Top 10 Counties Per Year')
-
-plt.show()
-
-
-
-# ============================================================================|
-# %% BARS: TCHANGING COLOR
-
-
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib import cm
-
-# Sample data
-x = np.linspace(0, 10, 100)
-y = np.sin(x)
-
-# Create a colormap
-norm = plt.Normalize(y.min(), y.max())
-colors = cm.viridis(norm(y))
-
-# Plotting the line with changing colors
-fig, ax = plt.subplots()
-line = ax.plot(x, y, color=colors, linewidth=2)
-
-# Adding a colorbar for reference
-cbar = plt.colorbar(line, ax=ax)
-cbar.set_label('Color by Value')
-
-ax.set_xlabel('X-axis')
-ax.set_ylabel('Y-axis')
-ax.set_title('Line Plot with Changing Colors')
-
-plt.show()

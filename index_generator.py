@@ -9,8 +9,14 @@ The University of Texas at El Paso
 ncachanosky@utep.edu
 www.ncachanosky.com
 
+J. P. Bastos
+Free Market Institute
+Texas Tech University
+jpmvbastos@gmail.com
+https://www.jpmvbastos.com/
+
 Version: 1.0
-Last update: 08-Jan-2023
+Last update: 08-Mar-2025
 '''
 # ============================================================================|
 # %% LOAD PACKAGES AND SETTINGS
@@ -456,9 +462,27 @@ del replacements
 # ============================================================================|
 # %% INDEX | PLOTS FOR INITIAL CHECK
 
-plt.style.use('seaborn-v0_8-dark')
 
-#### Argentina
+#### Load data
+file  = "index_2023.xlsx"
+file  = pd.ExcelFile(file)
+
+INDEX = pd.read_excel(file)
+INDEX = INDEX[INDEX['YEAR'] != 2000]  # Year 2001 is missing
+INDEX = INDEX[INDEX['YEAR'] != 2020]  # Year 2020 is missing
+
+countries = INDEX['COUNTRY'].unique()
+region    = INDEX['REGION'].unique()
+years     = INDEX['YEAR'].unique()
+
+#### Plot settings
+print(plt.style.available)
+plt.style.use('seaborn-v0_8-bright')
+
+fig_landscape = (16,9)
+fig_square    = (9, 9)
+
+#### TS: Argentina
 y  = INDEX[INDEX['ISO3']=='ARG']
 y1 = y['IP']
 y2 = y['EP']
@@ -476,7 +500,7 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 
-#### Bolivia
+#### TS: Bolivia
 y  = INDEX[INDEX['ISO3']=='BOL']
 y1 = y['IP']
 y2 = y['EP']
@@ -494,7 +518,7 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 
-#### Ecuador
+#### TS: Ecuador
 y  = INDEX[INDEX['ISO3']=='ECU']
 y1 = y['IP']
 y2 = y['EP']
@@ -512,7 +536,7 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 
-#### Nicaragua
+#### TS: Nicaragua
 y  = INDEX[INDEX['ISO3']=='NIC']
 y1 = y['IP']
 y2 = y['EP']
@@ -530,7 +554,7 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 
-#### Venezuela
+#### TS: Venezuela
 y  = INDEX[INDEX['ISO3']=='VEN']
 y1 = y['IP']
 y2 = y['EP']
@@ -548,7 +572,7 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 
-#### Chile
+#### TS: Chile
 y  = INDEX[INDEX['ISO3']=='CHL']
 y1 = y['IP']
 y2 = y['EP']
@@ -567,7 +591,7 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 
-#### Colombia
+#### TS: Colombia
 y  = INDEX[INDEX['ISO3']=='COL']
 y1 = y['IP']
 y2 = y['EP']
@@ -583,6 +607,74 @@ ax.set_ylim(0, 100)
 plt.legend()
 plt.tight_layout()
 plt.show()
+
+#### Scatter
+
+ARG = INDEX[INDEX['ISO3'] == "ARG"]
+BOL = INDEX[INDEX['ISO3'] == "BOL"]
+ECU = INDEX[INDEX['ISO3'] == "ECU"]
+NIC = INDEX[INDEX['ISO3'] == "NIC"]
+VEN = INDEX[INDEX['ISO3'] == "VEN"]
+
+
+axis_range = [0, 100, 0, 100]
+labels=['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
+title = "Populism transition"
+
+fig, ax = plt.subplots(figsize=fig_square)
+plt.plot([0,100],[0,100], color='gray', ls=':')
+plt.plot(ARG['EP'],ARG['IP'],'o-',markersize=10, color='tab:blue',label=labels[0])
+plt.plot(BOL['EP'],BOL['IP'],'o-',markersize=10,color='tab:green',label=labels[1])
+plt.plot(ECU['EP'],ECU['IP'],'o-',markersize=10,color='tab:red'  ,label=labels[2])
+plt.plot(NIC['EP'],NIC['IP'],'o-',markersize=10,color='tab:cyan' ,label=labels[3])
+plt.plot(VEN['EP'],VEN['IP'],'o-',markersize=10,color='tab:olive',label=labels[4])
+plt.xlabel("Economic populism")
+plt.ylabel("Institutional populism")
+plt.axis_range=axis_range
+plt.tight_layout()
+plt.show()
+
+fig, ax = plt.subplots(figsize=fig_square)
+plt.title = "Bolivia"
+plt.plot([0,100],[0,100], color='gray', ls=':')
+plt.plot(BOL['EP'], BOL['IP'], 'o-', markersize=10, color='tab:green')
+plt.xlabel("Economic populism")
+plt.ylabel("Institutional populism")
+plt.axis_range=axis_range
+plt.tight_layout()
+plt.show()
+
+fig, ax = plt.subplots(figsize=fig_square)
+title = "Ecuador"
+plt.plot([0,100],[0,100], color='gray', ls=':')
+plt.plot(ECU['EP'], ECU['IP'], 'o-', markersize=10, color='tab:red')
+plt.xlabel("Economic populism")
+plt.ylabel("Institutional populism")
+plt.axis_range=axis_range
+plt.tight_layout()
+plt.show()
+
+fig, ax = plt.subplots(figsize=fig_square)
+title = "Nicaragua"
+plt.plot([0,100],[0,100], color='gray', ls=':')
+plt.plot(NIC['EP'], NIC['IP'], 'o-', markersize=10, color='tab:cyan')
+plt.xlabel("Economic populism")
+plt.ylabel("Institutional populism")
+plt.axis_range=axis_range
+plt.tight_layout()
+plt.show()
+
+fig, ax = plt.subplots(figsize=fig_square)
+title = "Venezuela"
+plt.plot([0,100],[0,100], color='gray', ls=':')
+plt.plot(VEN['EP'], VEN['IP'], 'o-', markersize=10, color='tab:olive')
+plt.xlabel("Economic populism")
+plt.ylabel("Institutional populism")
+plt.axis_range=axis_range
+plt.tight_layout()
+plt.show()
+
+
 
 #### Clean up
 del ax, fig, t, y, y1, y2, y3
