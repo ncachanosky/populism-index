@@ -186,9 +186,9 @@ del P, P1, P2, P3
 
 
 # ============================================================================|
-# %% BARS: TOP & BOTTOM PER YEAR
+# %% BARS: SCATTER PLOTS
 
-#### Build plots
+#### By Year
 axis_range = [0, 100, 0, 100]
 #i= years[0]
 for year in years:
@@ -207,6 +207,49 @@ for year in years:
     plt.tight_layout()
     plt.savefig('visualizations/scatter_'+i)
     plt.show()
+
+
+#### Transition
+ARG = INDEX[INDEX['ISO3'] == "ARG"]
+BOL = INDEX[INDEX['ISO3'] == "BOL"]
+ECU = INDEX[INDEX['ISO3'] == "ECU"]
+NIC = INDEX[INDEX['ISO3'] == "NIC"]
+VEN = INDEX[INDEX['ISO3'] == "VEN"]
+
+
+axis_range = [0, 100, 0, 100]
+labels=['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
+title = "Populism transition"
+
+fig, ax = plt.subplots(figsize=fig_square)
+plt.plot([0,100],[0,100], color='gray', ls=':')
+plt.plot(ARG['EP'],ARG['IP'],'o-',markersize=10, color='tab:blue',label=labels[0])
+plt.plot(BOL['EP'],BOL['IP'],'o-',markersize=10,color='tab:green',label=labels[1])
+plt.plot(ECU['EP'],ECU['IP'],'o-',markersize=10,color='tab:red'  ,label=labels[2])
+plt.plot(NIC['EP'],NIC['IP'],'o-',markersize=10,color='tab:cyan' ,label=labels[3])
+plt.plot(VEN['EP'],VEN['IP'],'o-',markersize=10,color='tab:olive',label=labels[4])
+plt.xlabel("Economic populism")
+plt.ylabel("Institutional populism")
+plt.axis_range=axis_range
+plt.tight_layout()
+plt.show()
+
+#### VPARTY VS EP INDEX
+year_data = INDEX[INDEX['YEAR'] == 2015]
+EP = year_data['EP']
+IP = year_data['IP']
+VPARTY = year_data['VPARTY']*100
+
+fig, ax = plt.subplots(figsize=fig_square)
+plt.scatter(VPARTY,EP, color = 'tab:orange', s=100)
+plt.plot([0,100],[0,100], color='black', ls=':')
+plt.xlabel('V-Party')
+plt.ylabel('Economic populism')
+plt.axis_range = axis_range
+plt.tight_layout()
+plt.savefig('visualizations/scatter_'+i)
+plt.show()
+
     
 #### Clean up
 del year_data, ax, fig, EP, IP

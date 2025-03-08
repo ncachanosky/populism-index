@@ -608,7 +608,7 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 
-#### Scatter
+#### Scatter: By Year
 
 ARG = INDEX[INDEX['ISO3'] == "ARG"]
 BOL = INDEX[INDEX['ISO3'] == "BOL"]
@@ -633,48 +633,6 @@ plt.ylabel("Institutional populism")
 plt.axis_range=axis_range
 plt.tight_layout()
 plt.show()
-
-fig, ax = plt.subplots(figsize=fig_square)
-plt.title = "Bolivia"
-plt.plot([0,100],[0,100], color='gray', ls=':')
-plt.plot(BOL['EP'], BOL['IP'], 'o-', markersize=10, color='tab:green')
-plt.xlabel("Economic populism")
-plt.ylabel("Institutional populism")
-plt.axis_range=axis_range
-plt.tight_layout()
-plt.show()
-
-fig, ax = plt.subplots(figsize=fig_square)
-title = "Ecuador"
-plt.plot([0,100],[0,100], color='gray', ls=':')
-plt.plot(ECU['EP'], ECU['IP'], 'o-', markersize=10, color='tab:red')
-plt.xlabel("Economic populism")
-plt.ylabel("Institutional populism")
-plt.axis_range=axis_range
-plt.tight_layout()
-plt.show()
-
-fig, ax = plt.subplots(figsize=fig_square)
-title = "Nicaragua"
-plt.plot([0,100],[0,100], color='gray', ls=':')
-plt.plot(NIC['EP'], NIC['IP'], 'o-', markersize=10, color='tab:cyan')
-plt.xlabel("Economic populism")
-plt.ylabel("Institutional populism")
-plt.axis_range=axis_range
-plt.tight_layout()
-plt.show()
-
-fig, ax = plt.subplots(figsize=fig_square)
-title = "Venezuela"
-plt.plot([0,100],[0,100], color='gray', ls=':')
-plt.plot(VEN['EP'], VEN['IP'], 'o-', markersize=10, color='tab:olive')
-plt.xlabel("Economic populism")
-plt.ylabel("Institutional populism")
-plt.axis_range=axis_range
-plt.tight_layout()
-plt.show()
-
-
 
 #### Clean up
 del ax, fig, t, y, y1, y2, y3
