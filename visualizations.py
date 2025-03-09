@@ -22,22 +22,21 @@ Last update: 08-Mar-2025
 # ============================================================================|
 # %% LOAD PACKAGES, SETTINGS, AND DATA
 
-
 #### Packages
-import numpy             as np
 import os
+import numpy             as np
 import pandas            as pd
 import matplotlib.pyplot as plt
 
 #### General settings
-path = 'C:/Users/ncachanosky/OneDrive/Research/populism-index/'
-os.chdir(path)
+PATH = 'C:/Users/ncachanosky/OneDrive/Research/populism-index/'
+os.chdir(PATH)
 
 #### Load data
-file  = "index_2023.xlsx"
-file  = pd.ExcelFile(file)
+FILE  = "index_2023.xlsx"
+FILE  = pd.ExcelFile(FILE)
 
-INDEX = pd.read_excel(file)
+INDEX = pd.read_excel(FILE)
 INDEX = INDEX[INDEX['YEAR'] != 2000]  # Year 2001 is missing
 INDEX = INDEX[INDEX['YEAR'] != 2020]  # Year 2020 is missing
 
@@ -46,7 +45,7 @@ region    = INDEX['REGION'].unique()
 years     = INDEX['YEAR'].unique()
 
 #### Clean up
-del path, file
+del PATH, FILE
 
 
 # ============================================================================|
@@ -219,7 +218,7 @@ VEN = INDEX[INDEX['ISO3'] == "VEN"]
 
 axis_range = [0, 100, 0, 100]
 labels=['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
-title = "Populism transition"
+TITLE = "Populism transition"
 
 fig, ax = plt.subplots(figsize=fig_square)
 plt.plot([0,100],[0,100], color='gray', ls=':')
@@ -250,6 +249,5 @@ plt.tight_layout()
 plt.savefig('visualizations/scatter_'+i)
 plt.show()
 
-    
 #### Clean up
 del year_data, ax, fig, EP, IP

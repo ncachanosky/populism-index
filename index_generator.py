@@ -27,9 +27,9 @@ import pandas            as pd
 import matplotlib.pyplot as plt
 
 #### Settings
-path = 'C:/Users/ncachanosky/OneDrive/Research/populism-index/'
-os.chdir(path)
-del path
+PATH = 'C:/Users/ncachanosky/OneDrive/Research/populism-index/'
+os.chdir(PATH)
+del PATH
 
 print(plt.style.available)
 
@@ -37,8 +37,8 @@ print(plt.style.available)
 # %% INDEX SKELETON
 
 #### Create dataset structure with empty rows
-start = 1990
-end   = 2020
+START = 1990
+END   = 2020
 
 INDEX = pd.DataFrame({'ISO2'   : [],
                       'ISO3'   : [],  
@@ -50,8 +50,8 @@ INDEX = pd.DataFrame({'ISO2'   : [],
                       'SIDS'   : []})     # Small island developing state
 
 
-t = start
-while t <= end:
+t = START
+while t <= END:
     df_new = pd.DataFrame(
         [['NA', 'AIA', t, 'Anguila'                       , 'Caribbean'      , 0, 0, 1],
          ['NA', 'ATG', t, 'Antigua and Barbuda'           , 'Caribbean'      , 0, 0, 1],
@@ -110,40 +110,39 @@ while t <= end:
     INDEX = pd.concat([INDEX, df_new])
     t = t+1
 
-
 #### Clean up
-del start, end, t, df_new
+del START, END, t, df_new
 
 # ============================================================================|
 # %% DATA | V-PARTY INDEX
 #### Data
-file = "C:/Users/ncachanosky/OneDrive/Research/Datasets/V-Dem-CPD-Party-V2.dta"
-VPARTY = pd.read_stata(file)
-del file
+FILE = "C:/Users/ncachanosky/OneDrive/Research/Datasets/V-Dem-CPD-Party-V2.dta"
+VPARTY = pd.read_stata(FILE)
+del FILE
 
 # Rename columns for future merge (when building the index)
 VPARTY = VPARTY.rename(columns={'country_text_id':'ISO3' })
 VPARTY = VPARTY.rename(columns={'year'           :'YEAR'})
 
 # Drop unnecesary columns and rows
-keep = ['ISO3'      ,
+KEEP = ['ISO3'      ,
         'YEAR'      ,
         'v2paid'    ,
         'v2paenname',
         'v2pashname',
         'v2xpa_popul']
 
-VPARTY = VPARTY[keep]
+VPARTY = VPARTY[KEEP]
 VPARTY = VPARTY[VPARTY['YEAR'] >= 1990]
 
 # Drop non-Latam countries
-keep = 'AIA|ATG|ARG|ABW|BHS|BRB|BLZ|BOL|BES|BVT|BRA|VGB|CYM|\
+KEEP = 'AIA|ATG|ARG|ABW|BHS|BRB|BLZ|BOL|BES|BVT|BRA|VGB|CYM|\
 CHL|COL|CRI|CUB|CUW|DMA|DOM|ECU|SLV|FLK|GUF|GRD|GLP|\
 GTM|GUY|HTI|HND|JAM|MTQ|MEX|MSR|NIC|PAN|PRY|PER|PRI|\
 BLM|KNA|LCA|MAF|VCT|SXM|SGS|SUR|TTO|TCA|VIR|URY|VEN'
 
-VPARTY = VPARTY[VPARTY['ISO3'].str.contains(keep)]
-del keep
+VPARTY = VPARTY[VPARTY['ISO3'].str.contains(KEEP)]
+del KEEP
 
 #### Interpolate missing observations
 VPARTY = VPARTY.sort_values(by=['ISO3', 'v2paenname', 'YEAR'])
@@ -152,30 +151,30 @@ VPARTY = VPARTY.interpolate()
 VPARTY = VPARTY.sort_index(axis=1)
 
 #### Export to excel for *manual* completion
-file = 'Data/VParty.xlsx'
+FILE = 'Data/VParty.xlsx'
 
-with pd.ExcelWriter(file,
+with pd.ExcelWriter(FILE,
                     engine='openpyxl',
                     mode='a',
                     if_sheet_exists='replace') as writer:
     VPARTY.to_excel(writer, sheet_name="V-Party")
 
-del writer, file
+del writer, FILE
 
 
 # ============================================================================|
 # %% DATA | V-PARTY MERGE
 
 #### Data
-file = 'Data/VParty.xlsx'
+FILE = 'Data/VParty.xlsx'
 
 ### After manual update, re-import data from Excel
-file   = pd.ExcelFile(file)
-VPARTY = pd.read_excel(file, sheet_name='INDEX', usecols="A,B,E,F,G")
+FILE   = pd.ExcelFile(FILE)
+VPARTY = pd.read_excel(FILE, sheet_name='INDEX', usecols="A,B,E,F,G")
 
 #### Merge
 INDEX = pd.merge(INDEX, VPARTY, on=['ISO3','YEAR'])
-del VPARTY, file
+del VPARTY, FILE
 
 
 # ============================================================================|
@@ -185,8 +184,8 @@ del VPARTY, file
 # Be patient with data import (can take a few minutes)
 # Then rename columns used for merging
 
-file = "C:/Users/ncachanosky/OneDrive/Research/Datasets/V-Dem-CY-Core-v13.dta"
-VDEM = pd.read_stata(file)
+FILE = "C:/Users/ncachanosky/OneDrive/Research/Datasets/V-Dem-CY-Core-v13.dta"
+VDEM = pd.read_stata(FILE)
 VDEM = VDEM.rename(columns={'country_text_id':'ISO3' })
 VDEM = VDEM.rename(columns={'year'           :'YEAR'})
 
@@ -218,14 +217,14 @@ INDEX = INDEX.rename(columns={code5:'VDEM_5'})
 INDEX = INDEX.rename(columns={code6:'VDEM_6'})
 
 #### Clean up
-del VDEM, VDEM_1, code1, code2, code3, code4, code5, code6, file
+del VDEM, VDEM_1, code1, code2, code3, code4, code5, code6, FILE
 
 
 # ============================================================================|
 # %% DATA | WGI
 
 #### Data
-file = "Data/wgidataset.dta"
+FILE = "Data/wgidataset.dta"
 WGI = pd.read_stata(file)
 WGI = WGI.rename(columns={'year':'YEAR'})
 WGI = WGI.rename(columns={'code':'ISO3' })
@@ -233,39 +232,39 @@ WGI = WGI.rename(columns={'rle':'WGI_1' ,   # Rule of Law
                           'cce':'WGI_2'})   # Control of Corruption
 
 #### Drop unnecessary columns
-keep = ['ISO3', 'YEAR', 'WGI_1', 'WGI_2']
-WGI = WGI[keep]
+KEEP = ['ISO3', 'YEAR', 'WGI_1', 'WGI_2']
+WGI = WGI[KEEP]
 
 #### Rescale data
 WGI['WGI_1'] = 100 - (WGI['WGI_1'] + 2.5)*20
 WGI['WGI_2'] = 100 - (WGI['WGI_2'] + 2.5)*20
 
 #### Drop non-Latam countries
-keep = 'AIA|ATG|ARG|ABW|BHS|BRB|BLZ|BOL|BES|BVT|BRA|VGB|CYM|\
+KEEP = 'AIA|ATG|ARG|ABW|BHS|BRB|BLZ|BOL|BES|BVT|BRA|VGB|CYM|\
 CHL|COL|CRI|CUB|CUW|DMA|DOM|ECU|SLV|FLK|GUF|GRD|GLP|\
 GTM|GUY|HTI|HND|JAM|MTQ|MEX|MSR|NIC|PAN|PRY|PER|PRI|\
 BLM|KNA|LCA|MAF|VCT|SXM|SGS|SUR|TTO|TCA|VIR|URY|VEN'
 
-WGI = WGI[WGI['ISO3'].str.contains(keep)]
+WGI = WGI[WGI['ISO3'].str.contains(KEEP)]
 
 INDEX = pd.merge(INDEX, WGI, on=['ISO3','YEAR'])
 
 
 #### Clean up
-del file, keep, WGI
+del FILE, KEEP, WGI
 
 
 # ============================================================================|
 # %% DATA | HERITAGE
 
 #### Data
-file  = "Data/heritage.xlsx"
-file  = pd.ExcelFile(file)
+FILE  = "Data/heritage.xlsx"
+FILE  = pd.ExcelFile(FILE)
 
-HERITAGE = pd.read_excel(file)
+HERITAGE = pd.read_excel(FILE)
 
 #### Drop unnecessary columns
-keep = ['ISO Code'         ,
+KEEP = ['ISO Code'         ,
         'Index Year'       ,
         'Property Rights'  ,    
         'Business Freedom' ,    
@@ -274,7 +273,7 @@ keep = ['ISO Code'         ,
         'Financial Freedom',]
 
 
-HERITAGE = HERITAGE[keep].rename(columns={'ISO Code'         :'ISO2',
+HERITAGE = HERITAGE[KEEP].rename(columns={'ISO Code'         :'ISO2',
                                           'Index Year'       :'YEAR',
                                           'Property Rights'  :'HERITAGE_1',
                                           'Business Freedom' :'HERITAGE_2',
@@ -292,19 +291,19 @@ INDEX['HERITAGE_4'] = 100 - INDEX['HERITAGE_4']
 INDEX['HERITAGE_5'] = 100 - INDEX['HERITAGE_5']
 
 #### Clean up
-del file, keep, HERITAGE
+del FILE, KEEP, HERITAGE
 
 
 # ============================================================================|
 # %% DATA | FRASER
 
 #### Data
-file  = "Data/efw.xlsx"
-file  = pd.ExcelFile(file)
-sheet = "EFW Ratings 1970-2021"
-cols  = "B, D, K, T, AO, BH, BU, BZ"
+FILE  = "Data/efw.xlsx"
+FILE  = pd.ExcelFile(file)
+SHEET = "EFW Ratings 1970-2021"
+COLS  = "B, D, K, T, AO, BH, BU, BZ"
 
-EFW = pd.read_excel(file, sheet_name=sheet, skiprows=4, usecols=cols)
+EFW = pd.read_excel(FILE, sheet_name=SHEET, skiprows=4, usecols=COLS)
  
 EFW = EFW.rename(columns={'ISO Code 3'                         :'ISO3' ,
                           'Year'                               :'YEAR' ,
@@ -327,7 +326,7 @@ INDEX['EFW_6'] = 100 - INDEX['EFW_6']*10    # Business regulations
 
 
 #### Clean up
-del file, sheet, cols, EFW
+del FILE, SHEET, COLS, EFW
 
 
 # # ============================================================================|
@@ -404,7 +403,7 @@ INDEX['POPULISM_PERCENTILE'] = INDEX.groupby('YEAR')['POPULISM'].rank(pct=True)
 # ============================================================================|
 # %% CLEAN UP DATASET
 
-keep = ['ISO2'               ,
+KEEP = ['ISO2'               ,
         'ISO3'               ,
         'COUNTRY'            ,
         'REGION'             ,
@@ -427,9 +426,9 @@ keep = ['ISO2'               ,
         'PARTY_CODE'         ,
         'PARTY_NAME']
 
-INDEX = INDEX[keep]
+INDEX = INDEX[KEEP]
 
-del keep
+del KEEP
 
 
 # ============================================================================|
@@ -462,12 +461,11 @@ del replacements
 # ============================================================================|
 # %% INDEX | PLOTS FOR INITIAL CHECK
 
-
 #### Load data
-file  = "index_2023.xlsx"
-file  = pd.ExcelFile(file)
+FILE  = "index_2023.xlsx"
+FILE  = pd.ExcelFile(FILE)
 
-INDEX = pd.read_excel(file)
+INDEX = pd.read_excel(FILE)
 INDEX = INDEX[INDEX['YEAR'] != 2000]  # Year 2001 is missing
 INDEX = INDEX[INDEX['YEAR'] != 2020]  # Year 2020 is missing
 
@@ -618,16 +616,16 @@ VEN = INDEX[INDEX['ISO3'] == "VEN"]
 
 
 axis_range = [0, 100, 0, 100]
-labels=['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
-title = "Populism transition"
+LABELS=['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
+TITLE = "Populism transition"
 
 fig, ax = plt.subplots(figsize=fig_square)
 plt.plot([0,100],[0,100], color='gray', ls=':')
-plt.plot(ARG['EP'],ARG['IP'],'o-',markersize=10, color='tab:blue',label=labels[0])
-plt.plot(BOL['EP'],BOL['IP'],'o-',markersize=10,color='tab:green',label=labels[1])
-plt.plot(ECU['EP'],ECU['IP'],'o-',markersize=10,color='tab:red'  ,label=labels[2])
-plt.plot(NIC['EP'],NIC['IP'],'o-',markersize=10,color='tab:cyan' ,label=labels[3])
-plt.plot(VEN['EP'],VEN['IP'],'o-',markersize=10,color='tab:olive',label=labels[4])
+plt.plot(ARG['EP'],ARG['IP'],'o-',markersize=10, color='tab:blue',label=LABELS[0])
+plt.plot(BOL['EP'],BOL['IP'],'o-',markersize=10,color='tab:green',label=LABELS[1])
+plt.plot(ECU['EP'],ECU['IP'],'o-',markersize=10,color='tab:red'  ,label=LABELS[2])
+plt.plot(NIC['EP'],NIC['IP'],'o-',markersize=10,color='tab:cyan' ,label=LABELS[3])
+plt.plot(VEN['EP'],VEN['IP'],'o-',markersize=10,color='tab:olive',label=LABELS[4])
 plt.xlabel("Economic populism")
 plt.ylabel("Institutional populism")
 plt.axis_range=axis_range
@@ -641,6 +639,7 @@ del ax, fig, t, y, y1, y2, y3
 # ============================================================================|
 # %% SAMPLE CODES
 
+"""
 #### Rearrange pandas' columns
 import pandas as pd
 
@@ -669,3 +668,6 @@ print(df)
 # Rank data within each year group in ascending order with the
 # 'min' tie-breaking method
 df['Rank'] = df.groupby('Year')['Value'].rank(ascending=True, method='min')
+"""
+# ===========================================================================
+# End-of-File
