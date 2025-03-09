@@ -614,7 +614,6 @@ ECU = INDEX[INDEX['ISO3'] == "ECU"]
 NIC = INDEX[INDEX['ISO3'] == "NIC"]
 VEN = INDEX[INDEX['ISO3'] == "VEN"]
 
-
 axis_range = [0, 100, 0, 100]
 LABELS=['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
 TITLE = "Populism transition"
