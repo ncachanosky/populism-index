@@ -620,7 +620,7 @@ TITLE = "Populism transition"
 
 fig, ax = plt.subplots(figsize=fig_square)
 plt.plot([0,100],[0,100], color='gray', ls=':')
-plt.plot(ARG['EP'],ARG['IP'],'o-',markersize=10, color='tab:blue',label=LABELS[0])
+plt.plot(ARG['EP'],ARG['IP'],'o-',markersize=10,color='tab:blue' ,label=LABELS[0])
 plt.plot(BOL['EP'],BOL['IP'],'o-',markersize=10,color='tab:green',label=LABELS[1])
 plt.plot(ECU['EP'],ECU['IP'],'o-',markersize=10,color='tab:red'  ,label=LABELS[2])
 plt.plot(NIC['EP'],NIC['IP'],'o-',markersize=10,color='tab:cyan' ,label=LABELS[3])

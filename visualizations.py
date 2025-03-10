@@ -76,7 +76,7 @@ for country in countries:
     #----------------------------------------------------------------------
     fig, ax = plt.subplots(figsize=fig_landscape)
     plt.title(country)
-    plt.plot(T, P , label='Populism Index')
+    plt.plot(T, P , label='Populism Index'                  , c='black'   )
     plt.plot(T, EP, label='Economic Populism Sub-Index'     , c='tab:blue')
     plt.plot(T, IP, label='Institutional Populism Sub-Index', c='tab:red' )
     plt.xlim(2002, 2020)
@@ -233,6 +233,7 @@ plt.axis_range=axis_range
 plt.tight_layout()
 plt.savefig('visualizations/transition')
 plt.show()
+
 
 #### VPARTY VS EP INDEX
 year_data = INDEX[INDEX['YEAR'] == 2015]
