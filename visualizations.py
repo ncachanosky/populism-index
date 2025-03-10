@@ -398,5 +398,9 @@ plt.show()
 
 #### Clean up
 del year_data, ax, fig, EP, IP, ARG, BOL, ECU, NIC, VEN, LABELS, i
-del axis_range, countries, country, TITLE, region, year, years
-del fig_landscape, fig_square
+del ARG_A, ARG_B, ARG_E, ARG_N, ARG_V
+del BOL_A, BOL_B, BOL_E, BOL_N, BOL_V
+del ECU_A, ECU_B, ECU_E, ECU_N, ECU_V
+del NIC_A, NIC_B, NIC_E, NIC_N, NIC_V
+del VEN_A, VEN_B, VEN_E, VEN_N, VEN_V
+del axis_range, TITLE, fig_landscape, fig_square
