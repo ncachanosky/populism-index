@@ -251,5 +251,152 @@ plt.tight_layout()
 plt.savefig('visualizations/scatter_'+i)
 plt.show()
 
+
+# ============================================================================|
+# %% BARS: SCATTER PLOTS
+ARG = INDEX[INDEX['YEAR'].between(2007, 2015)]
+BOL = INDEX[INDEX['YEAR'].between(2006, 2019)]
+ECU = INDEX[INDEX['YEAR'].between(2007, 2017)]
+NIC = INDEX[INDEX['YEAR'].between(2007, 2018)]
+VEN = INDEX[INDEX['YEAR'].between(1999, 2018)]
+
+ARG = ARG.groupby("ISO3", as_index=False).mean(numeric_only=True)
+BOL = BOL.groupby("ISO3", as_index=False).mean(numeric_only=True)
+ECU = ECU.groupby("ISO3", as_index=False).mean(numeric_only=True)
+NIC = NIC.groupby("ISO3", as_index=False).mean(numeric_only=True)
+VEN = VEN.groupby("ISO3", as_index=False).mean(numeric_only=True)
+
+
+#### ARGENTINA
+ARG_A = [ARG['EP'].iloc[ 0], ARG['IP'].iloc[ 0]] 
+ARG_B = [ARG['EP'].iloc[ 1], ARG['IP'].iloc[ 1]]
+ARG_E = [ARG['EP'].iloc[ 8], ARG['IP'].iloc[ 8]]
+ARG_N = [ARG['EP'].iloc[15], ARG['IP'].iloc[15]]
+ARG_V = [ARG['EP'].iloc[23], ARG['IP'].iloc[23]]   
+
+LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
+axis_range = [0, 100, 0, 100]
+fig, ax = plt.subplots(figsize=fig_square)
+plt.scatter(ARG['EP'], ARG['IP'], color = 'tab:orange', s=100, alpha=0.5)
+plt.scatter(ARG_A[0] , ARG_A[1] , color = 'tab:blue'  , s=200, alpha=1.0, label=LABELS[0])
+plt.scatter(ARG_B[0] , ARG_B[1] , color = 'tab:green' , s=100, alpha=0.7, label=LABELS[1])
+plt.scatter(ARG_E[0] , ARG_E[1] , color = 'tab:red'   , s=100, alpha=0.7, label=LABELS[2])
+plt.scatter(ARG_N[0] , ARG_N[1] , color = 'tab:cyan'  , s=100, alpha=0.7, label=LABELS[3])
+plt.scatter(ARG_V[0] , ARG_V[1] , color = 'tab:olive' , s=100, alpha=0.7, label=LABELS[4])
+plt.plot([0,100],[0,100], color='gray', ls=':')
+plt.xlabel('Economic populism')
+plt.ylabel('institutional populism')
+plt.axis_range = axis_range
+plt.legend(labelcolor='linecolor')
+plt.tight_layout()
+plt.savefig('visualizations/Iconic5_Scatter_ARG')
+plt.show()
+
+
+#### BOLIVIA
+BOL_A = [BOL['EP'].iloc[ 0], BOL['IP'].iloc[ 0]] 
+BOL_B = [BOL['EP'].iloc[ 1], BOL['IP'].iloc[ 1]]
+BOL_E = [BOL['EP'].iloc[ 8], BOL['IP'].iloc[ 8]]
+BOL_N = [BOL['EP'].iloc[15], BOL['IP'].iloc[15]]
+BOL_V = [BOL['EP'].iloc[23], BOL['IP'].iloc[23]]   
+
+LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
+axis_range = [0, 100, 0, 100]
+fig, ax = plt.subplots(figsize=fig_square)
+plt.scatter(BOL['EP'], BOL['IP'], color = 'tab:orange', s=100, alpha=0.5)
+plt.scatter(BOL_A[0] , BOL_A[1] , color = 'tab:blue'  , s=100, alpha=0.7, label=LABELS[0])
+plt.scatter(BOL_B[0] , BOL_B[1] , color = 'tab:green' , s=200, alpha=1.0, label=LABELS[1])
+plt.scatter(BOL_E[0] , BOL_E[1] , color = 'tab:red'   , s=100, alpha=0.7, label=LABELS[2])
+plt.scatter(BOL_N[0] , BOL_N[1] , color = 'tab:cyan'  , s=100, alpha=0.7, label=LABELS[3])
+plt.scatter(BOL_V[0] , BOL_V[1] , color = 'tab:olive' , s=100, alpha=0.7, label=LABELS[4])
+plt.plot([0,100],[0,100], color='gray', ls=':')
+plt.xlabel('Economic populism')
+plt.ylabel('institutional populism')
+plt.axis_range = axis_range
+plt.legend(labelcolor='linecolor')
+plt.tight_layout()
+plt.savefig('visualizations/Iconic5_Scatter_BOL')
+plt.show()
+
+
+#### ECUADOR
+ECU_A = [ECU['EP'].iloc[ 0], ECU['IP'].iloc[ 0]] 
+ECU_B = [ECU['EP'].iloc[ 1], ECU['IP'].iloc[ 1]]
+ECU_E = [ECU['EP'].iloc[ 8], ECU['IP'].iloc[ 8]]
+ECU_N = [ECU['EP'].iloc[15], ECU['IP'].iloc[15]]
+ECU_V = [ECU['EP'].iloc[23], ECU['IP'].iloc[23]]   
+
+LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
+axis_range = [0, 100, 0, 100]
+fig, ax = plt.subplots(figsize=fig_square)
+plt.scatter(ECU['EP'], ECU['IP'], color = 'tab:orange', s=100, alpha=0.5)
+plt.scatter(ECU_A[0] , ECU_A[1] , color = 'tab:blue'  , s=100, alpha=0.7, label=LABELS[0])
+plt.scatter(ECU_B[0] , ECU_B[1] , color = 'tab:green' , s=100, alpha=0.7, label=LABELS[1])
+plt.scatter(ECU_E[0] , ECU_E[1] , color = 'tab:red'   , s=200, alpha=1.0, label=LABELS[2])
+plt.scatter(ECU_N[0] , ECU_N[1] , color = 'tab:cyan'  , s=100, alpha=0.7, label=LABELS[3])
+plt.scatter(ECU_V[0] , ECU_V[1] , color = 'tab:olive' , s=100, alpha=0.7, label=LABELS[4])
+plt.plot([0,100],[0,100], color='gray', ls=':')
+plt.xlabel('Economic populism')
+plt.ylabel('institutional populism')
+plt.axis_range = axis_range
+plt.legend(labelcolor='linecolor')
+plt.tight_layout()
+plt.savefig('visualizations/Iconic5_Scatter_ECU')
+plt.show()
+
+
+#### NICARAGUA
+NIC_A = [NIC['EP'].iloc[ 0], NIC['IP'].iloc[ 0]] 
+NIC_B = [NIC['EP'].iloc[ 1], NIC['IP'].iloc[ 1]]
+NIC_E = [NIC['EP'].iloc[ 8], NIC['IP'].iloc[ 8]]
+NIC_N = [NIC['EP'].iloc[15], NIC['IP'].iloc[15]]
+NIC_V = [NIC['EP'].iloc[23], NIC['IP'].iloc[23]]   
+
+LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
+axis_range = [0, 100, 0, 100]
+fig, ax = plt.subplots(figsize=fig_square)
+plt.scatter(NIC['EP'], NIC['IP'], color = 'tab:orange', s=100, alpha=0.5)
+plt.scatter(NIC_A[0] , NIC_A[1] , color = 'tab:blue'  , s=100, alpha=0.7, label=LABELS[0])
+plt.scatter(NIC_B[0] , NIC_B[1] , color = 'tab:green' , s=100, alpha=0.7, label=LABELS[1])
+plt.scatter(NIC_E[0] , NIC_E[1] , color = 'tab:red'   , s=100, alpha=0.7, label=LABELS[2])
+plt.scatter(NIC_N[0] , NIC_N[1] , color = 'tab:cyan'  , s=200, alpha=1.0, label=LABELS[3])
+plt.scatter(NIC_V[0] , NIC_V[1] , color = 'tab:olive' , s=100, alpha=0.7, label=LABELS[4])
+plt.plot([0,100],[0,100], color='gray', ls=':')
+plt.xlabel('Economic populism')
+plt.ylabel('institutional populism')
+plt.axis_range = axis_range
+plt.legend(labelcolor='linecolor')
+plt.tight_layout()
+plt.savefig('visualizations/Iconic5_Scatter_NIC')
+plt.show()
+
+
+#### VENEZUELA
+VEN_A = [VEN['EP'].iloc[ 0], VEN['IP'].iloc[ 0]] 
+VEN_B = [VEN['EP'].iloc[ 1], VEN['IP'].iloc[ 1]]
+VEN_E = [VEN['EP'].iloc[ 8], VEN['IP'].iloc[ 8]]
+VEN_N = [VEN['EP'].iloc[15], VEN['IP'].iloc[15]]
+VEN_V = [VEN['EP'].iloc[23], VEN['IP'].iloc[23]]   
+
+LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
+axis_range = [0, 100, 0, 100]
+fig, ax = plt.subplots(figsize=fig_square)
+plt.scatter(VEN['EP'], VEN['IP'], color = 'tab:orange', s=100, alpha=0.5)
+plt.scatter(VEN_A[0] , VEN_A[1] , color = 'tab:blue'  , s=100, alpha=0.7, label=LABELS[0])
+plt.scatter(VEN_B[0] , VEN_B[1] , color = 'tab:green' , s=100, alpha=0.7, label=LABELS[1])
+plt.scatter(VEN_E[0] , VEN_E[1] , color = 'tab:red'   , s=100, alpha=0.7, label=LABELS[2])
+plt.scatter(VEN_N[0] , VEN_N[1] , color = 'tab:cyan'  , s=100, alpha=0.7, label=LABELS[3])
+plt.scatter(VEN_V[0] , VEN_V[1] , color = 'tab:olive' , s=200, alpha=1.0, label=LABELS[4])
+plt.plot([0,100],[0,100], color='gray', ls=':')
+plt.xlabel('Economic populism')
+plt.ylabel('institutional populism')
+plt.axis_range = axis_range
+plt.legend(labelcolor='linecolor')
+plt.tight_layout()
+plt.savefig('visualizations/IcoVEN5_Scatter_VEN')
+plt.show()
+
 #### Clean up
-del year_data, ax, fig, EP, IP
+del year_data, ax, fig, EP, IP, ARG, BOL, ECU, NIC, VEN, LABELS, i
+del axis_range, countries, country, TITLE, region, year, years
+del fig_landscape, fig_square
