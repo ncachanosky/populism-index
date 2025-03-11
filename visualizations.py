@@ -30,6 +30,7 @@ import matplotlib.pyplot       as plt
 import matplotlib              as mpl
 import matplotlib.font_manager as fm
 
+
 #### General settings
 PATH = 'C:/Users/ncachanosky/OneDrive/Research/populism-index/'
 os.chdir(PATH)
@@ -47,7 +48,7 @@ region    = INDEX['REGION'].unique()
 years     = INDEX['YEAR'].unique()
 
 #### Clean up
-del PATH, FILE
+del PATH, FILE, region
 
 
 # ============================================================================|
@@ -59,9 +60,13 @@ plt.style.use('fivethirtyeight')
 
 
 #### Parameters
+font_dir = ['C:/Windows/Fonts']
+for font in fm.findSystemFonts(font_dir):
+    fm.fontManager.addfont(font)
+
 available_fonts = sorted([f.name for f in fm.fontManager.ttflist])
-mpl.rcParams["font.family"] = "Times New Roman"
-mpl.rcParams["figure.dpi"]  = 600
+mpl.rcParams["font.family"] = "Arial"
+mpl.rcParams["figure.dpi"]  = 300
 
 
 #### Color Palette
@@ -79,6 +84,10 @@ mpl.rcParams["axes.prop_cycle"] = plt.cycler(color=c_palette)
 #### Format
 fig_landscape = (16,9)
 fig_square    = (9, 9)
+
+
+#### Clean up
+del available_fonts, font, font_dir, c_palette
 
 
 # ============================================================================|
@@ -104,7 +113,7 @@ for country in countries:
     plt.show()
 
 #### Clean up
-del country_data, ax, fig, EP, IP, P
+del countries, country_data, ax, fig, EP, IP, P
 
 # ============================================================================|
 # %% TIME-SERIES: LATAM AND SUB-REGIONS
