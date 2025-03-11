@@ -60,12 +60,15 @@ plt.style.use('fivethirtyeight')
 
 
 #### Parameters
+'''
 font_dir = ['C:/Windows/Fonts']
 for font in fm.findSystemFonts(font_dir):
     fm.fontManager.addfont(font)
+'''
 
 available_fonts = sorted([f.name for f in fm.fontManager.ttflist])
-mpl.rcParams["font.family"] = "Arial"
+mpl.rcParams["font.family"] = "Aptos"
+mpl.rcParams["font.size"]   = 12
 mpl.rcParams["figure.dpi"]  = 300
 
 
@@ -87,7 +90,7 @@ fig_square    = (9, 9)
 
 
 #### Clean up
-del available_fonts, font, font_dir, c_palette
+del available_fonts, c_palette
 
 
 # ============================================================================|
@@ -212,7 +215,7 @@ del P, P1, P2, P3
 
 
 # ============================================================================|
-# %% BARS: SCATTER PLOTS
+# %% SCATTER PLOTS
 
 #### By Year
 axis_range = [0, 100, 0, 100]
@@ -280,7 +283,116 @@ plt.show()
 
 
 # ============================================================================|
-# %% BARS: SCATTER PLOTS
+# %% THE ICONIC FIVE: TIME SERIES
+
+
+#### Argentina
+y  = INDEX[INDEX['ISO3']=='ARG']
+y1 = y['IP']
+y2 = y['EP']
+y3 = y['POPULISM']
+t  = y['YEAR']
+
+fig, ax = plt.subplots(figsize=fig_landscape)
+plt.title("Argentina")
+plt.plot(t, y1, label='Institutional opulism', color="tab:blue")
+plt.plot(t, y2, label='Economic populism'    , color="tab:red")
+plt.plot(t, y3, label='Populism index'       , color="black")
+ax.axvspan(2006, 2015, color='gray', alpha=0.25)
+plt.ylim(0, 100)
+plt.xlim(2002, 2020)
+plt.legend()
+plt.tight_layout()
+plt.savefig('visualizations/Iconic5_ARG')
+plt.show()
+
+#### Bolivia
+y  = INDEX[INDEX['ISO3']=='BOL']
+y1 = y['IP']
+y2 = y['EP']
+y3 = y['POPULISM']
+t  = y['YEAR']
+
+fig, ax = plt.subplots(figsize=fig_landscape)
+plt.title("Bolivia")
+plt.plot(t, y1, label='Institutional opulism', color="tab:blue")
+plt.plot(t, y2, label='Economic populism'    , color="tab:red")
+plt.plot(t, y3, label='Populism index'       , color="black")
+ax.axvspan(2006, 2019, color='gray', alpha=0.25)
+plt.ylim(0, 100)
+plt.xlim(2002, 2020)
+plt.legend()
+plt.tight_layout()
+plt.savefig('visualizations/Iconic5_BOL')
+plt.show()
+
+#### Ecuador
+y  = INDEX[INDEX['ISO3']=='ECU']
+y1 = y['IP']
+y2 = y['EP']
+y3 = y['POPULISM']
+t  = y['YEAR']
+
+fig, ax = plt.subplots(figsize=fig_landscape)
+plt.title("Ecuador")
+plt.plot(t, y1, label='Institutional opulism', color="tab:blue")
+plt.plot(t, y2, label='Economic populism'    , color="tab:red")
+plt.plot(t, y3, label='Populism index'       , color="black")
+ax.axvspan(2007, 2016, color='gray', alpha=0.25)
+plt.ylim(0, 100)
+plt.xlim(2002, 2020)
+plt.legend()
+plt.tight_layout()
+plt.savefig('visualizations/Iconic5_ECU')
+plt.show()
+
+#### Nicaragua
+y  = INDEX[INDEX['ISO3']=='NIC']
+y1 = y['IP']
+y2 = y['EP']
+y3 = y['POPULISM']
+t  = y['YEAR']
+
+fig, ax = plt.subplots(figsize=fig_landscape)
+plt.title("Nicaragua")
+plt.plot(t, y1, label='Institutional opulism', color="tab:blue")
+plt.plot(t, y2, label='Economic populism'    , color="tab:red")
+plt.plot(t, y3, label='Populism index'       , color="black")
+ax.axvspan(2007, 2022, color='gray', alpha=0.25)
+plt.ylim(0, 100)
+plt.xlim(2002, 2020)
+plt.legend()
+plt.tight_layout()
+plt.savefig('visualizations/Iconic5_NIC')
+plt.show()
+
+#### Venezuela
+y  = INDEX[INDEX['ISO3']=='VEN']
+y1 = y['IP']
+y2 = y['EP']
+y3 = y['POPULISM']
+t  = y['YEAR']
+
+fig, ax = plt.subplots(figsize=fig_landscape)
+plt.title("Venezuela")
+plt.plot(t, y1, label='Institutional opulism', color="tab:blue")
+plt.plot(t, y2, label='Economic populism'    , color="tab:red")
+plt.plot(t, y3, label='Populism index'       , color="black")
+ax.axvspan(1999, 2020, color='gray', alpha=0.25)
+plt.ylim(0, 100)
+plt.xlim(2002, 2020)
+plt.legend()
+plt.tight_layout()
+plt.savefig('visualizations/Iconic5_VEN')
+plt.show()
+
+
+#### Clean up
+del ax, fig, t, y, y1, y2, y3
+
+
+# ============================================================================|
+# %% THE ICONIC FIVE: SCATTER PLOTS
 ARG = INDEX[INDEX['YEAR'].between(2007, 2015)]
 BOL = INDEX[INDEX['YEAR'].between(2006, 2019)]
 ECU = INDEX[INDEX['YEAR'].between(2007, 2017)]
@@ -431,3 +543,6 @@ del ECU_A, ECU_B, ECU_E, ECU_N, ECU_V
 del NIC_A, NIC_B, NIC_E, NIC_N, NIC_V
 del VEN_A, VEN_B, VEN_E, VEN_N, VEN_V
 del axis_range, TITLE, fig_landscape, fig_square
+
+# ============================================================================|
+# %% THE END

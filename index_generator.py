@@ -385,7 +385,7 @@ INDEX['EP_3'] = EP3
 INDEX['EP_4'] = EP4
 INDEX['EP']   = INDEX['VPARTY'] * (EP1 + EP2 + EP3 + EP4)/4
 
-INDEX['EP_RANK'] = INDEX.groupby('YEAR')['EP'].rank(ascending=False)
+INDEX['EP_RANK']       = INDEX.groupby('YEAR')['EP'].rank(ascending=False)
 INDEX['EP_PERCENTILE'] = INDEX.groupby('YEAR')['EP'].rank(pct=True)
 
 #### Clean up
@@ -448,7 +448,7 @@ extension_2 = '.xlsx'
 extension_3 = '.html' 
 extension_4 = '.dta'
 
-INDEX.to_csv(file_name + extension_1, encoding='utf-8')
+INDEX.to_csv(file_name + extension_1  , encoding='utf-8')
 INDEX.to_excel(file_name + extension_2, index=False)
 INDEX.to_html(file_name + extension_3)
 INDEX.to_stata(file_name + extension_4)
@@ -459,187 +459,10 @@ del replacements
 
 
 # ============================================================================|
-# %% INDEX | PLOTS FOR INITIAL CHECK
-
-#### Load data
-FILE  = "index_2023.xlsx"
-FILE  = pd.ExcelFile(FILE)
-
-INDEX = pd.read_excel(FILE)
-INDEX = INDEX[INDEX['YEAR'] != 2000]  # Year 2001 is missing
-INDEX = INDEX[INDEX['YEAR'] != 2020]  # Year 2020 is missing
-
-countries = INDEX['COUNTRY'].unique()
-region    = INDEX['REGION'].unique()
-years     = INDEX['YEAR'].unique()
-
-#### Plot settings
-print(plt.style.available)
-plt.style.use('seaborn-v0_8-bright')
-
-fig_landscape = (16,9)
-fig_square    = (9, 9)
-
-#### TS: Argentina
-y  = INDEX[INDEX['ISO3']=='ARG']
-y1 = y['IP']
-y2 = y['EP']
-y3 = y['POPULISM']
-t  = y['YEAR']
-
-fig, ax = plt.subplots()
-ax.set_title("Argentina")
-ax.plot(t, y1, label='IP')
-ax.plot(t, y2, label='EP')
-ax.plot(t, y3, label='Populism')
-ax.axvspan(2006, 2015, color='gray', alpha=0.25)
-ax.set_ylim(0, 100)
-plt.legend()
-plt.tight_layout()
-plt.show()
-
-#### TS: Bolivia
-y  = INDEX[INDEX['ISO3']=='BOL']
-y1 = y['IP']
-y2 = y['EP']
-y3 = y['POPULISM']
-t  = y['YEAR']
-
-fig, ax = plt.subplots()
-ax.set_title("Bolivia")
-ax.plot(t, y1, label='IP')
-ax.plot(t, y2, label='EP')
-ax.plot(t, y3, label='Populism')
-ax.axvspan(2006, 2019, color='gray', alpha=0.25)
-ax.set_ylim(0, 100)
-plt.legend()
-plt.tight_layout()
-plt.show()
-
-#### TS: Ecuador
-y  = INDEX[INDEX['ISO3']=='ECU']
-y1 = y['IP']
-y2 = y['EP']
-y3 = y['POPULISM']
-t  = y['YEAR']
-
-fig, ax = plt.subplots()
-ax.set_title("Ecuador")
-ax.plot(t, y1, label='IP')
-ax.plot(t, y2, label='EP')
-ax.plot(t, y3, label='Populism')
-ax.axvspan(2007, 2016, color='gray', alpha=0.25)
-ax.set_ylim(0, 100)
-plt.legend()
-plt.tight_layout()
-plt.show()
-
-#### TS: Nicaragua
-y  = INDEX[INDEX['ISO3']=='NIC']
-y1 = y['IP']
-y2 = y['EP']
-y3 = y['POPULISM']
-t  = y['YEAR']
-
-fig, ax = plt.subplots()
-ax.set_title("Nicaragua")
-ax.plot(t, y1, label='IP')
-ax.plot(t, y2, label='EP')
-ax.plot(t, y3, label='Populism')
-ax.axvspan(2007, 2022, color='gray', alpha=0.25)
-ax.set_ylim(0, 100)
-plt.legend()
-plt.tight_layout()
-plt.show()
-
-#### TS: Venezuela
-y  = INDEX[INDEX['ISO3']=='VEN']
-y1 = y['IP']
-y2 = y['EP']
-y3 = y['POPULISM']
-t  = y['YEAR']
-
-fig, ax = plt.subplots()
-ax.set_title("Venezuela")
-ax.plot(t, y1, label='IP')
-ax.plot(t, y2, label='EP')
-ax.plot(t, y3, label='Populism')
-ax.axvspan(1999, 2020, color='gray', alpha=0.25)
-ax.set_ylim(0, 100)
-plt.legend()
-plt.tight_layout()
-plt.show()
-
-#### TS: Chile
-y  = INDEX[INDEX['ISO3']=='CHL']
-y1 = y['IP']
-y2 = y['EP']
-y3 = y['POPULISM']
-t  = y['YEAR']
-
-fig, ax = plt.subplots()
-ax.set_title("Chile")
-ax.plot(t, y1, label='IP')
-ax.plot(t, y2, label='EP')
-ax.plot(t, y3, label='Populism')
-plt.axvspan(2005, 2009, color='gray', alpha=0.25)
-plt.axvspan(2014, 2017, color='gray', alpha=0.25)
-ax.set_ylim(0, 100)
-plt.legend()
-plt.tight_layout()
-plt.show()
-
-#### TS: Colombia
-y  = INDEX[INDEX['ISO3']=='COL']
-y1 = y['IP']
-y2 = y['EP']
-y3 = y['POPULISM']
-t  = y['YEAR']
-
-fig, ax = plt.subplots()
-ax.set_title("Colombia")
-ax.plot(t, y1, label='IP')
-ax.plot(t, y2, label='EP')
-ax.plot(t, y3, label='Populism')
-ax.set_ylim(0, 100)
-plt.legend()
-plt.tight_layout()
-plt.show()
-
-#### Scatter: By Year
-
-ARG = INDEX[INDEX['ISO3'] == "ARG"]
-BOL = INDEX[INDEX['ISO3'] == "BOL"]
-ECU = INDEX[INDEX['ISO3'] == "ECU"]
-NIC = INDEX[INDEX['ISO3'] == "NIC"]
-VEN = INDEX[INDEX['ISO3'] == "VEN"]
-
-axis_range = [0, 100, 0, 100]
-LABELS=['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
-TITLE = "Populism transition"
-
-fig, ax = plt.subplots(figsize=fig_square)
-plt.plot([0,100],[0,100], color='gray', ls=':')
-plt.plot(ARG['EP'],ARG['IP'],'o-',markersize=10,color='tab:blue' ,label=LABELS[0])
-plt.plot(BOL['EP'],BOL['IP'],'o-',markersize=10,color='tab:green',label=LABELS[1])
-plt.plot(ECU['EP'],ECU['IP'],'o-',markersize=10,color='tab:red'  ,label=LABELS[2])
-plt.plot(NIC['EP'],NIC['IP'],'o-',markersize=10,color='tab:cyan' ,label=LABELS[3])
-plt.plot(VEN['EP'],VEN['IP'],'o-',markersize=10,color='tab:olive',label=LABELS[4])
-plt.xlabel("Economic populism")
-plt.ylabel("Institutional populism")
-plt.axis_range=axis_range
-plt.tight_layout()
-plt.show()
-
-#### Clean up
-del ax, fig, t, y, y1, y2, y3
-
-
-# ============================================================================|
-# %% SAMPLE CODES
+# %% THE END
 
 """
-#### Rearrange pandas' columns
+#### Sample Code: Rearrange pandas' columns
 import pandas as pd
 
 # Sample DataFrame
@@ -663,7 +486,7 @@ df = df[desired_order]
 print("\nDataFrame with Rearranged Columns:")
 print(df)
 
-#### Ranking
+#### Sample Code: Ranking
 # Rank data within each year group in ascending order with the
 # 'min' tie-breaking method
 df['Rank'] = df.groupby('Year')['Value'].rank(ascending=True, method='min')
