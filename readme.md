@@ -117,31 +117,31 @@ where:
 
 The following tables include the source of each component used in the index and its original database `code name`.
 
-| Variable                                       | Source                               | Variable code     |
-| :--------------------------------------------- | :----------------------------------- | :---------------- |
-| **Populism rhetorical index**                  |                                      |                   |
-| Populism index                                 | [V-Dem][VDEM1]                       | v2xpa_popul       |
-| **Economic populism**                          |                                      |                   |
-| EP_11: Business Freedom                        | [Index of Economic Freedom][HIEF]    | Business Freedom  |
-| EP_12: Labor Markert Regulations               | [Economic Freedom of the World][EFW] | 5A                |
-| EP_13: Business Regulations                    | [Economic Freedom of the World][EFW] | 5C                |
-| EP_21: Transfers and Subsidies                 | [Economic Freedom of the World][EFW] | 1B                |
-| EP_22: State Ownership                         | [Economic Freedom of the World][EFW] | IE                |
-| EP_31: Monetary Freedom                        | [Index of Economic Freedom][HIEF]    | Monetary Freedom  |
-| EP_32: Financial Freedom                       | [Index of Economic Freedom][HIEF]    | Financial Freedom |
-| EP_33: Foreign Currency and Bank Accounts      | [Economic Freedom of the World][EFW] | 3D                |
-| EP_41: Trade Freedom                           | [Index of Economic Freedom][HIEF]    | Trade Freedom     |
-| EP_42: Freedom to Trade Internationally        | [Economic Freedom of the World][EFW] | 4                 |
-| **Institutional populism**                     |                                      |                   |
-| IP_11: Rule of law                             | [V-Dem][VDEM2]                       | v2x_rule          |
-| IP_12: Judiciary Consraints on the Executive   | [V-Dem][VDEM2]                       | v2x_jucon         |
-| IP_13: Legislative Consraints on the Executive | [V-Dem][VDEM2]                       | v2xlg_legcon      |
-| IP_14: Rule of Law                             | [World Governance Indicators][WGI]   | RL_EST            |
-| IP_21: Corruption                              | [V-Dem][VDEM2]                       | 2x_execorr        |
-| IP_22: Control of Corruption                   | [World Governance Indicators][WGI]   | CC_EST            |
-| IP_31: Neopatrimonialism                       | [V-Dem][VDEM2]                       | 2x_neopat         |
-| IP_41: Freedom of Expression                   | [V-Dem][VDEM2]                       | v2mecenefm_osp    |
-| IP_51: Property Rights                         | [Index of Economic Freedom][HIEF]    | Property Rights   |
+| Variable                                           | Source                               | Variable code     |
+| :------------------------------------------------- | :----------------------------------- | :---------------- |
+| **Populism rhetorical index**                      |                                      |                   |
+| Populism index                                     | [V-Dem][VDEM1]                       | v2xpa_popul       |
+| **Economic populism**                              |                                      |                   |
+| $EP_{11}$: Business Freedom                        | [Index of Economic Freedom][HIEF]    | Business Freedom  |
+| $EP_{12}$: Labor Markert Regulations               | [Economic Freedom of the World][EFW] | 5A                |
+| $EP_{13}$: Business Regulations                    | [Economic Freedom of the World][EFW] | 5C                |
+| $EP_{21}$: Transfers and Subsidies                 | [Economic Freedom of the World][EFW] | 1B                |
+| $EP_{22}$: State Ownership                         | [Economic Freedom of the World][EFW] | IE                |
+| $EP_{31}$: Monetary Freedom                        | [Index of Economic Freedom][HIEF]    | Monetary Freedom  |
+| $EP_{32}$: Financial Freedom                       | [Index of Economic Freedom][HIEF]    | Financial Freedom |
+| $EP_{33}$: Foreign Currency and Bank Accounts      | [Economic Freedom of the World][EFW] | 3D                |
+| $EP_{41}$: Trade Freedom                           | [Index of Economic Freedom][HIEF]    | Trade Freedom     |
+| $EP_{42}$: Freedom to Trade Internationally        | [Economic Freedom of the World][EFW] | 4                 |
+| **Institutional populism**                         |                                      |                   |
+| $IP_{11}$: Rule of law                             | [V-Dem][VDEM2]                       | v2x_rule          |
+| $IP_{12}$: Judiciary Consraints on the Executive   | [V-Dem][VDEM2]                       | v2x_jucon         |
+| $IP_{13}$: Legislative Consraints on the Executive | [V-Dem][VDEM2]                       | v2xlg_legcon      |
+| $IP_{14}$: Rule of Law                             | [World Governance Indicators][WGI]   | RL_EST            |
+| $IP_{21}$: Corruption                              | [V-Dem][VDEM2]                       | 2x_execorr        |
+| $IP_{22}$: Control of Corruption                   | [World Governance Indicators][WGI]   | CC_EST            |
+| $IP_{31}$: Neopatrimonialism                       | [V-Dem][VDEM2]                       | 2x_neopat         |
+| $IP_{41}$: Freedom of Expression                   | [V-Dem][VDEM2]                       | v2mecenefm_osp    |
+| $IP_{51}$: Property Rights                         | [Index of Economic Freedom][HIEF]    | Property Rights   |
 
 
 
