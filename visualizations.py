@@ -24,9 +24,11 @@ Last update: 08-Mar-2025
 
 #### Packages
 import os
-import numpy             as np
-import pandas            as pd
-import matplotlib.pyplot as plt
+import numpy                   as np
+import pandas                  as pd
+import matplotlib.pyplot       as plt
+import matplotlib              as mpl
+import matplotlib.font_manager as fm
 
 #### General settings
 PATH = 'C:/Users/ncachanosky/OneDrive/Research/populism-index/'
@@ -51,17 +53,33 @@ del PATH, FILE
 # ============================================================================|
 # %% PLOT SETTINGS
 
-#### Plot settings
-#style = "https://github.com/ncachanosky/populism-index/tree/style_sheet/my-plot_style.mplstyle"
-#style = "C:/Users/ncachanosky/OneDrive/Research/populism-index/visualizations/style_sheet/my-plot_style.mplstyle"
-#plt.style.use(style)
-
+#### Style
 print(plt.style.available)
 plt.style.use('fivethirtyeight')
 
+
+#### Parameters
+available_fonts = sorted([f.name for f in fm.fontManager.ttflist])
+mpl.rcParams["font.family"] = "Times New Roman"
+mpl.rcParams["figure.dpi"]  = 600
+
+
+#### Color Palette
+c_palette = ["#0E2841",     # Dark blue
+             "#156082",     # Dark teal
+             "#E97132",     # Orange
+             "#196B24",     # Dark Green
+             "#0F9ED5",     # Cyan
+             "#A02B93",     # Plum
+             "#4EA72E"]     # Green
+
+mpl.rcParams["axes.prop_cycle"] = plt.cycler(color=c_palette)
+
+
+#### Format
 fig_landscape = (16,9)
 fig_square    = (9, 9)
-#title_font_size = 26
+
 
 # ============================================================================|
 # %% TIME-SERIES: ALL COUNTRIES
