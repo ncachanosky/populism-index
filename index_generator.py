@@ -31,8 +31,6 @@ PATH = 'C:/Users/ncachanosky/OneDrive/Research/populism-index/'
 os.chdir(PATH)
 del PATH
 
-print(plt.style.available)
-
 # ============================================================================|
 # %% INDEX SKELETON
 
