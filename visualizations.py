@@ -43,12 +43,9 @@ INDEX = pd.read_excel(FILE)
 INDEX = INDEX[INDEX['YEAR'] != 2000]  # Year 2001 is missing
 INDEX = INDEX[INDEX['YEAR'] != 2020]  # Year 2020 is missing
 
-countries = INDEX['COUNTRY'].unique()
-region    = INDEX['REGION'].unique()
-years     = INDEX['YEAR'].unique()
 
 #### Clean up
-del PATH, FILE, region
+del PATH, FILE
 
 
 # ============================================================================|
@@ -76,15 +73,15 @@ mpl.rcParams["figure.dpi"]      = 300
 
 
 #### Color Palette
-c_palette = ["#0E2841",     # Dark blue
-             "#156082",     # Dark teal
-             "#E97132",     # Orange
-             "#196B24",     # Dark Green
-             "#0F9ED5",     # Cyan
-             "#A02B93",     # Plum
-             "#4EA72E"]     # Green
+colors = ['#418AB3',        # 0 Blue
+          '#A6B727',        # 1 Green
+          '#F69200',        # 2 Orange
+          '#838383',        # 3 Gray
+          '#FEC306',        # 4 Yellow
+          '#DF5327',        # 5 Red
+          ]
 
-mpl.rcParams["axes.prop_cycle"] = plt.cycler(color=c_palette)
+mpl.rcParams["axes.prop_cycle"] = plt.cycler(color=colors)
 
 
 #### Format
@@ -94,11 +91,15 @@ fig_square    = ( 3  , 3)
 
 
 #### Clean up
-del available_fonts, c_palette
+del available_fonts
 
 
 # ============================================================================|
 # %% TIME-SERIES: ALL COUNTRIES
+
+countries = INDEX['COUNTRY'].unique()
+region    = INDEX['REGION'].unique()
+years     = INDEX['YEAR'].unique()
 
 #### Build plots
 for country in countries:
@@ -110,9 +111,9 @@ for country in countries:
     #----------------------------------------------------------------------
     fig, ax = plt.subplots(figsize=fig_word)
     plt.title(country)
-    plt.plot(T, P , label='Populism Index'        , c='C0'   )
-    plt.plot(T, EP, label='Economic Populism'     , c='C1')
-    plt.plot(T, IP, label='Institutional Populism', c='C2' )
+    plt.plot(T, P , label='Populism Index'        )
+    plt.plot(T, EP, label='Economic Populism'     )
+    plt.plot(T, IP, label='Institutional Populism')
     plt.xlim(2002, 2020)
     plt.legend(labelcolor='linecolor')
     plt.tight_layout()
@@ -142,9 +143,9 @@ labels = ['Populism index',
 #### Average: Latin-America
 fig, ax = plt.subplots(figsize=fig_word)
 plt.title("Populism indices, Latin America averages")
-plt.plot(T, y1, label=labels[0], c='C0')
-plt.plot(T, y2, label=labels[1], c='C1')
-plt.plot(T, y3, label=labels[2], c='C2')
+plt.plot(T, y1, label=labels[0])
+plt.plot(T, y2, label=labels[1])
+plt.plot(T, y3, label=labels[2])
 plt.xlim(2002, 2020)
 plt.legend(labelcolor='linecolor')
 plt.tight_layout()
@@ -162,9 +163,9 @@ P3 = P['South America']
 
 fig, ax = plt.subplots(figsize=fig_word)
 plt.title("Populism, Latin America regional averages")
-plt.plot(T, P1, label='Caribbean'      , c='C3' )
+plt.plot(T, P1, label='Caribbean'      , c='C3')
 plt.plot(T, P2, label='Central America', c='C4')
-plt.plot(T, P3, label='South America'  , c='C5' )
+plt.plot(T, P3, label='South America'  , c='C5')
 plt.xlim(2002, 2020)
 plt.legend(labelcolor='linecolor')
 plt.tight_layout()
@@ -186,7 +187,7 @@ plt.plot(T, EP1, label='Caribbean'      , c='C3' )
 plt.plot(T, EP2, label='Central America', c='C4')
 plt.plot(T, EP3, label='South America'  , c='C5' )
 plt.xlim(2002, 2020)
-plt.legend(labelcolor='linecolor')
+plt.legend(labelcolor='linecolor',ncol=3, loc='lower center')
 plt.tight_layout()
 plt.savefig('visualizations/TS_Regional_EP')
 plt.show()
@@ -232,7 +233,7 @@ for year in years:
     #----------------------------------------------------------------------
     fig, ax = plt.subplots(figsize=fig_square)
     plt.title(year)
-    plt.scatter(EP,IP, color = 'tab:orange', s=20)
+    plt.scatter(EP,IP, color = 'C2', s=20)
     plt.plot([0,100],[0,100], color='gray', linewidth=0.5, ls='-.', alpha=0.5)
     plt.xlabel('Economic populism')
     plt.ylabel('Institutional populism')
@@ -257,11 +258,11 @@ TITLE = "Populism transition"
 
 fig, ax = plt.subplots(figsize=fig_square)
 plt.plot([0,100],[0,100], color='gray', linewidth=0.5, ls='-.', alpha=0.5)
-plt.plot(ARG['EP'],ARG['IP'],'o-',lw=1, ms=2,color='tab:blue' ,label=LABELS[0])
-plt.plot(BOL['EP'],BOL['IP'],'o-',lw=1, ms=2,color='tab:green',label=LABELS[1])
-plt.plot(ECU['EP'],ECU['IP'],'o-',lw=1, ms=2,color='tab:red'  ,label=LABELS[2])
-plt.plot(NIC['EP'],NIC['IP'],'o-',lw=1, ms=2,color='tab:cyan' ,label=LABELS[3])
-plt.plot(VEN['EP'],VEN['IP'],'o-',lw=1, ms=2,color='tab:olive',label=LABELS[4])
+plt.plot(ARG['EP'],ARG['IP'],'o-',lw=1, ms=2,color='C0',label=LABELS[0])
+plt.plot(BOL['EP'],BOL['IP'],'o-',lw=1, ms=2,color='C1',label=LABELS[1])
+plt.plot(ECU['EP'],ECU['IP'],'o-',lw=1, ms=2,color='C5',label=LABELS[2])
+plt.plot(NIC['EP'],NIC['IP'],'o-',lw=1, ms=2,color='C3' ,label=LABELS[3])
+plt.plot(VEN['EP'],VEN['IP'],'o-',lw=1, ms=2,color='C4',label=LABELS[4])
 plt.xlabel("Economic populism")
 plt.ylabel("Institutional populism")
 plt.axis_range=axis_range
@@ -272,14 +273,14 @@ plt.savefig('visualizations/transition')
 plt.show()
 
 
-#### VPARTY VS EP INDEX
+#### VParty VS EP Index
 year_data = INDEX[INDEX['YEAR'] == 2015]
 EP        = year_data['EP']
 IP        = year_data['IP']
 VPARTY    = year_data['VPARTY']*100
 
 fig, ax = plt.subplots(figsize=fig_square)
-plt.scatter(VPARTY,EP, color = 'tab:orange', s=20)
+plt.scatter(VPARTY,EP, color = 'C2', s=20)
 plt.plot([0,100],[0,100], color='gray', linewidth=0.5, ls='-.', alpha=0.5)
 plt.xlabel('V-Party')
 plt.ylabel('Economic populism')
@@ -424,12 +425,12 @@ ARG_V = [ARG['EP'].iloc[23], ARG['IP'].iloc[23]]
 LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
 axis_range = [0, 100, 0, 100]
 fig, ax = plt.subplots(figsize=fig_square)
-plt.scatter(ARG['EP'], ARG['IP'], color = 'tab:orange', s=S[1], alpha=0.5)
-plt.scatter(ARG_A[0] , ARG_A[1] , color = 'tab:blue'  , s=S[0], alpha=1.0, label=LABELS[0])
-plt.scatter(ARG_B[0] , ARG_B[1] , color = 'tab:green' , s=S[1], alpha=0.7, label=LABELS[1])
-plt.scatter(ARG_E[0] , ARG_E[1] , color = 'tab:red'   , s=S[1], alpha=0.7, label=LABELS[2])
-plt.scatter(ARG_N[0] , ARG_N[1] , color = 'tab:cyan'  , s=S[1], alpha=0.7, label=LABELS[3])
-plt.scatter(ARG_V[0] , ARG_V[1] , color = 'tab:olive' , s=S[1], alpha=0.7, label=LABELS[4])
+plt.scatter(ARG['EP'], ARG['IP'], color = 'C3', s=S[1], alpha=0.4)
+plt.scatter(ARG_A[0] , ARG_A[1] , color = 'C0', s=S[0], alpha=1.0, label=LABELS[0])
+plt.scatter(ARG_B[0] , ARG_B[1] , color = 'C1', s=S[1], alpha=1.0, label=LABELS[1])
+plt.scatter(ARG_E[0] , ARG_E[1] , color = 'C5', s=S[1], alpha=1.0, label=LABELS[2])
+plt.scatter(ARG_N[0] , ARG_N[1] , color = 'C2', s=S[1], alpha=1.0, label=LABELS[3])
+plt.scatter(ARG_V[0] , ARG_V[1] , color = 'C4', s=S[1], alpha=1.0, label=LABELS[4])
 plt.plot([0,100],[0,100], color='gray', ls=':')
 plt.xlabel('Economic populism')
 plt.ylabel('institutional populism')
@@ -450,12 +451,12 @@ BOL_V = [BOL['EP'].iloc[23], BOL['IP'].iloc[23]]
 LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
 axis_range = [0, 100, 0, 100]
 fig, ax = plt.subplots(figsize=fig_square)
-plt.scatter(BOL['EP'], BOL['IP'], color = 'tab:orange', s=S[1], alpha=0.5)
-plt.scatter(BOL_A[0] , BOL_A[1] , color = 'tab:blue'  , s=S[1], alpha=0.7, label=LABELS[0])
-plt.scatter(BOL_B[0] , BOL_B[1] , color = 'tab:green' , s=S[0], alpha=1.0, label=LABELS[1])
-plt.scatter(BOL_E[0] , BOL_E[1] , color = 'tab:red'   , s=S[1], alpha=0.7, label=LABELS[2])
-plt.scatter(BOL_N[0] , BOL_N[1] , color = 'tab:cyan'  , s=S[1], alpha=0.7, label=LABELS[3])
-plt.scatter(BOL_V[0] , BOL_V[1] , color = 'tab:olive' , s=S[1], alpha=0.7, label=LABELS[4])
+plt.scatter(BOL['EP'], BOL['IP'], color = 'C3', s=S[1], alpha=0.4)
+plt.scatter(BOL_A[0] , BOL_A[1] , color = 'C0', s=S[1], alpha=1.0, label=LABELS[0])
+plt.scatter(BOL_B[0] , BOL_B[1] , color = 'C1', s=S[0], alpha=1.0, label=LABELS[1])
+plt.scatter(BOL_E[0] , BOL_E[1] , color = 'C5', s=S[1], alpha=1.0, label=LABELS[2])
+plt.scatter(BOL_N[0] , BOL_N[1] , color = 'C2', s=S[1], alpha=1.0, label=LABELS[3])
+plt.scatter(BOL_V[0] , BOL_V[1] , color = 'C4', s=S[1], alpha=1.0, label=LABELS[4])
 plt.plot([0,100],[0,100], color='gray', ls=':')
 plt.xlabel('Economic populism')
 plt.ylabel('institutional populism')
@@ -476,12 +477,12 @@ ECU_V = [ECU['EP'].iloc[23], ECU['IP'].iloc[23]]
 LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
 axis_range = [0, 100, 0, 100]
 fig, ax = plt.subplots(figsize=fig_square)
-plt.scatter(ECU['EP'], ECU['IP'], color = 'tab:orange', s=S[1], alpha=0.5)
-plt.scatter(ECU_A[0] , ECU_A[1] , color = 'tab:blue'  , s=S[1], alpha=0.7, label=LABELS[0])
-plt.scatter(ECU_B[0] , ECU_B[1] , color = 'tab:green' , s=S[1], alpha=0.7, label=LABELS[1])
-plt.scatter(ECU_E[0] , ECU_E[1] , color = 'tab:red'   , s=S[0], alpha=1.0, label=LABELS[2])
-plt.scatter(ECU_N[0] , ECU_N[1] , color = 'tab:cyan'  , s=S[1], alpha=0.7, label=LABELS[3])
-plt.scatter(ECU_V[0] , ECU_V[1] , color = 'tab:olive' , s=S[1], alpha=0.7, label=LABELS[4])
+plt.scatter(ECU['EP'], ECU['IP'], color = 'C3', s=S[1], alpha=0.4)
+plt.scatter(ECU_A[0] , ECU_A[1] , color = 'C0', s=S[1], alpha=1.0, label=LABELS[0])
+plt.scatter(ECU_B[0] , ECU_B[1] , color = 'C1', s=S[1], alpha=1.0, label=LABELS[1])
+plt.scatter(ECU_E[0] , ECU_E[1] , color = 'C5', s=S[0], alpha=1.0, label=LABELS[2])
+plt.scatter(ECU_N[0] , ECU_N[1] , color = 'C2', s=S[1], alpha=1.0, label=LABELS[3])
+plt.scatter(ECU_V[0] , ECU_V[1] , color = 'C4', s=S[1], alpha=1.0, label=LABELS[4])
 plt.plot([0,100],[0,100], color='gray', ls=':')
 plt.xlabel('Economic populism')
 plt.ylabel('institutional populism')
@@ -502,12 +503,12 @@ NIC_V = [NIC['EP'].iloc[23], NIC['IP'].iloc[23]]
 LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
 axis_range = [0, 100, 0, 100]
 fig, ax = plt.subplots(figsize=fig_square)
-plt.scatter(NIC['EP'], NIC['IP'], color = 'tab:orange', s=S[1], alpha=0.5)
-plt.scatter(NIC_A[0] , NIC_A[1] , color = 'tab:blue'  , s=S[1], alpha=0.7, label=LABELS[0])
-plt.scatter(NIC_B[0] , NIC_B[1] , color = 'tab:green' , s=S[1], alpha=0.7, label=LABELS[1])
-plt.scatter(NIC_E[0] , NIC_E[1] , color = 'tab:red'   , s=S[1], alpha=0.7, label=LABELS[2])
-plt.scatter(NIC_N[0] , NIC_N[1] , color = 'tab:cyan'  , s=S[0], alpha=1.0, label=LABELS[3])
-plt.scatter(NIC_V[0] , NIC_V[1] , color = 'tab:olive' , s=S[1], alpha=0.7, label=LABELS[4])
+plt.scatter(NIC['EP'], NIC['IP'], color = 'C3', s=S[1], alpha=0.4)
+plt.scatter(NIC_A[0] , NIC_A[1] , color = 'C0', s=S[1], alpha=1.0, label=LABELS[0])
+plt.scatter(NIC_B[0] , NIC_B[1] , color = 'C1', s=S[1], alpha=1.0, label=LABELS[1])
+plt.scatter(NIC_E[0] , NIC_E[1] , color = 'C5', s=S[1], alpha=1.0, label=LABELS[2])
+plt.scatter(NIC_N[0] , NIC_N[1] , color = 'C2', s=S[0], alpha=1.0, label=LABELS[3])
+plt.scatter(NIC_V[0] , NIC_V[1] , color = 'C4', s=S[1], alpha=1.0, label=LABELS[4])
 plt.plot([0,100],[0,100], color='gray', ls=':')
 plt.xlabel('Economic populism')
 plt.ylabel('institutional populism')
@@ -528,12 +529,12 @@ VEN_V = [VEN['EP'].iloc[23], VEN['IP'].iloc[23]]
 LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
 axis_range = [0, 100, 0, 100]
 fig, ax = plt.subplots(figsize=fig_square)
-plt.scatter(VEN['EP'], VEN['IP'], color = 'tab:orange', s=S[1], alpha=0.5)
-plt.scatter(VEN_A[0] , VEN_A[1] , color = 'tab:blue'  , s=S[1], alpha=0.7, label=LABELS[0])
-plt.scatter(VEN_B[0] , VEN_B[1] , color = 'tab:green' , s=S[1], alpha=0.7, label=LABELS[1])
-plt.scatter(VEN_E[0] , VEN_E[1] , color = 'tab:red'   , s=S[1], alpha=0.7, label=LABELS[2])
-plt.scatter(VEN_N[0] , VEN_N[1] , color = 'tab:cyan'  , s=S[1], alpha=0.7, label=LABELS[3])
-plt.scatter(VEN_V[0] , VEN_V[1] , color = 'tab:olive' , s=S[0], alpha=1.0, label=LABELS[4])
+plt.scatter(VEN['EP'], VEN['IP'], color = 'C3', s=S[1], alpha=0.4)
+plt.scatter(VEN_A[0] , VEN_A[1] , color = 'C0', s=S[1], alpha=1.0, label=LABELS[0])
+plt.scatter(VEN_B[0] , VEN_B[1] , color = 'C1', s=S[1], alpha=1.0, label=LABELS[1])
+plt.scatter(VEN_E[0] , VEN_E[1] , color = 'C5', s=S[1], alpha=1.0, label=LABELS[2])
+plt.scatter(VEN_N[0] , VEN_N[1] , color = 'C2', s=S[1], alpha=1.0, label=LABELS[3])
+plt.scatter(VEN_V[0] , VEN_V[1] , color = 'C4', s=S[0], alpha=1.0, label=LABELS[4])
 plt.plot([0,100],[0,100], color='gray', ls=':')
 plt.xlabel('Economic populism')
 plt.ylabel('institutional populism')
