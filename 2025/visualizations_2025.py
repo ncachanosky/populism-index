@@ -32,11 +32,11 @@ import matplotlib.font_manager as fm
 
 
 #### General settings
-PATH = 'C:/Users/ncachanosky/OneDrive/Research/populism-index/'
+PATH = 'C:/Users/ncachanosky/OneDrive/Research/populism-index/2025/'
 os.chdir(PATH)
 
 #### Load data
-FILE  = "index_2023.xlsx"
+FILE  = "index_2025.xlsx"
 FILE  = pd.ExcelFile(FILE)
 
 INDEX = pd.read_excel(FILE)
@@ -420,7 +420,7 @@ ARG_A = [ARG['EP'].iloc[ 0], ARG['IP'].iloc[ 0]]
 ARG_B = [ARG['EP'].iloc[ 1], ARG['IP'].iloc[ 1]]
 ARG_E = [ARG['EP'].iloc[ 8], ARG['IP'].iloc[ 8]]
 ARG_N = [ARG['EP'].iloc[15], ARG['IP'].iloc[15]]
-ARG_V = [ARG['EP'].iloc[23], ARG['IP'].iloc[23]]   
+ARG_V = [ARG['EP'].iloc[22], ARG['IP'].iloc[22]]   
 
 LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
 axis_range = [0, 100, 0, 100]
@@ -447,7 +447,7 @@ BOL_A = [BOL['EP'].iloc[ 0], BOL['IP'].iloc[ 0]]
 BOL_B = [BOL['EP'].iloc[ 1], BOL['IP'].iloc[ 1]]
 BOL_E = [BOL['EP'].iloc[ 8], BOL['IP'].iloc[ 8]]
 BOL_N = [BOL['EP'].iloc[15], BOL['IP'].iloc[15]]
-BOL_V = [BOL['EP'].iloc[23], BOL['IP'].iloc[23]]   
+BOL_V = [BOL['EP'].iloc[22], BOL['IP'].iloc[22]]   
 
 LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
 axis_range = [0, 100, 0, 100]
@@ -474,7 +474,7 @@ ECU_A = [ECU['EP'].iloc[ 0], ECU['IP'].iloc[ 0]]
 ECU_B = [ECU['EP'].iloc[ 1], ECU['IP'].iloc[ 1]]
 ECU_E = [ECU['EP'].iloc[ 8], ECU['IP'].iloc[ 8]]
 ECU_N = [ECU['EP'].iloc[15], ECU['IP'].iloc[15]]
-ECU_V = [ECU['EP'].iloc[23], ECU['IP'].iloc[23]]   
+ECU_V = [ECU['EP'].iloc[22], ECU['IP'].iloc[22]]   
 
 LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
 axis_range = [0, 100, 0, 100]
@@ -501,7 +501,7 @@ NIC_A = [NIC['EP'].iloc[ 0], NIC['IP'].iloc[ 0]]
 NIC_B = [NIC['EP'].iloc[ 1], NIC['IP'].iloc[ 1]]
 NIC_E = [NIC['EP'].iloc[ 8], NIC['IP'].iloc[ 8]]
 NIC_N = [NIC['EP'].iloc[15], NIC['IP'].iloc[15]]
-NIC_V = [NIC['EP'].iloc[23], NIC['IP'].iloc[23]]   
+NIC_V = [NIC['EP'].iloc[22], NIC['IP'].iloc[22]]   
 
 LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
 axis_range = [0, 100, 0, 100]
@@ -528,7 +528,7 @@ VEN_A = [VEN['EP'].iloc[ 0], VEN['IP'].iloc[ 0]]
 VEN_B = [VEN['EP'].iloc[ 1], VEN['IP'].iloc[ 1]]
 VEN_E = [VEN['EP'].iloc[ 8], VEN['IP'].iloc[ 8]]
 VEN_N = [VEN['EP'].iloc[15], VEN['IP'].iloc[15]]
-VEN_V = [VEN['EP'].iloc[23], VEN['IP'].iloc[23]]   
+VEN_V = [VEN['EP'].iloc[22], VEN['IP'].iloc[22]]   
 
 LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
 axis_range = [0, 100, 0, 100]

@@ -112,8 +112,9 @@ del START, END, t, df_new
 
 # ============================================================================|
 # %% DATA | V-PARTY INDEX
+
 #### Data
-FILE = "C:/Users/ncachanosky/OneDrive/Research/Datasets/V-Dem-CPD-Party-V2.dta"
+FILE = "V-Party-2.dta."
 VPARTY = pd.read_stata(FILE)
 del FILE
 
@@ -182,7 +183,7 @@ del VPARTY, FILE
 # Be patient with data import (can take a few minutes)
 # Then rename columns used for merging
 
-FILE = "C:/Users/ncachanosky/OneDrive/Research/Datasets/V-Dem-CY-Core-v13.dta"
+FILE = "Data/V-Dem-13.dta"
 VDEM = pd.read_stata(FILE)
 VDEM = VDEM.rename(columns={'country_text_id':'ISO3' })
 VDEM = VDEM.rename(columns={'year'           :'YEAR'})
