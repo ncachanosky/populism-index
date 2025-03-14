@@ -93,7 +93,7 @@ mpl.rcParams["axes.prop_cycle"] = plt.cycler(color=colors)
 
 
 #### Size
-fig_word      = ( 6.5, 4)
+fig_word      = ( 6.5, 3.5)
 fig_landscape = (16  , 9)
 fig_square    = ( 3  , 3)
 
