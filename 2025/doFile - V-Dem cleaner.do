@@ -30,7 +30,7 @@ keep $keep1 $keep2
 
 *| DROP OBSERVATIONS PRIOR TO 1990 AND AFTER 2020
 drop if year < 1990
-drop if year > 2000
+drop if year > 2020
 
 
 *| SAVE DATA

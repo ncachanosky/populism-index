@@ -53,7 +53,7 @@ del PATH, FILE
 
 #### Style
 print(plt.style.available)
-plt.style.use('fivethirtyeight')
+plt.style.use('_mpl-gallery')
 
 
 #### Parameters
@@ -65,11 +65,19 @@ for font in fm.findSystemFonts(font_dir):
 
 available_fonts = sorted([f.name for f in fm.fontManager.ttflist])
 
-mpl.rcParams["font.family"]     = "Aptos Serif"
-mpl.rcParams["font.size"]       =  10
-mpl.rcParams["axes.titlesize"]  =  12
-mpl.rcParams["lines.linewidth"] =   2
-mpl.rcParams["figure.dpi"]      = 300
+mpl.rcParams["font.family"]        = "Aptos Serif"
+mpl.rcParams["figure.facecolor"]   = "white"
+mpl.rcParams["axes.facecolor"]     = "white"
+mpl.rcParams["font.size"]          =  10
+mpl.rcParams["axes.titlesize"]     =  12
+mpl.rcParams["lines.linewidth"]    =   2
+mpl.rcParams["figure.dpi"]         = 300
+mpl.rcParams["axes.spines.top"]    = True
+mpl.rcParams["axes.spines.right"]  = True
+mpl.rcParams["axes.spines.bottom"] = True
+mpl.rcParams["axes.spines.left"]   = True
+mpl.rcParams["axes.edgecolor"]     = "lightgray"
+plt.rcParams["grid.color"]         = "lightgray"
 
 
 #### Color Palette: Marquee
@@ -84,7 +92,7 @@ colors = ['#418AB3',        # 0 Blue
 mpl.rcParams["axes.prop_cycle"] = plt.cycler(color=colors)
 
 
-#### Format
+#### Size
 fig_word      = ( 6.5, 4)
 fig_landscape = (16  , 9)
 fig_square    = ( 3  , 3)
@@ -232,7 +240,7 @@ for year in years:
     IP = year_data['IP']
     #----------------------------------------------------------------------
     fig, ax = plt.subplots(figsize=fig_square)
-    plt.title(year)
+#    plt.title(year)
     plt.scatter(EP,IP, color = 'C2', s=20)
     plt.plot([0,100],[0,100], color='gray', linewidth=0.5, ls=':', alpha=0.5)
     plt.xlabel('Economic populism')
@@ -290,6 +298,18 @@ plt.tight_layout()
 plt.savefig('visualizations/scatter_'+i)
 plt.show()
 
+
+#### VParty VS IP Index
+fig, ax = plt.subplots(figsize=fig_square)
+plt.scatter(VPARTY,IP, color = 'C2', s=20)
+plt.plot([0,100],[0,100], color='gray', linewidth=0.5, ls='-.', alpha=0.5)
+plt.xlabel('V-Party')
+plt.ylabel('Institutional populism')
+plt.axis_range = axis_range
+plt.xticks(np.arange(0, 101, 20))
+plt.tight_layout()
+plt.savefig('visualizations/scatter_'+i)
+plt.show()
 
 # ============================================================================|
 # %% THE ICONIC FIVE: TIME SERIES
