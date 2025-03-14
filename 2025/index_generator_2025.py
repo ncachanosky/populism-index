@@ -215,6 +215,7 @@ INDEX = INDEX.rename(columns={code4:'VDEM_4'})
 INDEX = INDEX.rename(columns={code5:'VDEM_5'})
 INDEX = INDEX.rename(columns={code6:'VDEM_6'})
 
+
 #### Clean up
 del VDEM, VDEM_1, code1, code2, code3, code4, code5, code6, FILE
 
@@ -355,11 +356,12 @@ IP3 = INDEX['IP_3']     # Neopatrimonialism
 IP4 = INDEX['IP_4']     # Freedom of the Press
 IP5 = INDEX['IP_5']     # Clean Election Index
 IP6 = INDEX['IP_6']     # Property Rights
-INDEX['IP'] = INDEX['VPARTY'] * (IP1 + IP2 + IP3 + IP4 + IP5 + IP6)/6
+INDEX['IP']  = (IP1 + IP2 + IP3 + IP4 + IP5 + IP6)/6
+INDEX['PIP'] = INDEX['VPARTY'] * INDEX['IP']
 
 
-INDEX['IP_RANK']       = INDEX.groupby('YEAR')['IP'].rank(ascending=False)
-INDEX['IP_PERCENTILE'] = INDEX.groupby('YEAR')['IP'].rank(pct=True)
+INDEX['PIP_RANK']       = INDEX.groupby('YEAR')['PIP'].rank(ascending=False)
+INDEX['PIP_PERCENTILE'] = INDEX.groupby('YEAR')['PIP'].rank(pct=True)
 
 #### Clean up
 del IP11, IP12, IP13, IP14, IP21, IP22, IP1, IP2, IP3, IP4, IP5, IP6
@@ -383,10 +385,11 @@ INDEX['EP_1'] = EP1
 INDEX['EP_2'] = EP2
 INDEX['EP_3'] = EP3
 INDEX['EP_4'] = EP4
-INDEX['EP']   = INDEX['VPARTY'] * (EP1 + EP2 + EP3 + EP4)/4
+INDEX['EP']   = (EP1 + EP2 + EP3 + EP4)/4
+INDEX['PEP']  = INDEX['VPARTY'] * INDEX['EP']
 
-INDEX['EP_RANK']       = INDEX.groupby('YEAR')['EP'].rank(ascending=False)
-INDEX['EP_PERCENTILE'] = INDEX.groupby('YEAR')['EP'].rank(pct=True)
+INDEX['PEP_RANK']       = INDEX.groupby('YEAR')['PEP'].rank(ascending=False)
+INDEX['PEP_PERCENTILE'] = INDEX.groupby('YEAR')['PEP'].rank(pct=True)
 
 #### Clean up
 del EP1, EP2, EP3, EP4
@@ -395,10 +398,14 @@ del EP1, EP2, EP3, EP4
 # ============================================================================|
 # %% INDEX | POPULISM OVERAL INDEX
 
-INDEX['POPULISM'] = (INDEX['IP'] + INDEX['EP'])/2
+INDEX['POP'] = (INDEX['PIP'] + INDEX['PEP'])/2
 
-INDEX['POPULISM_RANK']       = INDEX.groupby('YEAR')['POPULISM'].rank(ascending=False)
-INDEX['POPULISM_PERCENTILE'] = INDEX.groupby('YEAR')['POPULISM'].rank(pct=True)
+INDEX['POP_RANK']       = INDEX.groupby('YEAR')['POP'].rank(ascending=False)
+INDEX['POP_PERCENTILE'] = INDEX.groupby('YEAR')['POP'].rank(pct=True)
+
+
+INDEX= INDEX.rename(columns={'VPARTY':'POP_R'})
+
 
 # ============================================================================|
 # %% CLEAN UP DATASET
@@ -411,18 +418,18 @@ KEEP = ['ISO2'               ,
         'LLDC'               ,
         'SIDS'               ,
         'YEAR'               ,
-        'POPULISM'           ,
-        'POPULISM_RANK'      ,
-        'POPULISM_PERCENTILE',
-        'IP'                 ,
-        'IP_RANK'            ,
-        'IP_PERCENTILE'      ,
-        'IP_1','IP_2','IP_3' ,'IP_4','IP_5','IP_6',
-        'EP'                 ,
-        'EP_RANK'            ,
-        'EP_PERCENTILE'      ,
-        'EP_1','EP_2','EP_3' ,'EP_4',
-        'VPARTY'             ,
+        'POP'           ,
+        'POP_RANK'      ,
+        'POP_PERCENTILE',
+        'PIP'                 ,
+        'PIP_RANK'            ,
+        'PIP_PERCENTILE'      ,
+        'IP','IP_1','IP_2','IP_3' ,'IP_4','IP_5','IP_6',
+        'PEP'                 ,
+        'PEP_RANK'            ,
+        'PEP_PERCENTILE'      ,
+        'EP','EP_1','EP_2','EP_3' ,'EP_4',
+        'POP_R'             ,
         'PARTY_CODE'         ,
         'PARTY_NAME']
 
@@ -461,6 +468,31 @@ del file_name, extension_1, extension_2, extension_3, extension_4
 del replacements
 
 
+# ============================================================================|
+# %% MISSING DATA TABLE
+
+KEEP = ['COUNTRY'            ,
+        'YEAR'               ,
+        'POPULISM'           ,
+        'IP'                 ,
+        'EP'                 ,
+        'VPARTY'
+        ]
+
+TABLE = INDEX[KEEP]
+
+TABLE = TABLE.set_index(["COUNTRY", "YEAR"]).notna().replace({True: "x", False:""})
+
+pd.set_option("display.max_rows", None)   # Show all rows
+print(TABLE)
+
+obs_year    = TABLE.groupby("YEAR")[["POPULISM", "EP", "IP", "VPARTY"]].count()
+obs_country = TABLE.groupby("COUNTRY")[["POPULISM", "EP", "IP", "VPARTY"]].count()
+
+print(obs_year)
+print(obs_country)
+
+del KEEP, TABLE, obs_year, obs_country
 # ============================================================================|
 # %% THE END
 

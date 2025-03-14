@@ -150,7 +150,7 @@ labels = ['Populism index'   ,
 
 #### Average: Latin-America
 fig, ax = plt.subplots(figsize=fig_word)
-plt.title("Populism indices, Latin America averages")
+# plt.title("Populism indices, Latin America averages")
 plt.plot(T, y1, label=labels[0])
 plt.plot(T, y2, label=labels[1])
 plt.plot(T, y3, label=labels[2])
@@ -170,7 +170,7 @@ P2 = P['Central America']
 P3 = P['South America']
 
 fig, ax = plt.subplots(figsize=fig_word)
-plt.title("Populism, Latin America regional averages")
+# plt.title("Populism, Latin America regional averages")
 plt.plot(T, P1, label='Caribbean'      , c='C3')
 plt.plot(T, P2, label='Central America', c='C4')
 plt.plot(T, P3, label='South America'  , c='C5')
@@ -190,7 +190,7 @@ EP2 = EP['Central America']
 EP3 = EP['South America']
 
 fig, ax = plt.subplots(figsize=fig_word)
-plt.title("Economic Populism, Latin America regional averages")
+# plt.title("Economic Populism, Latin America regional averages")
 plt.plot(T, EP1, label='Caribbean'      , c='C3' )
 plt.plot(T, EP2, label='Central America', c='C4')
 plt.plot(T, EP3, label='South America'  , c='C5' )
@@ -211,7 +211,7 @@ IP2 = IP['Central America']
 IP3 = IP['South America']
 
 fig, ax = plt.subplots(figsize=fig_word)
-plt.title("Institutional Populism, Latin America regional averages")
+# plt.title("Institutional Populism, Latin America regional averages")
 plt.plot(T, IP1, label='Caribbean'      , c='C3' )
 plt.plot(T, IP2, label='Central America', c='C4')
 plt.plot(T, IP3, label='South America'  , c='C5' )
