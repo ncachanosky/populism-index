@@ -114,7 +114,7 @@ del START, END, t, df_new
 # %% DATA | V-PARTY INDEX
 
 #### Data
-FILE = "V-Party-2.dta."
+FILE = "Data/V-Party-2.dta."
 VPARTY = pd.read_stata(FILE)
 del FILE
 
@@ -455,28 +455,26 @@ INDEX['PARTY_NAME'] = INDEX['PARTY_NAME'].replace(replacements, regex=True)
 file_name   = 'index_2025'
 extension_1 = '.csv'
 extension_2 = '.xlsx'
-extension_3 = '.html' 
-extension_4 = '.dta'
+extension_3 = '.dta'
 
 INDEX.to_csv(file_name + extension_1  , encoding='utf-8')
 INDEX.to_excel(file_name + extension_2, index=False)
-INDEX.to_html(file_name + extension_3)
-INDEX.to_stata(file_name + extension_4)
+INDEX.to_stata(file_name + extension_3)
 
 #### Clean up
-del file_name, extension_1, extension_2, extension_3, extension_4
+del file_name, extension_1, extension_2, extension_3
 del replacements
 
 
 # ============================================================================|
 # %% MISSING DATA TABLE
 
-KEEP = ['COUNTRY'            ,
-        'YEAR'               ,
-        'POPULISM'           ,
-        'IP'                 ,
-        'EP'                 ,
-        'VPARTY'
+KEEP = ['COUNTRY',
+        'YEAR'   ,
+        'POP'    ,
+        'PIP'    ,
+        'PEP'    ,
+        'POP_R'
         ]
 
 TABLE = INDEX[KEEP]
@@ -486,8 +484,8 @@ TABLE = TABLE.set_index(["COUNTRY", "YEAR"]).notna().replace({True: "x", False:"
 pd.set_option("display.max_rows", None)   # Show all rows
 print(TABLE)
 
-obs_year    = TABLE.groupby("YEAR")[["POPULISM", "EP", "IP", "VPARTY"]].count()
-obs_country = TABLE.groupby("COUNTRY")[["POPULISM", "EP", "IP", "VPARTY"]].count()
+obs_year    = TABLE.groupby("YEAR")[["POP", "PEP", "PIP", "POP_R"]].count()
+obs_country = TABLE.groupby("COUNTRY")[["POP", "PEP", "PIP", "POP_R"]].count()
 
 print(obs_year)
 print(obs_country)

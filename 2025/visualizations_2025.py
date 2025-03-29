@@ -80,13 +80,13 @@ mpl.rcParams["axes.edgecolor"]     = "lightgray"
 plt.rcParams["grid.color"]         = "lightgray"
 
 
-#### Color Palette: Marquee
-colors = ['#418AB3',        # 0 Blue
-          '#A6B727',        # 1 Green
-          '#F69200',        # 2 Orange
-          '#838383',        # 3 Gray
-          '#FEC306',        # 4 Yellow
-          '#DF5327',        # 5 Red
+#### Color Palette: Aspect
+colors = ['#F07F09',        # 0 Orange
+          '#9F2936',        # 1 Red
+          '#1B587C',        # 2 Blue
+          '#4E8542',        # 3 Green
+          '#604878',        # 4 Purple
+          '#C19859',        # 5 Brown
           ]
 
 mpl.rcParams["axes.prop_cycle"] = plt.cycler(color=colors)
@@ -177,7 +177,7 @@ plt.plot(T, P3, label='South America'  , c='C5')
 plt.xlim(2002, 2020)
 plt.legend(labelcolor='linecolor')
 plt.tight_layout()
-plt.savefig('visualizations/TS_Regional_Populism')
+plt.savefig('visualizations/TS_Regional_POP')
 plt.show()
 
 #### Average: Regional (Economic Populism)
@@ -197,7 +197,7 @@ plt.plot(T, EP3, label='South America'  , c='C5' )
 plt.xlim(2002, 2020)
 plt.legend(labelcolor='linecolor',ncol=3, loc='lower center')
 plt.tight_layout()
-plt.savefig('visualizations/TS_Regional_EP')
+plt.savefig('visualizations/TS_Regional_PEP')
 plt.show()
 
 
@@ -218,7 +218,7 @@ plt.plot(T, IP3, label='South America'  , c='C5' )
 plt.xlim(2002, 2020)
 plt.legend(labelcolor='linecolor')
 plt.tight_layout()
-plt.savefig('visualizations/TS_Regional_IP')
+plt.savefig('visualizations/TS_Regional_PIP')
 plt.show()
 
 
@@ -423,9 +423,9 @@ del ax, fig, t, y, y1, y2, y3
 # %% THE ICONIC FIVE: SCATTER PLOTS
 ARG = INDEX[INDEX['YEAR'].between(2007, 2015)]
 BOL = INDEX[INDEX['YEAR'].between(2006, 2019)]
-ECU = INDEX[INDEX['YEAR'].between(2007, 2017)]
+ECU = INDEX[INDEX['YEAR'].between(2007, 2016)]
 NIC = INDEX[INDEX['YEAR'].between(2007, 2018)]
-VEN = INDEX[INDEX['YEAR'].between(1999, 2018)]
+VEN = INDEX[INDEX['YEAR'].between(2002, 2018)]
 
 ARG = ARG.groupby("ISO3", as_index=False).mean(numeric_only=True)
 BOL = BOL.groupby("ISO3", as_index=False).mean(numeric_only=True)
@@ -436,16 +436,16 @@ VEN = VEN.groupby("ISO3", as_index=False).mean(numeric_only=True)
 S = [40, 20] # [True; False]
 
 #### ARGENTINA
-ARG_A = [ARG['EP'].iloc[ 0], ARG['IP'].iloc[ 0]] 
-ARG_B = [ARG['EP'].iloc[ 1], ARG['IP'].iloc[ 1]]
-ARG_E = [ARG['EP'].iloc[ 8], ARG['IP'].iloc[ 8]]
-ARG_N = [ARG['EP'].iloc[15], ARG['IP'].iloc[15]]
-ARG_V = [ARG['EP'].iloc[22], ARG['IP'].iloc[22]]   
+ARG_A = [ARG['PEP'].iloc[ 0], ARG['PIP'].iloc[ 0]] 
+ARG_B = [ARG['PEP'].iloc[ 1], ARG['PIP'].iloc[ 1]]
+ARG_E = [ARG['PEP'].iloc[ 8], ARG['PIP'].iloc[ 8]]
+ARG_N = [ARG['PEP'].iloc[15], ARG['PIP'].iloc[15]]
+ARG_V = [ARG['PEP'].iloc[22], ARG['PIP'].iloc[22]]   
 
 LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
 axis_range = [0, 100, 0, 100]
 fig, ax = plt.subplots(figsize=fig_square)
-plt.scatter(ARG['EP'], ARG['IP'], color = 'C3', s=S[1], alpha=0.4)
+plt.scatter(ARG['PEP'], ARG['PIP'], color = 'C3', s=S[1], alpha=0.4)
 plt.scatter(ARG_A[0] , ARG_A[1] , color = 'C0', s=S[0], alpha=1.0, label=LABELS[0])
 plt.scatter(ARG_B[0] , ARG_B[1] , color = 'C1', s=S[1], alpha=1.0, label=LABELS[1])
 plt.scatter(ARG_E[0] , ARG_E[1] , color = 'C5', s=S[1], alpha=1.0, label=LABELS[2])
@@ -463,16 +463,16 @@ plt.show()
 
 
 #### BOLIVIA
-BOL_A = [BOL['EP'].iloc[ 0], BOL['IP'].iloc[ 0]] 
-BOL_B = [BOL['EP'].iloc[ 1], BOL['IP'].iloc[ 1]]
-BOL_E = [BOL['EP'].iloc[ 8], BOL['IP'].iloc[ 8]]
-BOL_N = [BOL['EP'].iloc[15], BOL['IP'].iloc[15]]
-BOL_V = [BOL['EP'].iloc[22], BOL['IP'].iloc[22]]   
+BOL_A = [BOL['PEP'].iloc[ 0], BOL['PIP'].iloc[ 0]] 
+BOL_B = [BOL['PEP'].iloc[ 1], BOL['PIP'].iloc[ 1]]
+BOL_E = [BOL['PEP'].iloc[ 8], BOL['PIP'].iloc[ 8]]
+BOL_N = [BOL['PEP'].iloc[15], BOL['PIP'].iloc[15]]
+BOL_V = [BOL['PEP'].iloc[22], BOL['PIP'].iloc[22]]   
 
 LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
 axis_range = [0, 100, 0, 100]
 fig, ax = plt.subplots(figsize=fig_square)
-plt.scatter(BOL['EP'], BOL['IP'], color = 'C3', s=S[1], alpha=0.4)
+plt.scatter(BOL['PEP'], BOL['PIP'], color = 'C3', s=S[1], alpha=0.4)
 plt.scatter(BOL_A[0] , BOL_A[1] , color = 'C0', s=S[1], alpha=1.0, label=LABELS[0])
 plt.scatter(BOL_B[0] , BOL_B[1] , color = 'C1', s=S[0], alpha=1.0, label=LABELS[1])
 plt.scatter(BOL_E[0] , BOL_E[1] , color = 'C5', s=S[1], alpha=1.0, label=LABELS[2])
@@ -490,16 +490,16 @@ plt.show()
 
 
 #### ECUADOR
-ECU_A = [ECU['EP'].iloc[ 0], ECU['IP'].iloc[ 0]] 
-ECU_B = [ECU['EP'].iloc[ 1], ECU['IP'].iloc[ 1]]
-ECU_E = [ECU['EP'].iloc[ 8], ECU['IP'].iloc[ 8]]
-ECU_N = [ECU['EP'].iloc[15], ECU['IP'].iloc[15]]
-ECU_V = [ECU['EP'].iloc[22], ECU['IP'].iloc[22]]   
+ECU_A = [ECU['PEP'].iloc[ 0], ECU['PIP'].iloc[ 0]] 
+ECU_B = [ECU['PEP'].iloc[ 1], ECU['PIP'].iloc[ 1]]
+ECU_E = [ECU['PEP'].iloc[ 8], ECU['PIP'].iloc[ 8]]
+ECU_N = [ECU['PEP'].iloc[15], ECU['PIP'].iloc[15]]
+ECU_V = [ECU['PEP'].iloc[22], ECU['PIP'].iloc[22]]   
 
 LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
 axis_range = [0, 100, 0, 100]
 fig, ax = plt.subplots(figsize=fig_square)
-plt.scatter(ECU['EP'], ECU['IP'], color = 'C3', s=S[1], alpha=0.4)
+plt.scatter(ECU['PEP'], ECU['PIP'], color = 'C3', s=S[1], alpha=0.4)
 plt.scatter(ECU_A[0] , ECU_A[1] , color = 'C0', s=S[1], alpha=1.0, label=LABELS[0])
 plt.scatter(ECU_B[0] , ECU_B[1] , color = 'C1', s=S[1], alpha=1.0, label=LABELS[1])
 plt.scatter(ECU_E[0] , ECU_E[1] , color = 'C5', s=S[0], alpha=1.0, label=LABELS[2])
@@ -517,16 +517,16 @@ plt.show()
 
 
 #### NICARAGUA
-NIC_A = [NIC['EP'].iloc[ 0], NIC['IP'].iloc[ 0]] 
-NIC_B = [NIC['EP'].iloc[ 1], NIC['IP'].iloc[ 1]]
-NIC_E = [NIC['EP'].iloc[ 8], NIC['IP'].iloc[ 8]]
-NIC_N = [NIC['EP'].iloc[15], NIC['IP'].iloc[15]]
-NIC_V = [NIC['EP'].iloc[22], NIC['IP'].iloc[22]]   
+NIC_A = [NIC['PEP'].iloc[ 0], NIC['PIP'].iloc[ 0]] 
+NIC_B = [NIC['PEP'].iloc[ 1], NIC['PIP'].iloc[ 1]]
+NIC_E = [NIC['PEP'].iloc[ 8], NIC['PIP'].iloc[ 8]]
+NIC_N = [NIC['PEP'].iloc[15], NIC['PIP'].iloc[15]]
+NIC_V = [NIC['PEP'].iloc[22], NIC['PIP'].iloc[22]]   
 
 LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
 axis_range = [0, 100, 0, 100]
 fig, ax = plt.subplots(figsize=fig_square)
-plt.scatter(NIC['EP'], NIC['IP'], color = 'C3', s=S[1], alpha=0.4)
+plt.scatter(NIC['PEP'], NIC['PIP'], color = 'C3', s=S[1], alpha=0.4)
 plt.scatter(NIC_A[0] , NIC_A[1] , color = 'C0', s=S[1], alpha=1.0, label=LABELS[0])
 plt.scatter(NIC_B[0] , NIC_B[1] , color = 'C1', s=S[1], alpha=1.0, label=LABELS[1])
 plt.scatter(NIC_E[0] , NIC_E[1] , color = 'C5', s=S[1], alpha=1.0, label=LABELS[2])
@@ -544,16 +544,16 @@ plt.show()
 
 
 #### VENEZUELA
-VEN_A = [VEN['EP'].iloc[ 0], VEN['IP'].iloc[ 0]] 
-VEN_B = [VEN['EP'].iloc[ 1], VEN['IP'].iloc[ 1]]
-VEN_E = [VEN['EP'].iloc[ 8], VEN['IP'].iloc[ 8]]
-VEN_N = [VEN['EP'].iloc[15], VEN['IP'].iloc[15]]
-VEN_V = [VEN['EP'].iloc[22], VEN['IP'].iloc[22]]   
+VEN_A = [VEN['PEP'].iloc[ 0], VEN['PIP'].iloc[ 0]] 
+VEN_B = [VEN['PEP'].iloc[ 1], VEN['PIP'].iloc[ 1]]
+VEN_E = [VEN['PEP'].iloc[ 8], VEN['PIP'].iloc[ 8]]
+VEN_N = [VEN['PEP'].iloc[15], VEN['PIP'].iloc[15]]
+VEN_V = [VEN['PEP'].iloc[22], VEN['PIP'].iloc[22]]   
 
 LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
 axis_range = [0, 100, 0, 100]
 fig, ax = plt.subplots(figsize=fig_square)
-plt.scatter(VEN['EP'], VEN['IP'], color = 'C3', s=S[1], alpha=0.4)
+plt.scatter(VEN['PEP'], VEN['PIP'], color = 'C3', s=S[1], alpha=0.4)
 plt.scatter(VEN_A[0] , VEN_A[1] , color = 'C0', s=S[1], alpha=1.0, label=LABELS[0])
 plt.scatter(VEN_B[0] , VEN_B[1] , color = 'C1', s=S[1], alpha=1.0, label=LABELS[1])
 plt.scatter(VEN_E[0] , VEN_E[1] , color = 'C5', s=S[1], alpha=1.0, label=LABELS[2])
