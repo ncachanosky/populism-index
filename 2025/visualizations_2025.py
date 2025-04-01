@@ -112,9 +112,9 @@ years     = INDEX['YEAR'].unique()
 #### Build plots
 for country in countries:
     country_data = INDEX[INDEX['COUNTRY'] == country]
-    EP = country_data['EP']
-    IP = country_data['IP']
-    P  = country_data['POPULISM']
+    EP = country_data['PEP']
+    IP = country_data['PIP']
+    P  = country_data['POP']
     T  = country_data['YEAR']
     #----------------------------------------------------------------------
     fig, ax = plt.subplots(figsize=fig_word)
@@ -135,14 +135,14 @@ del countries, country_data, ax, fig, EP, IP, P
 # %% TIME-SERIES: LATAM AND SUB-REGIONS
 
 #### Create average series and labels
-POP = INDEX.groupby('YEAR')['POPULISM'].mean().reset_index()
-EP  = INDEX.groupby('YEAR')['EP'].mean().reset_index()
-IP  = INDEX.groupby('YEAR')['IP'].mean().reset_index()
+POP = INDEX.groupby('YEAR')['POP'].mean().reset_index()
+PEP = INDEX.groupby('YEAR')['PEP'].mean().reset_index()
+PIP = INDEX.groupby('YEAR')['PIP'].mean().reset_index()
 
 T  = POP['YEAR']
-y1 = POP['POPULISM']
-y2 = EP['EP']
-y3 = IP['IP']
+y1 = POP['POP']
+y2 = PEP['PEP']
+y3 = PIP['PIP']
 
 labels = ['Populism index'   ,
           'Economic populism',
@@ -161,8 +161,8 @@ plt.savefig('visualizations/TS_Latam_Average')
 plt.show()
 
 #### Average: Regional (Populism)
-P = INDEX.pivot_table(index='YEAR',columns='REGION', values='POPULISM', aggfunc='mean')
-P['T'] = np.arange(2002, 2020, 1)
+P = INDEX.pivot_table(index='YEAR',columns='REGION', values='POP', aggfunc='mean')
+P['T'] = np.arange(2000, 2020, 1)
 
 T  = P['T']
 P1 = P['Caribbean']
@@ -181,8 +181,8 @@ plt.savefig('visualizations/TS_Regional_POP')
 plt.show()
 
 #### Average: Regional (Economic Populism)
-EP = INDEX.pivot_table(index='YEAR',columns='REGION', values='EP', aggfunc='mean')
-EP['T'] = np.arange(2002, 2020, 1)
+EP = INDEX.pivot_table(index='YEAR',columns='REGION', values='PEP', aggfunc='mean')
+EP['T'] = np.arange(2000, 2020, 1)
 
 T   = EP['T']
 EP1 = EP['Caribbean']
@@ -202,8 +202,8 @@ plt.show()
 
 
 #### Average: Regional (Institutional Populism)
-IP = INDEX.pivot_table(index='YEAR',columns='REGION', values='IP', aggfunc='mean')
-IP['T'] = np.arange(2002, 2020, 1)
+IP = INDEX.pivot_table(index='YEAR',columns='REGION', values='PIP', aggfunc='mean')
+IP['T'] = np.arange(2000, 2020, 1)
 
 T   = IP['T']
 IP1 = IP['Caribbean']
@@ -236,12 +236,12 @@ axis_range = [0, 100, 0, 100]
 for year in years:
     i = year.astype(str)
     year_data = INDEX[INDEX['YEAR'] == year]
-    EP = year_data['EP']
-    IP = year_data['IP']
+    PEP = year_data['PEP']
+    PIP = year_data['PIP']
     #----------------------------------------------------------------------
     fig, ax = plt.subplots(figsize=fig_square)
 #    plt.title(year)
-    plt.scatter(EP,IP, color = 'C2', s=20)
+    plt.scatter(PEP,PIP, color = 'C2', s=20)
     plt.plot([0,100],[0,100], color='gray', linewidth=0.5, ls=':', alpha=0.5)
     plt.xlabel('Economic populism')
     plt.ylabel('Institutional populism')
@@ -266,11 +266,11 @@ TITLE = "Populism transition"
 
 fig, ax = plt.subplots(figsize=fig_square)
 plt.plot([0,100],[0,100], color='gray', linewidth=0.5, ls=':', alpha=0.5)
-plt.plot(ARG['EP'],ARG['IP'],'o-',lw=1, ms=2,color='C0',label=LABELS[0])
-plt.plot(BOL['EP'],BOL['IP'],'o-',lw=1, ms=2,color='C1',label=LABELS[1])
-plt.plot(ECU['EP'],ECU['IP'],'o-',lw=1, ms=2,color='C5',label=LABELS[2])
-plt.plot(NIC['EP'],NIC['IP'],'o-',lw=1, ms=2,color='C3' ,label=LABELS[3])
-plt.plot(VEN['EP'],VEN['IP'],'o-',lw=1, ms=2,color='C4',label=LABELS[4])
+plt.plot(ARG['PEP'],ARG['PIP'],'o-',lw=1, ms=2,color='C0',label=LABELS[0])
+plt.plot(BOL['PEP'],BOL['PIP'],'o-',lw=1, ms=2,color='C1',label=LABELS[1])
+plt.plot(ECU['PEP'],ECU['PIP'],'o-',lw=1, ms=2,color='C5',label=LABELS[2])
+plt.plot(NIC['PEP'],NIC['PIP'],'o-',lw=1, ms=2,color='C3' ,label=LABELS[3])
+plt.plot(VEN['PEP'],VEN['PIP'],'o-',lw=1, ms=2,color='C4',label=LABELS[4])
 plt.xlabel("Economic populism")
 plt.ylabel("Institutional populism")
 plt.axis_range=axis_range
@@ -281,45 +281,15 @@ plt.savefig('visualizations/transition')
 plt.show()
 
 
-#### VParty VS EP Index
-year_data = INDEX[INDEX['YEAR'] == 2015]
-EP        = year_data['EP']
-IP        = year_data['IP']
-VPARTY    = year_data['VPARTY']*100
-
-fig, ax = plt.subplots(figsize=fig_square)
-plt.scatter(VPARTY,EP, color = 'C2', s=20)
-plt.plot([0,100],[0,100], color='gray', linewidth=0.5, ls='-.', alpha=0.5)
-plt.xlabel('V-Party')
-plt.ylabel('Economic populism')
-plt.axis_range = axis_range
-plt.xticks(np.arange(0, 101, 20))
-plt.tight_layout()
-plt.savefig('visualizations/scatter_'+i)
-plt.show()
-
-
-#### VParty VS IP Index
-fig, ax = plt.subplots(figsize=fig_square)
-plt.scatter(VPARTY,IP, color = 'C2', s=20)
-plt.plot([0,100],[0,100], color='gray', linewidth=0.5, ls='-.', alpha=0.5)
-plt.xlabel('V-Party')
-plt.ylabel('Institutional populism')
-plt.axis_range = axis_range
-plt.xticks(np.arange(0, 101, 20))
-plt.tight_layout()
-plt.savefig('visualizations/scatter_'+i)
-plt.show()
-
 # ============================================================================|
 # %% THE ICONIC FIVE: TIME SERIES
 
 
 #### Argentina
 y  = INDEX[INDEX['ISO3']=='ARG']
-y1 = y['POPULISM']
-y2 = y['EP']
-y3 = y['IP']
+y1 = y['POP']
+y2 = y['PEP']
+y3 = y['PIP']
 t  = y['YEAR']
 
 fig, ax = plt.subplots(figsize=fig_word)
@@ -337,9 +307,9 @@ plt.show()
 
 #### Bolivia
 y  = INDEX[INDEX['ISO3']=='BOL']
-y1 = y['IP']
-y2 = y['EP']
-y3 = y['POPULISM']
+y1 = y['PIP']
+y2 = y['PEP']
+y3 = y['POP']
 t  = y['YEAR']
 
 fig, ax = plt.subplots(figsize=fig_word)
@@ -356,9 +326,9 @@ plt.show()
 
 #### Ecuador
 y  = INDEX[INDEX['ISO3']=='ECU']
-y1 = y['IP']
-y2 = y['EP']
-y3 = y['POPULISM']
+y1 = y['PIP']
+y2 = y['PEP']
+y3 = y['POP']
 t  = y['YEAR']
 
 fig, ax = plt.subplots(figsize=fig_word)
@@ -376,9 +346,9 @@ plt.show()
 
 #### Nicaragua
 y  = INDEX[INDEX['ISO3']=='NIC']
-y1 = y['IP']
-y2 = y['EP']
-y3 = y['POPULISM']
+y1 = y['PIP']
+y2 = y['PEP']
+y3 = y['POP']
 t  = y['YEAR']
 
 fig, ax = plt.subplots(figsize=fig_word)
@@ -396,9 +366,9 @@ plt.show()
 
 #### Venezuela
 y  = INDEX[INDEX['ISO3']=='VEN']
-y1 = y['IP']
-y2 = y['EP']
-y3 = y['POPULISM']
+y1 = y['PIP']
+y2 = y['PEP']
+y3 = y['POP']
 t  = y['YEAR']
 
 fig, ax = plt.subplots(figsize=fig_word)
@@ -439,8 +409,8 @@ S = [40, 20] # [True; False]
 ARG_A = [ARG['PEP'].iloc[ 0], ARG['PIP'].iloc[ 0]] 
 ARG_B = [ARG['PEP'].iloc[ 1], ARG['PIP'].iloc[ 1]]
 ARG_E = [ARG['PEP'].iloc[ 8], ARG['PIP'].iloc[ 8]]
-ARG_N = [ARG['PEP'].iloc[15], ARG['PIP'].iloc[15]]
-ARG_V = [ARG['PEP'].iloc[22], ARG['PIP'].iloc[22]]   
+ARG_N = [ARG['PEP'].iloc[14], ARG['PIP'].iloc[14]]
+ARG_V = [ARG['PEP'].iloc[21], ARG['PIP'].iloc[21]]   
 
 LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
 axis_range = [0, 100, 0, 100]
@@ -466,8 +436,8 @@ plt.show()
 BOL_A = [BOL['PEP'].iloc[ 0], BOL['PIP'].iloc[ 0]] 
 BOL_B = [BOL['PEP'].iloc[ 1], BOL['PIP'].iloc[ 1]]
 BOL_E = [BOL['PEP'].iloc[ 8], BOL['PIP'].iloc[ 8]]
-BOL_N = [BOL['PEP'].iloc[15], BOL['PIP'].iloc[15]]
-BOL_V = [BOL['PEP'].iloc[22], BOL['PIP'].iloc[22]]   
+BOL_N = [BOL['PEP'].iloc[14], BOL['PIP'].iloc[14]]
+BOL_V = [BOL['PEP'].iloc[21], BOL['PIP'].iloc[21]]   
 
 LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
 axis_range = [0, 100, 0, 100]
@@ -493,8 +463,8 @@ plt.show()
 ECU_A = [ECU['PEP'].iloc[ 0], ECU['PIP'].iloc[ 0]] 
 ECU_B = [ECU['PEP'].iloc[ 1], ECU['PIP'].iloc[ 1]]
 ECU_E = [ECU['PEP'].iloc[ 8], ECU['PIP'].iloc[ 8]]
-ECU_N = [ECU['PEP'].iloc[15], ECU['PIP'].iloc[15]]
-ECU_V = [ECU['PEP'].iloc[22], ECU['PIP'].iloc[22]]   
+ECU_N = [ECU['PEP'].iloc[14], ECU['PIP'].iloc[14]]
+ECU_V = [ECU['PEP'].iloc[21], ECU['PIP'].iloc[21]]   
 
 LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
 axis_range = [0, 100, 0, 100]
@@ -520,8 +490,8 @@ plt.show()
 NIC_A = [NIC['PEP'].iloc[ 0], NIC['PIP'].iloc[ 0]] 
 NIC_B = [NIC['PEP'].iloc[ 1], NIC['PIP'].iloc[ 1]]
 NIC_E = [NIC['PEP'].iloc[ 8], NIC['PIP'].iloc[ 8]]
-NIC_N = [NIC['PEP'].iloc[15], NIC['PIP'].iloc[15]]
-NIC_V = [NIC['PEP'].iloc[22], NIC['PIP'].iloc[22]]   
+NIC_N = [NIC['PEP'].iloc[14], NIC['PIP'].iloc[14]]
+NIC_V = [NIC['PEP'].iloc[21], NIC['PIP'].iloc[21]]   
 
 LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
 axis_range = [0, 100, 0, 100]
@@ -547,8 +517,8 @@ plt.show()
 VEN_A = [VEN['PEP'].iloc[ 0], VEN['PIP'].iloc[ 0]] 
 VEN_B = [VEN['PEP'].iloc[ 1], VEN['PIP'].iloc[ 1]]
 VEN_E = [VEN['PEP'].iloc[ 8], VEN['PIP'].iloc[ 8]]
-VEN_N = [VEN['PEP'].iloc[15], VEN['PIP'].iloc[15]]
-VEN_V = [VEN['PEP'].iloc[22], VEN['PIP'].iloc[22]]   
+VEN_N = [VEN['PEP'].iloc[14], VEN['PIP'].iloc[14]]
+VEN_V = [VEN['PEP'].iloc[21], VEN['PIP'].iloc[21]]   
 
 LABELS = ['Argentina', 'Bolivia', 'Ecuador', 'Nicaragua', 'Venezuela']
 axis_range = [0, 100, 0, 100]

@@ -110,7 +110,6 @@ while t <= END:
 #### Clean up
 del START, END, t, df_new
 
-
 # ============================================================================|
 # %% DATA | V-PARTY INDEX
 
@@ -168,7 +167,7 @@ del writer, FILE
 #### Data
 FILE = 'Data/VParty.xlsx'
 
-#### After manual update, re-import data from Excel
+### After manual update, re-import data from Excel
 FILE   = pd.ExcelFile(FILE)
 VPARTY = pd.read_excel(FILE, sheet_name='INDEX', usecols="A,B,E,F,G")
 
@@ -176,11 +175,6 @@ VPARTY = pd.read_excel(FILE, sheet_name='INDEX', usecols="A,B,E,F,G")
 INDEX = pd.merge(INDEX, VPARTY, on=['ISO3','YEAR'])
 del VPARTY, FILE
 
-#### Extrapolate
-INDEX = INDEX.sort_values(by=['COUNTRY', 'YEAR'])
-INDEX.loc[(INDEX["YEAR"] == 2004) & (INDEX["ISO3"] == "ARG"), "VPARTY"] = INDEX.loc[(INDEX["YEAR"].isin([2004, 2005])) & (INDEX["ISO3"] == "ARG"), "VPARTY"].interpolate(method="bfill", limit_direction="backward")
-INDEX.loc[(INDEX["YEAR"] == 2003) & (INDEX["ISO3"] == "ARG"), "VPARTY"] = INDEX.loc[(INDEX["YEAR"].isin([2003, 2004])) & (INDEX["ISO3"] == "ARG"), "VPARTY"].interpolate(method="bfill", limit_direction="backward")
-INDEX.loc[(INDEX["YEAR"] == 2002) & (INDEX["ISO3"] == "NIC"), "VPARTY"] = INDEX.loc[(INDEX["YEAR"].isin([2000, 2001])) & (INDEX["ISO3"] == "NIC"), "VPARTY"].interpolate(method="bfill", limit_direction="backward")
 
 # ============================================================================|
 # %% DATA | V-DEM
@@ -227,6 +221,40 @@ del VDEM, VDEM_1, code1, code2, code3, code4, code5, code6, FILE
 
 
 # ============================================================================|
+# %% DATA | WGI
+
+#### Data
+FILE = "Data/wgidataset.dta"
+WGI = pd.read_stata(FILE)
+WGI = WGI.rename(columns={'year':'YEAR'})
+WGI = WGI.rename(columns={'code':'ISO3' })
+WGI = WGI.rename(columns={'rle':'WGI_1' ,   # Rule of Law
+                          'cce':'WGI_2'})   # Control of Corruption
+
+#### Drop unnecessary columns
+KEEP = ['ISO3', 'YEAR', 'WGI_1', 'WGI_2']
+WGI = WGI[KEEP]
+
+#### Rescale data
+WGI['WGI_1'] = 100 - (WGI['WGI_1'] + 2.5)*20
+WGI['WGI_2'] = 100 - (WGI['WGI_2'] + 2.5)*20
+
+#### Drop non-Latam countries
+KEEP = 'AIA|ATG|ARG|ABW|BHS|BRB|BLZ|BOL|BES|BVT|BRA|VGB|CYM|\
+CHL|COL|CRI|CUB|CUW|DMA|DOM|ECU|SLV|FLK|GUF|GRD|GLP|\
+GTM|GUY|HTI|HND|JAM|MTQ|MEX|MSR|NIC|PAN|PRY|PER|PRI|\
+BLM|KNA|LCA|MAF|VCT|SXM|SGS|SUR|TTO|TCA|VIR|URY|VEN'
+
+WGI = WGI[WGI['ISO3'].str.contains(KEEP)]
+
+INDEX = pd.merge(INDEX, WGI, on=['ISO3','YEAR'])
+
+
+#### Clean up
+del FILE, KEEP, WGI
+
+
+# ============================================================================|
 # %% DATA | HERITAGE
 
 #### Data
@@ -242,18 +270,16 @@ KEEP = ['ISO Code'         ,
         'Business Freedom' ,    
         'Monetary Freedom' ,    
         'Trade Freedom'    ,    
-        'Financial Freedom',
-        'Government Integrity']
+        'Financial Freedom',]
 
 
-HERITAGE = HERITAGE[KEEP].rename(columns={'ISO Code'            :'ISO2',
-                                          'Index Year'          :'YEAR',
-                                          'Property Rights'     :'HERITAGE_1',
-                                          'Business Freedom'    :'HERITAGE_2',
-                                          'Monetary Freedom'    :'HERITAGE_3',
-                                          'Trade Freedom'       :'HERITAGE_4',
-                                          'Financial Freedom'   :'HERITAGE_5',
-                                          'Government Integrity':'HERITAGE_6'})
+HERITAGE = HERITAGE[KEEP].rename(columns={'ISO Code'         :'ISO2',
+                                          'Index Year'       :'YEAR',
+                                          'Property Rights'  :'HERITAGE_1',
+                                          'Business Freedom' :'HERITAGE_2',
+                                          'Monetary Freedom' :'HERITAGE_3',
+                                          'Trade Freedom'    :'HERITAGE_4',
+                                          'Financial Freedom':'HERITAGE_5'})
 
 
 INDEX = pd.merge(INDEX, HERITAGE, on=['ISO2', 'YEAR'])
@@ -263,7 +289,6 @@ INDEX['HERITAGE_2'] = 100 - INDEX['HERITAGE_2']
 INDEX['HERITAGE_3'] = 100 - INDEX['HERITAGE_3']
 INDEX['HERITAGE_4'] = 100 - INDEX['HERITAGE_4']
 INDEX['HERITAGE_5'] = 100 - INDEX['HERITAGE_5']
-INDEX['HERITAGE_6'] = 100 - INDEX['HERITAGE_6']
 
 #### Clean up
 del FILE, KEEP, HERITAGE
@@ -304,6 +329,44 @@ INDEX['EFW_6'] = 100 - INDEX['EFW_6']*10    # Business regulations
 del FILE, SHEET, COLS, EFW
 
 
+# # ============================================================================|
+# %% INDEX | INSTITUTIONAL POPULISM
+
+#### Define sub-indices
+IP11 = INDEX['VDEM_1']     # Rule of Law
+IP12 = INDEX['VDEM_2']     # Judiciary Constraints on the Executive
+IP13 = INDEX['VDEM_3']     # Legislative Constraints on the Executive
+IP14 = INDEX['WGI_1']      # Rule of Law
+
+IP21 = INDEX['VDEM_4']     # Corruption
+IP22 = INDEX['WGI_2']      # Control of Corruption
+
+
+INDEX['IP_1'] = (IP11 + IP12 + IP13 + IP14)/4         # IP1: Rule of Law
+INDEX['IP_2'] = (IP21 + IP22)/2                       # IP2: Corruption
+INDEX = INDEX.rename(columns={'VDEM_3'    : 'IP_3'})  # IP3: Neopatrimonialism
+INDEX = INDEX.rename(columns={'VDEM_4'    : 'IP_4'})  # IP4: Freedom of the Press
+INDEX = INDEX.rename(columns={'VDEM_5'    : 'IP_5'})  # IP5: Neopatrimonialism
+INDEX = INDEX.rename(columns={'HERITAGE_1': 'IP_6'})  # IP6: Property Rights
+
+#### Build index
+IP1 = INDEX['IP_1']     # Rule of Law
+IP2 = INDEX['IP_2']     # Corruption
+IP3 = INDEX['IP_3']     # Neopatrimonialism
+IP4 = INDEX['IP_4']     # Freedom of the Press
+IP5 = INDEX['IP_5']     # Clean Election Index
+IP6 = INDEX['IP_6']     # Property Rights
+INDEX['IP']  = (IP1 + IP2 + IP3 + IP4 + IP5 + IP6)/6
+INDEX['PIP'] = INDEX['VPARTY'] * INDEX['IP']
+
+
+INDEX['PIP_RANK']       = INDEX.groupby('YEAR')['PIP'].rank(ascending=False)
+INDEX['PIP_PERCENTILE'] = INDEX.groupby('YEAR')['PIP'].rank(pct=True)
+
+#### Clean up
+del IP11, IP12, IP13, IP14, IP21, IP22, IP1, IP2, IP3, IP4, IP5, IP6
+
+
 # ============================================================================|
 # %% INDEX | ECONOMIC POPULISM
 
@@ -332,45 +395,6 @@ INDEX['PEP_PERCENTILE'] = INDEX.groupby('YEAR')['PEP'].rank(pct=True)
 del EP1, EP2, EP3, EP4
 
 
-# # ============================================================================|
-# %% INDEX | INSTITUTIONAL POPULISM
-
-#### Define sub-indices
-IP11 = INDEX['VDEM_1']     # Rule of Law
-IP12 = INDEX['VDEM_2']     # Judiciary Constraints on the Executive
-IP13 = INDEX['VDEM_3']     # Legislative Constraints on the Executive
-# IP14 = INDEX['WGI_1']      # Rule of Law
-
-IP21 = INDEX['VDEM_4']     # Corruption
-IP22 = INDEX['HERITAGE_6'] # Control of Corruption
-
-
-INDEX['IP_1'] = (IP11 + IP12 + IP13)/3                # IP1: Rule of Law
-INDEX['IP_2'] = (IP21 + IP22)/2                       # IP2: Corruption
-INDEX = INDEX.rename(columns={'VDEM_3'    : 'IP_3'})  # IP3: Leg. constraints
-INDEX = INDEX.rename(columns={'VDEM_4'    : 'IP_4'})  # IP4: Freedom of the Press
-INDEX = INDEX.rename(columns={'VDEM_5'    : 'IP_5'})  # IP5: Neopatrimonialism
-INDEX = INDEX.rename(columns={'HERITAGE_1': 'IP_6'})  # IP6: Property Rights
-
-#### Build index
-IP1 = INDEX['IP_1']     # Rule of Law
-IP2 = INDEX['IP_2']     # Corruption
-IP3 = INDEX['IP_3']     # Neopatrimonialism
-IP4 = INDEX['IP_4']     # Freedom of the Press
-IP5 = INDEX['IP_5']     # Clean Election Index
-IP6 = INDEX['IP_6']     # Property Rights
-INDEX['IP']  = (IP1 + IP2 + IP3 + IP4 + IP5 + IP6)/6
-INDEX['PIP'] = INDEX['VPARTY'] * INDEX['IP']
-
-
-INDEX['PIP_RANK']       = INDEX.groupby('YEAR')['PIP'].rank(ascending=False)
-INDEX['PIP_PERCENTILE'] = INDEX.groupby('YEAR')['PIP'].rank(pct=True)
-
-#### Clean up
-del IP11, IP12, IP13, IP21, IP22, IP1, IP2, IP3, IP4, IP5, IP6
-
-
-
 # ============================================================================|
 # %% INDEX | POPULISM OVERAL INDEX
 
@@ -379,48 +403,40 @@ INDEX['POP'] = (INDEX['PIP'] + INDEX['PEP'])/2
 INDEX['POP_RANK']       = INDEX.groupby('YEAR')['POP'].rank(ascending=False)
 INDEX['POP_PERCENTILE'] = INDEX.groupby('YEAR')['POP'].rank(pct=True)
 
-INDEX['POP_R_RANK']       = INDEX.groupby('YEAR')['PIP'].rank(ascending=False)
-INDEX['POP_R_PERCENTILE'] = INDEX.groupby('YEAR')['PIP'].rank(pct=True)
 
 INDEX= INDEX.rename(columns={'VPARTY':'POP_R'})
-INDEX['POP_R_RANK']       = INDEX.groupby('YEAR')['POP'].rank(ascending=False)
-INDEX['POP_R_PERCENTILE'] = INDEX.groupby('YEAR')['POP'].rank(pct=True)
 
 
 # ============================================================================|
 # %% CLEAN UP DATASET
 
-KEEP = ['ISO2'            ,
-        'ISO3'            ,
-        'COUNTRY'         ,
-        'REGION'          ,
-        'LDC'             ,
-        'LLDC'            ,
-        'SIDS'            ,
-        'YEAR'            ,
-        'POP'             ,
-        'POP_RANK'        ,
-        'POP_PERCENTILE'  ,
-        'PIP'             ,
-        'PIP_RANK'        ,
-        'PIP_PERCENTILE'  ,
+KEEP = ['ISO2'               ,
+        'ISO3'               ,
+        'COUNTRY'            ,
+        'REGION'             ,
+        'LDC'                ,
+        'LLDC'               ,
+        'SIDS'               ,
+        'YEAR'               ,
+        'POP'           ,
+        'POP_RANK'      ,
+        'POP_PERCENTILE',
+        'PIP'                 ,
+        'PIP_RANK'            ,
+        'PIP_PERCENTILE'      ,
         'IP','IP_1','IP_2','IP_3' ,'IP_4','IP_5','IP_6',
-        'PEP'             ,
-        'PEP_RANK'        ,
-        'PEP_PERCENTILE'  ,
+        'PEP'                 ,
+        'PEP_RANK'            ,
+        'PEP_PERCENTILE'      ,
         'EP','EP_1','EP_2','EP_3' ,'EP_4',
-        'POP_R'           ,
-        'POP_R_RANK'      ,
-        'POP_R_PERCENTILE',
-        'PARTY_CODE'      ,
+        'POP_R'             ,
+        'PARTY_CODE'         ,
         'PARTY_NAME']
 
 INDEX = INDEX[KEEP]
-INDEX = INDEX.sort_values(by=['YEAR', 'COUNTRY'])
 
 # Drop Latin American countries with empty observations
-INDEX = INDEX[INDEX['ISO3'] != "SUR"] # Drop Suriname
-INDEX = INDEX[INDEX['ISO3'] != "GUY"] # Drop Guyana
+INDEX = INDEX[INDEX['ISO3'] != "SUR"]
 
 del KEEP
 
@@ -473,11 +489,6 @@ obs_country = TABLE.groupby("COUNTRY")[["POP", "PEP", "PIP", "POP_R"]].count()
 
 print(obs_year)
 print(obs_country)
-
-TABLE.iloc[:,2] = TABLE.set_index(["COUNTRY", "YEAR"]).notna().replace({True: "X",
-                                                                        False:""})
-
-TABLE.to_excel("missing_data_2025.xlsx", index=False)
 
 del KEEP, TABLE, obs_year, obs_country
 # ============================================================================|
