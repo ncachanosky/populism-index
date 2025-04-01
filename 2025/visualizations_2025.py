@@ -540,7 +540,7 @@ plt.savefig('visualizations/IcoVEN5_Scatter_VEN')
 plt.show()
 
 #### Clean up
-del year_data, ax, fig, EP, IP, ARG, BOL, ECU, NIC, VEN, LABELS, i
+del year_data, ax, fig, PEP, PIP, ARG, BOL, ECU, NIC, VEN, LABELS, i
 del ARG_A, ARG_B, ARG_E, ARG_N, ARG_V
 del BOL_A, BOL_B, BOL_E, BOL_N, BOL_V
 del ECU_A, ECU_B, ECU_E, ECU_N, ECU_V

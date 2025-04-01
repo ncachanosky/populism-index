@@ -180,7 +180,7 @@ del VPARTY, FILE
 INDEX = INDEX.sort_values(by=['COUNTRY', 'YEAR'])
 INDEX.loc[(INDEX["YEAR"] == 2004) & (INDEX["ISO3"] == "ARG"), "VPARTY"] = INDEX.loc[(INDEX["YEAR"].isin([2004, 2005])) & (INDEX["ISO3"] == "ARG"), "VPARTY"].interpolate(method="bfill", limit_direction="backward")
 INDEX.loc[(INDEX["YEAR"] == 2003) & (INDEX["ISO3"] == "ARG"), "VPARTY"] = INDEX.loc[(INDEX["YEAR"].isin([2003, 2004])) & (INDEX["ISO3"] == "ARG"), "VPARTY"].interpolate(method="bfill", limit_direction="backward")
-INDEX.loc[(INDEX["YEAR"] == 2002) & (INDEX["ISO3"] == "NIC"), "VPARTY"] = INDEX.loc[(INDEX["YEAR"].isin([2000, 2001])) & (INDEX["ISO3"] == "NIC"), "VPARTY"].interpolate(method="bfill", limit_direction="backward")
+INDEX.loc[(INDEX["YEAR"] == 2002) & (INDEX["ISO3"] == "NIC"), "VPARTY"] = INDEX.loc[(INDEX["YEAR"].isin([2002, 2003])) & (INDEX["ISO3"] == "NIC"), "VPARTY"].interpolate(method="bfill", limit_direction="backward")
 
 # ============================================================================|
 # %% DATA | V-DEM
@@ -383,8 +383,8 @@ INDEX['POP_R_RANK']       = INDEX.groupby('YEAR')['PIP'].rank(ascending=False)
 INDEX['POP_R_PERCENTILE'] = INDEX.groupby('YEAR')['PIP'].rank(pct=True)
 
 INDEX= INDEX.rename(columns={'VPARTY':'POP_R'})
-INDEX['POP_R_RANK']       = INDEX.groupby('YEAR')['POP'].rank(ascending=False)
-INDEX['POP_R_PERCENTILE'] = INDEX.groupby('YEAR')['POP'].rank(pct=True)
+INDEX['POP_R_RANK']       = INDEX.groupby('YEAR')['POP_R'].rank(ascending=False)
+INDEX['POP_R_PERCENTILE'] = INDEX.groupby('YEAR')['POP_R'].rank(pct=True)
 
 
 # ============================================================================|
@@ -461,25 +461,25 @@ KEEP = ['COUNTRY',
         'POP_R'
         ]
 
+
 TABLE = INDEX[KEEP]
 
-TABLE = TABLE.set_index(["COUNTRY", "YEAR"]).notna().replace({True: "x", False:""})
+MISSING = TABLE.set_index(["COUNTRY", "YEAR"]).notna()
+MISSING = MISSING.replace({True: "X", False:""})
 
-pd.set_option("display.max_rows", None)   # Show all rows
-print(TABLE)
 
-obs_year    = TABLE.groupby("YEAR")[["POP", "PEP", "PIP", "POP_R"]].count()
-obs_country = TABLE.groupby("COUNTRY")[["POP", "PEP", "PIP", "POP_R"]].count()
 
-print(obs_year)
-print(obs_country)
 
-TABLE.iloc[:,2] = TABLE.set_index(["COUNTRY", "YEAR"]).notna().replace({True: "X",
-                                                                        False:""})
-
+TABLE.iloc[:,2] = MISSING.iloc[:,0].values
+TABLE.iloc[:,3] = MISSING.iloc[:,1].values
+TABLE.iloc[:,4] = MISSING.iloc[:,2].values
+TABLE.iloc[:,5] = MISSING.iloc[:,3].values
 TABLE.to_excel("missing_data_2025.xlsx", index=False)
 
-del KEEP, TABLE, obs_year, obs_country
+
+del KEEP, TABLE, MISSING
+
+
 # ============================================================================|
 # %% THE END
 
