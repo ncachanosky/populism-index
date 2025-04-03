@@ -339,7 +339,6 @@ del EP1, EP2, EP3, EP4
 IP11 = INDEX['VDEM_1']     # Rule of Law
 IP12 = INDEX['VDEM_2']     # Judiciary Constraints on the Executive
 IP13 = INDEX['VDEM_3']     # Legislative Constraints on the Executive
-# IP14 = INDEX['WGI_1']      # Rule of Law
 
 IP21 = INDEX['VDEM_4']     # Corruption
 IP22 = INDEX['HERITAGE_6'] # Control of Corruption
