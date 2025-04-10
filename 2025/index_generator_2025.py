@@ -34,7 +34,8 @@ del PATH
 # %% INDEX SKELETON
 
 #### Create dataset structure with empty rows
-START = 1990
+START = 2000
+#START = 1990
 END   = 2020
 
 INDEX = pd.DataFrame({'ISO2'   : [],
@@ -150,7 +151,7 @@ VPARTY = VPARTY.pivot(index='YEAR', values='v2xpa_popul', columns=['ISO3', 'v2pa
 VPARTY = VPARTY.interpolate()
 VPARTY = VPARTY.sort_index(axis=1)
 
-#### Export to excel for *manual* completion
+#### Export to excel for *manual* completion (i.e. "change of government" years)
 FILE = 'Data/VParty.xlsx'
 
 with pd.ExcelWriter(FILE,
@@ -466,51 +467,15 @@ TABLE = INDEX[KEEP]
 MISSING = TABLE.set_index(["COUNTRY", "YEAR"]).notna()
 MISSING = MISSING.replace({True: "X", False:""})
 
-
-
-
 TABLE.iloc[:,2] = MISSING.iloc[:,0].values
 TABLE.iloc[:,3] = MISSING.iloc[:,1].values
 TABLE.iloc[:,4] = MISSING.iloc[:,2].values
 TABLE.iloc[:,5] = MISSING.iloc[:,3].values
 TABLE.to_excel("missing_data_2025.xlsx", index=False)
 
-
+### Clean up
 del KEEP, TABLE, MISSING
 
 
 # ============================================================================|
 # %% THE END
-
-"""
-#### Sample Code: Rearrange pandas' columns
-import pandas as pd
-
-# Sample DataFrame
-data = {'A': [1, 2, 3],
-        'B': [4, 5, 6],
-        'C': [7, 8, 9]}
-
-df = pd.DataFrame(data)
-
-# Current column order
-print("Original DataFrame:")
-print(df)
-
-# Specify the desired column order
-desired_order = ['B', 'C', 'A']
-
-# Rearrange columns based on the desired order
-df = df[desired_order]
-
-# Updated column order
-print("\nDataFrame with Rearranged Columns:")
-print(df)
-
-#### Sample Code: Ranking
-# Rank data within each year group in ascending order with the
-# 'min' tie-breaking method
-df['Rank'] = df.groupby('Year')['Value'].rank(ascending=True, method='min')
-"""
-# ===========================================================================
-# End-of-File
