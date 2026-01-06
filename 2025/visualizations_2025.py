@@ -103,8 +103,8 @@ del available_fonts
 
 
 # ============================================================================|
+# %% COUNTRY PLOTS
 
-#### Build plots
 for country in countries:
     country_data = INDEX[INDEX['COUNTRY'] == country]
     EP = country_data['PEP']
